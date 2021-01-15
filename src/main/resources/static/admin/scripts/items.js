@@ -19,4 +19,4 @@ addForm.onsubmit = () => {
     formData.append("imageFile", imgUpload.files[0]);
     Ajax.request('POST','apis/product/addProduct', callback, fallback, formData);
     return false;
-}
+};

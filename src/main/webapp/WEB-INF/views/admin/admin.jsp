@@ -134,28 +134,28 @@
                     <ul class="block-content">
                         <li>
                             <input type="checkbox">
-                            <label for="">
+                            <label >
                                 <span>Beds</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
                             <input type="checkbox">
-                            <label for="">
+                            <label >
                                 <span>Sofas</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
                             <input type="checkbox">
-                            <label for="">
+                            <label >
                                 <span>Cabinets</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
                             <input type="checkbox">
-                            <label for="">
+                            <label >
                                 <span>tables</span>
                                 <small>(1)</small>
                             </label>
@@ -170,28 +170,28 @@
                     <ul class="block-content">
                         <li>
                             <input type="checkbox" >
-                            <label for="">
+                            <label >
                                 <span>HANSSEM</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
                             <input type="checkbox" >
-                            <label for="">
+                            <label >
                                 <span>illoom</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
                             <input type="checkbox" >
-                            <label for="">
+                            <label >
                                 <span>WELLZ</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
                             <input type="checkbox" >
-                            <label for="">
+                            <label >
                                 <span>youngDongGagu</span>
                                 <small>(1)</small>
                             </label>
@@ -202,7 +202,7 @@
             <div class="col-3-of-4">
                 <form action="">
                     <div class="item">
-                        <label for="">Sort By</label>
+                        <label >Sort By</label>
                         <select name="sort-by" >
                             <option value="title">Name</option>
                             <option value="number">Price</option>
@@ -211,7 +211,7 @@
                         </select>
                     </div>
                     <div class="item">
-                        <label for="">Order</label>
+                        <label >Order</label>
                         <select name="sort-by" >
                             <option value="ASC" selected="selected">ASC</option>
                             <option value="DESC">DESC</option>
@@ -449,6 +449,6 @@
     <script src="scripts/main.js"></script>
     <script src="scripts/admin.js"></script>
     <script src="scripts/ajax.js"></script>
-    <script src="/admin/scripts/items.js"></script>
+    <script src="admin/scripts/items.js"></script>
 </body>
 </html>

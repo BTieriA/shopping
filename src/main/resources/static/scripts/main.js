@@ -27,6 +27,7 @@ let productsClick = () => {
     content.classList.add('hidden');
     let callback = (responseText) => {
         let items = window.document.querySelector('.js-items');
+        items.classList.add('visible');
         items.innerHTML = responseText;
     };
     let fallback = () => {

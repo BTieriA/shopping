@@ -15,13 +15,6 @@ home.addEventListener('click', () =>{
 addition.addEventListener('click',()=>{
     admin.classList.add('hidden');
     addBox.classList.add('visible');
-    let callback = (responseText) => {
-        addBox.innerHTML =responseText;
-    };
-    let fallback = () => {
-        alert('페이지를 찾을 수 없습니다');
-    };
-    Ajax.request('GET', 'parts/addProduct.html', callback, fallback);
 });
 
 
