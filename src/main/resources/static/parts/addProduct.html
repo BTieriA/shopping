@@ -1,0 +1,44 @@
+<!-- Product Addition-->
+<div class="section product-insert">
+    <form class="details container" method="POST" action="/apis/product/addProduct" enctype="multipart/form-data"
+          onsubmit="insertResult();">
+        <div class="left">
+            <div class="fileBox">
+                <input type="text" class="uploadName" value="Upload File" disabled="disabled">
+                <label for="imgUpload" onclick="uploadClick()">Upload</label>
+                <input type="file" name="image" id="imgUpload" accept="image/*" multiple />
+                <img src="admin/images/default.jpg" class="preview">
+            </div>
+        </div>
+        <div class="right">
+            <div class="room">
+                <input type="text" id="room" name="room" placeholder="ROOM LOCATION">
+            </div>
+            <div class="name">
+                <input type="text" id="name" name="name" placeholder="PRODUCT NAME">
+            </div>
+            <div class="price">
+                <input type="text" id="price" name="price" placeholder="PRICE">
+            </div>
+            <div class="sizeBox">
+                <select name="size">
+                    <option value="Select Size" selected disabled>Select Size</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
+                <span><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <h3>Product Detail</h3>
+            <textarea cols="60" rows="10" name="detail"></textarea>
+            <div class="submitBox">
+                <input type="submit" class="addProduct" value="Add Product">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+

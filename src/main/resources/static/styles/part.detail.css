@@ -1,0 +1,118 @@
+/* Product Details */
+.product-details{
+    margin-top: 5rem;
+}
+
+.product-details .details{
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 7rem;
+}
+
+.product-details .left{
+    display: flex;
+    flex-direction: column;
+}
+
+.product-details .left .detail-main{
+    text-align: center;
+    background-color: #f6f2f1;
+    margin-bottom: 2rem;
+    height: 45rem;
+    padding: 3rem;
+}
+
+.product-details .left .detail-main img{
+    object-fit: contain;
+    /* 비율 유지하면서 너비와 높이를 가득 채울 때까지 최대 확대 */
+    height: 100%;
+    width: 100%;
+}
+
+.product-details .thumbnails{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+}
+
+.product-details .thumbnail{
+    height: 14rem;
+    background-color: #f6f2f1;
+    text-align: center;
+}
+
+.product-details .thumbnail img{
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-details .right span{
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.product-details .right h1{
+    font-size: 4rem;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+}
+
+.product-details .right .price{
+    font-weight: 600;
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 2rem
+}
+
+.product-details .right div{
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+}
+
+.product-details .right select{
+    font-family: "Poppins", sans-serif;
+    width: 20rem;
+    padding: 0.7rem;
+    border: 1px solid var(--grey1);
+    appearance: none;
+    outline: none;
+}
+
+.product-details form{
+    margin-bottom: 2rem;
+}
+
+.product-details form span{
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    z-index: 0;
+}
+
+.product-details .form{
+    margin-bottom: 3rem;
+}
+
+.product-details .form input{
+    padding: .8rem;
+    text-align: center;
+    width: 3.5rem;
+    margin-right: 2rem;
+}
+
+.product-details .form .addCart{
+    background-color: var(--primary);
+    padding: 0.8rem 4rem;
+    color: var(--white);
+    border-radius: 3rem;
+}
+
+.product-details h3{
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}

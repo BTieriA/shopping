@@ -1,0 +1,81 @@
+/* Cart */
+.cart{
+    margin: 20rem auto;
+    min-height: 60rem;
+}
+
+.cart table{
+    width: 100%;
+    border-collapse: collapse;
+    /* table과 td 간격을 없앰 */
+}
+
+.cart-info{
+    display: flex;
+    flex-wrap: wrap;
+    /* flex안에 여러줄 표시 */
+}
+
+.cart-info span{
+    color: var(--grey2);
+}
+
+.cart th{
+    text-align: left;
+    padding: .5rem;
+    color: var(--white);
+    background-color: var(--primary);
+    font-weight: normal;
+}
+
+.cart td{
+    padding: 1rem 0.5rem;
+}
+
+.cart td input{
+    width: 5rem;
+    height: 3rem;
+    padding: 0.5rem;
+}
+
+.cart td a{
+    color: var(--primary);
+    font-size: 1.4rem;
+}
+
+.cart td img{
+    width: 8rem;
+    height: 8rem;
+    margin-right: 1rem;
+}
+
+.total-price{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.total-price a{
+    display: inline-block;
+    background-color: var(--primary);
+    color: var(--white);
+    padding: .7rem 1.6rem;
+    font-weight: 700;
+    border-radius: 3rem;
+}
+
+.total-price table{
+    border-top: 3px solid var(--primary);
+    width: 100%;
+    max-width: 35rem;
+}
+
+.cart td:last-child{
+    text-align: right;
+}
+
+.cart th:last-child{
+    text-align: right;
+}

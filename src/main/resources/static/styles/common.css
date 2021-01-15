@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+@import "part.navigation.css";
+@import "part.main.css";
+@import "part.promotion.css";
+@import "part.products.css";
+@import "part.advert.css";
+@import "part.brands.css";
+@import "part.detail.css";
+@import "part.pagination.css";
+@import "part.cart.css";
+@import "part.footer.css";
+@import "part.responsive.css";
+@import "part.addProduct.css";
+
+
+:root{
+    --primary: #f68121;
+    --white: #fff;
+    --black: #222;
+    --grey1: #3a3b3c;
+    --grey2: #828282;
+}
+
+*, 
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    /* rem : root font size의 상대비율 */
+    background-color: var(--white);
+    color: var(--black);
+    font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4{
+    font-weight: 600;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+    /* inherit : 그대로 상속 */
+}
+
+li{
+    list-style: none;
+}
+
+.container{
+    max-width: 114rem;
+    margin: 0 auto;
+}
+
+.d-flex{
+    display: flex;
+    align-items: center;
+}
+
+.js-content,
+.js-admin{
+    display: block;
+}
+
+.js-content.hidden,
+.js-admin.hidden{
+    display: none;
+}
+
+.js-addition,
+.js-items{
+    display: none;
+}
+
+.js-addition.visible,
+.js-items.visible{
+    display: block;
+}

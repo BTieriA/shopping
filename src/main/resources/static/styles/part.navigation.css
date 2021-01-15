@@ -1,0 +1,191 @@
+/* Navigation */
+.nav{
+    position: fixed;
+    /* fix : 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: var(--white);
+    height: 6.5rem;
+    line-height: 6.5rem;
+    opacity: 1;
+}
+
+.nav.fix-nav{
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.nav .wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wrapper .logo a{
+    color: var(--primary);
+    font-size: 2.7rem;
+    font-weight: 600;
+    padding: .5rem;
+    border: 3px solid var(--black);
+}
+
+.wrapper .nav-list{
+    display: inline-flex;
+}
+
+.nav-list li i{
+    color: var(--grey2);
+}
+
+.nav-list a{
+    color: var(--black);
+    font-size: 1.5rem;
+    padding: .9rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 300ms ease;
+}
+
+.nav-list a:hover{
+    color: var(--primary);
+}
+
+.nav-list .icons span{
+    display: inline-block;
+    margin: 0.5rem 1rem 0 0;
+    position: relative;
+    /* relative : 위치 변경 가능, absolute의 기준 */
+}
+
+.nav-list .icons .count{
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: -.8rem;
+    background-color: var(--primary);
+    height: 2rem;
+    padding: .5rem;
+    color: var(--white);
+    font-weight: 700;
+    border-radius: 50%;
+}
+
+.nav-list .icons span img{
+    width: 20px;
+}
+
+/* vendors, page */
+.nav-list .drop-menu1,
+.nav-list .drop-menu2{
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    width: 20rem;
+    top: 8.5rem;
+    line-height: 4.5rem;
+    position: absolute;
+    background-color: var(--white);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 300ms ease;
+}
+
+.nav-list .drop-menu1 li a,
+.nav-list .drop-menu2 li a{
+    display: block;
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 0 0 0 1.5rem;
+    border-radius: 0;
+    color: var(--grey2);
+    transition: all 300ms ease;
+}
+
+.nav-list .drop-menu1 li a:hover,
+.nav-list .drop-menu2 li a:hover{
+    color: var(--primary);
+}
+
+.nav-list li:hover .drop-menu1,
+.nav-list li:hover .drop-menu2,
+.nav-list li:hover .mega-box{
+    opacity: 1;
+    visibility: visible;
+    top: 6.5rem;
+}
+
+/* shop */
+.mega-box{
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 8.5rem;
+    left: 0;
+    width: 100%;
+    padding: 0 3rem;
+    background-color: var(--white);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 300ms ease;
+}
+
+.mega-box .content{
+    padding: 2.5rem 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.mega-box .content .row{
+    width: calc(25% - 3rem);
+    line-height: 4.5rem;
+}
+
+.content .row img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content .row header{
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--grey1);
+}
+
+.content .row .mega-links{
+    border-left: 1px solid rgba(255, 255, 255, 0.09);
+    margin-left: -4rem;
+}
+
+.content .row li{
+    padding: 0 2rem;
+}
+
+.content .row li a{
+    padding: 0 2rem;
+    display: block;
+    font-size: 1.5rem;
+    color: var(--grey2);
+    transition: all 300ms ease;
+}
+
+.content .row li a:hover{
+    color: var(--primary);
+}
+
+/* mobile */
+.nav-list .mobile-item{
+    display: none;
+}
+
+.nav-list input{
+    display: none;
+}
+
+/* btn */
+.wrapper .btn{
+    color: var(--white);
+    font-size: 2rem;
+    cursor: pointer;
+    display: none;
+}
