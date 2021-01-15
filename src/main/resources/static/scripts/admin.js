@@ -2,7 +2,7 @@
 let admin = window.document.querySelector('.js-admin');
 let home = window.document.querySelector('.home');
 let addBox = window.document.querySelector('.js-addition');
-let addition = window.document.querySelector('.insertProduct')
+let addition = window.document.querySelector('.insertProduct');
 
 // Go to Main
 home.addEventListener('click', () =>{
@@ -30,8 +30,7 @@ let uploadClick = () => {
         };
 
         if(window.FileReader) {
-            let filename = elem.files[0].name;
-            document.querySelector('.uploadName').value = filename;
+            document.querySelector('.uploadName').value = elem.files[0].name;
         }
     });
 };

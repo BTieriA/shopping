@@ -10,13 +10,16 @@ addForm.onsubmit = () => {
         } else {
             fallback();
         }
-    }
+    };
     const fallback = () => {
         alert('등록에 실패하였습니다');
-    }
+    };
 
     let formData = new FormData(addForm);
+
     formData.append("imageFile", imgUpload.files[0]);
     Ajax.request('POST','apis/product/addProduct', callback, fallback, formData);
     return false;
 };
+
+
