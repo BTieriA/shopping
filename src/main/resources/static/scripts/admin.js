@@ -2,23 +2,25 @@
 let admin = window.document.querySelector('.js-admin');
 let home = window.document.querySelector('.home');
 let addBox = window.document.querySelector('.js-addition');
-let addition = window.document.querySelector('.insertProduct');
+
 
 // Go to Main
 home.addEventListener('click', () =>{
-    admin.classList.remove('hidden');
+    admin.classList.add('visible');
     window.location.href = "main";
 });
 
 
 // Ajax - insert
-addition.addEventListener('click',()=>{
-    admin.classList.add('hidden');
+let insertClick = () => {
+    let showItem = window.document.querySelector('.js-items');
+    admin.classList.remove('visible');
     addBox.classList.add('visible');
-});
+    showItem.classList.remove('visible');
+}
 
 
-// Image Upload
+// Image Upload - preview
 let uploadClick = () => {
     let upload = window.document.getElementById("imgUpload");
     let preview = window.document.querySelector(".preview");

@@ -36,7 +36,7 @@ public class Converter {
     public static String imageToString(MultipartFile image) throws
             IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("data:image/*;base64,");
+        stringBuilder.append("data:image/png;base64,");
         stringBuilder.append(StringUtils.newStringUtf8(Base64.encodeBase64(image.getBytes())));
         return stringBuilder.toString();
     }

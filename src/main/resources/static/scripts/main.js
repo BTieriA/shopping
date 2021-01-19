@@ -21,10 +21,10 @@ closeNav.addEventListener("click", () => {
 // Ajax - items
 let content = window.document.querySelector('.js-content');
 let homeClick = () => {
-    content.classList.remove('hidden');
+    content.classList.add('visible');
 };
 let productsClick = () => {
-    content.classList.add('hidden');
+    content.classList.remove('visible');
     let callback = (responseText) => {
         let items = window.document.querySelector('.js-items');
         items.classList.add('visible');

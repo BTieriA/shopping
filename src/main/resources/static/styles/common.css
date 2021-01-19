@@ -71,21 +71,15 @@ li{
     align-items: center;
 }
 
+.js-admin,
 .js-content,
-.js-admin{
-    display: block;
-}
-
-.js-content.hidden,
-.js-admin.hidden{
-    display: none;
-}
-
 .js-addition,
 .js-items{
     display: none;
 }
 
+.js-admin.visible,
+.js-content.visible,
 .js-addition.visible,
 .js-items.visible{
     display: block;

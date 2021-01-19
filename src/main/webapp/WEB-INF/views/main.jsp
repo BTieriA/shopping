@@ -105,7 +105,7 @@
         <label class="btn open-btn"><i class="fas fa-bars"></i></label>
     </div>
 </nav>
-<div class="js-content">
+<div class="js-content visible">
     <!-- Main -->
     <div class="main">
         <div class="left">

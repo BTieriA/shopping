@@ -6,16 +6,16 @@ public class ProductVo {
     private final String pdtRoom;
     private final String pdtName;
     private final int pdtPrice;
-    private final String pdtSize;
+    private final int pdtKinds;
     private final String pdtDetail;
     private final String pdtImage;
 
-    public ProductVo(int pdtIndex, String pdtRoom, String pdtName, int pdtPrice, String pdtSize, String pdtDetail, String pdtImage) {
+    public ProductVo(int pdtIndex, String pdtRoom, String pdtName, int pdtPrice, int pdtKinds, String pdtDetail, String pdtImage) {
         this.pdtIndex = pdtIndex;
         this.pdtRoom = pdtRoom;
         this.pdtName = pdtName;
         this.pdtPrice = pdtPrice;
-        this.pdtSize = pdtSize;
+        this.pdtKinds = pdtKinds;
         this.pdtDetail = pdtDetail;
         this.pdtImage = pdtImage;
     }
@@ -36,8 +36,8 @@ public class ProductVo {
         return pdtPrice;
     }
 
-    public String getPdtSize() {
-        return pdtSize;
+    public int getPdtKinds() {
+        return pdtKinds;
     }
 
     public String getPdtDetail() {
