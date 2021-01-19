@@ -30,8 +30,8 @@
                 <label class="btn close-btn"><i class="fas fa-times"></i></label>
             </div>
             <li><a href="#" class="home">Home</a></li>
-            <li><a href="#">Show Product</a></li>
-            <li class="insertProduct">
+            <li onclick="itemListClick()"><a href="#">Show Product</a></li>
+            <li onclick="insertClick()">
                 <a href="#" class="desktop-item">Insert Product</a>
                 <input type="checkbox" id="showMega">
                 <label for="showMega" class="mobile-item">Insert</label>
@@ -47,8 +47,9 @@
             <li>
                 <a href="#" class="desktop-item" onclick="adminClick()">Admin</a>
             </li>
+            <% } else { %>
+            <li style="display: none"></li>
             <% } %>
-
             <% if (userVo != null) { %>
             <li class="logout"><a href="#">Log Out</a></li>
             <% } else { %>
@@ -66,7 +67,7 @@
     </div>
 </nav>
 
-<div class="js-admin">
+<div class="js-admin visible">
     <div class="main">
         <div class="left">
             <span>Product Modify Mode</span>
@@ -86,10 +87,10 @@
               enctype="multipart/form-data">
             <div class="left">
                 <div class="fileBox">
-                    <input type="text" class="uploadName" value="Upload File" disabled="disabled">
+                    <input type="text" class="uploadName" value="Upload File" disabled="disabled" />
                     <label for="imgUpload" onclick="uploadClick()">Upload</label>
                     <input type="file" name="image" id="imgUpload" accept="image/*" multiple />
-                    <img src="admin/images/default.jpg" class="preview">
+                    <img src="admin/images/default.jpg" class="preview" />
                 </div>
             </div>
             <div class="right">
@@ -103,12 +104,15 @@
                     <input type="text" id="price" name="price" placeholder="PRICE">
                 </div>
                 <div class="sizeBox">
-                    <select name="size">
-                        <option value="Select Size" selected disabled>Select Size</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
+                    <select name="kinds">
+                        <option value="Select Kinds" selected disabled>Select Kinds</option>
+                        <option value="1">BED</option>
+                        <option value="2">SOFA</option>
+                        <option value="3">CABINET</option>
+                        <option value="4">TABLE</option>
+                        <option value="5">CHAIR</option>
+                        <option value="6">SINK</option>
+                        <option value="7">ETC</option>
                     </select>
                     <span><i class="fas fa-chevron-down"></i></span>
                 </div>
@@ -125,7 +129,7 @@
 <div class="js-items">
     <!-- Products -->
     <section class="section products">
-        <div class="products-layout container">
+        <div class="container products-layout">
             <div class="col-1-of-4">
                 <div>
                     <div class="block-title">
@@ -156,49 +160,28 @@
                         <li>
                             <input type="checkbox">
                             <label >
-                                <span>tables</span>
+                                <span>Tables</span>
                                 <small>(1)</small>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label >
+                                <span>Chairs</span>
+                                <small>(0)</small>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label >
+                                <span>Sink</span>
+                                <small>(0)</small>
                             </label>
                         </li>
                     </ul>
                 </div>
+           </div>
 
-                <div>
-                    <div class="block-title">
-                        <h3>Brands</h3>
-                    </div>
-                    <ul class="block-content">
-                        <li>
-                            <input type="checkbox" >
-                            <label >
-                                <span>HANSSEM</span>
-                                <small>(1)</small>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" >
-                            <label >
-                                <span>illoom</span>
-                                <small>(1)</small>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" >
-                            <label >
-                                <span>WELLZ</span>
-                                <small>(1)</small>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" >
-                            <label >
-                                <span>youngDongGagu</span>
-                                <small>(1)</small>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="col-3-of-4">
                 <form action="">
                     <div class="item">
@@ -236,139 +219,6 @@
                         </div>
                         <div class="bottom">
                             <a href="#">Drawers Bed</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/sofa1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Hyacinth Sofa</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/book1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Book Wood Cabinet</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/table1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Cuisine Wood Table</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/bed1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Drawers Bed</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/sofa1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Hyacinth Sofa</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/book1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Book Wood Cabinet</a>
-                            <div class="price">
-                                <span>₩1,000,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../images/table1.jpg" alt="">
-                            <div class="addCart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <ul class="side-icons">
-                                <span><i class="fas fa-search"></i></span>
-                                <span><i class="far fa-heart"></i></span>
-                                <span><i class="fas fa-sliders-h"></i></span>
-                            </ul>
-                        </div>
-                        <div class="bottom">
-                            <a href="#">Cuisine Wood Table</a>
                             <div class="price">
                                 <span>₩1,000,000</span>
                             </div>
