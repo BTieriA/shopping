@@ -16,7 +16,7 @@ public class ProductDao {
     public void insertProduct(Connection connection, AddProductVo addProductVo) throws SQLException {
         String query = "" +
                 "INSERT INTO `shopping`.`products`\n" +
-                "(product_room,\n" +
+                "(product_brand,\n" +
                 " product_name,\n" +
                 " product_price,\n" +
                 " product_kinds,\n" +
@@ -24,7 +24,7 @@ public class ProductDao {
                 " product_image)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, addProductVo.getPdtRoom());
+            preparedStatement.setString(1, addProductVo.getPdtBrand());
             preparedStatement.setString(2, addProductVo.getPdtName());
             preparedStatement.setInt(3, addProductVo.getPdtPrice());
             preparedStatement.setInt(4, addProductVo.getPdtKinds());
@@ -46,48 +46,35 @@ public class ProductDao {
             preparedStatement.setInt(1, addImageVo.getProductIndex());
             preparedStatement.setString(2, addImageVo.getImageName());
             preparedStatement.setBytes(3, addImageVo.getImageData());
-//            preparedStatement.setString(3, addImageVo.getImageData());
             preparedStatement.execute();
         }
     }
 
     //    -------------------------------------------------------------------------------------------- READ (select)
-    // get product last index
-    public int getLastIndex(Connection connection) throws SQLException {
-        int index = -1;
-        String query = "SELECT LAST_INSERT_ID() AS `index`";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    index = resultSet.getInt("index");
-                }
-            }
-        }
-        return index;
-    }
-
-    // select products
+    // Show products - Total
     public ArrayList<ProductVo> productsList(Connection connection) throws SQLException {
         ProductVo productVo = null;
         ArrayList<ProductVo> products = new ArrayList<>();
         String query = "" +
                 "SELECT `product_index`  AS `itemIndex`,\n" +
-                "       `product_room`   AS `itemRoom`,\n" +
+                "       `product_brand`  AS `itemBrand`,\n" +
                 "       `product_name`   AS `itemName`,\n" +
                 "       `product_price`  AS `itemPrice`,\n" +
                 "       `product_kinds`   AS `itemKinds`,\n" +
                 "       `product_detail` AS `itemDetail`,\n" +
+                "       `product_date` AS `itemDate`,\n" +
                 "       `product_image`  AS `itemImage`\n" +
                 "FROM `shopping`.`products`";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     productVo = new ProductVo(resultSet.getInt("itemIndex"),
-                            resultSet.getString("itemRoom"),
+                            resultSet.getString("itemBrand"),
                             resultSet.getString("itemName"),
                             resultSet.getInt("itemPrice"),
                             resultSet.getInt("itemKinds"),
                             resultSet.getString("itemDetail"),
+                            resultSet.getDate("itemDate"),
                             resultSet.getString("itemImage"));
                     products.add(productVo);
                 }
@@ -95,7 +82,6 @@ public class ProductDao {
         }
         return products;
     }
-
 
     // Get Image Test1 - image -> byte[]에 저장
     public byte[] getImage(Connection connection, int index) throws SQLException {
@@ -116,51 +102,18 @@ public class ProductDao {
         return imageByte;
     }
 
-    // Get Image Test2 - image 를 행렬에 저장
-//    public ArrayList<ImageVo> getImage(Connection connection, ProductIndexVo productIndexVo) throws SQLException {
-//        ImageVo imageVo = null;
-//        ArrayList<ImageVo> images = new ArrayList<>();
-//        String query = "" +
-//                "SELECT `image_index`             AS `imgIndex`,\n" +
-//                "       `images`.`product_index` AS `pdtIndex`,\n" +
-//                "       `image_name`             AS `imgName`,\n" +
-//                "       `image_data`             AS `imgData`\n" +
-//                "FROM `shopping`.`images`\n" +
-//                "         INNER JOIN `shopping`.`products`\n" +
-//                "                    ON `images`.`product_index` = ?";
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setInt(1, productIndexVo.getProductIndex());
-//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                while (resultSet.next()) {
-//                    imageVo = new ImageVo(
-//                            resultSet.getInt("imgIndex"),
-//                            resultSet.getInt("pdtIndex"),
-//                            resultSet.getString("imgName"),
-//                            resultSet.getBytes("imgData"));
-//                    images.add(imageVo);
-//                }
-//            }
-//        }
-//        return images;
-//    }
-
-    // Get Image Test 3 - Image -> String
-//    public String getImage(Connection connection, int index) throws SQLException {
-//        String imageData = null;
-//        String query = "" +
-//                "SELECT `image_data`             AS `imgData`\n" +
-//                "FROM `shopping`.`images`\n" +
-//                "         INNER JOIN `shopping`.`products`\n" +
-//                "                    ON `images`.`product_index` = ?";
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setInt(1, index);
-//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                while (resultSet.next()) {
-//                    imageData =resultSet.getString("imgData");
-//                }
-//            }
-//        }
-//        return imageData;
-//    }
+    // get product last index
+    public int getLastIndex(Connection connection) throws SQLException {
+        int index = -1;
+        String query = "SELECT LAST_INSERT_ID() AS `index`";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    index = resultSet.getInt("index");
+                }
+            }
+        }
+        return index;
+    }
 
 }

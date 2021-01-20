@@ -30,7 +30,8 @@
                 <label class="btn close-btn"><i class="fas fa-times"></i></label>
             </div>
             <li><a href="#" class="home">Home</a></li>
-            <li onclick="itemListClick()"><a href="#">Show Product</a></li>
+            <li onclick="checkCategory()"><a href="#">Show Product</a></li>
+<%--            <li onclick="itemListClick()"><a href="#">Show Product</a></li>--%>
             <li onclick="insertClick()">
                 <a href="#" class="desktop-item">Insert Product</a>
                 <input type="checkbox" id="showMega">
@@ -94,8 +95,15 @@
                 </div>
             </div>
             <div class="right">
-                <div class="room">
-                    <input type="text" id="room" name="room" placeholder="ROOM LOCATION">
+                <div class="brandBox">
+                    <select id="brand" name="brand">
+                        <option value="Select Brands" selected disabled>Select Brands</option>
+                        <option value="HANSSEM">HANSSEM</option>
+                        <option value="iloom">iloom</option>
+                        <option value="WELLZ">WELLZ</option>
+                        <option value="youngDongGagu">youngDongGagu</option>
+                    </select>
+                    <span><i class="fas fa-chevron-down"></i></span>
                 </div>
                 <div class="name">
                     <input type="text" id="name" name="name" placeholder="PRODUCT NAME">
@@ -103,7 +111,7 @@
                 <div class="price">
                     <input type="text" id="price" name="price" placeholder="PRICE">
                 </div>
-                <div class="sizeBox">
+                <div class="kindsBox">
                     <select name="kinds">
                         <option value="Select Kinds" selected disabled>Select Kinds</option>
                         <option value="1">BED</option>
@@ -137,42 +145,48 @@
                     </div>
                     <ul class="block-content">
                         <li>
-                            <input type="checkbox">
+                            <input class="cateKinds" type="checkbox" name="cateKinds" value="1" checked
+                                   onchange="checkCategory()">
                             <label >
                                 <span>Beds</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
-                            <input type="checkbox">
+                            <input class="cateKinds" type="checkbox" name="cateKinds" value="2" checked
+                                   onchange="checkCategory()">
                             <label >
                                 <span>Sofas</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
-                            <input type="checkbox">
+                            <input class="cateKinds" type="checkbox" name="cateKinds" value="3" checked
+                                   onchange="checkCategory()">
                             <label >
                                 <span>Cabinets</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
-                            <input type="checkbox">
+                            <input class="cateKinds" type="checkbox" name="cateKinds" value="4" checked
+                                   onchange="checkCategory()">
                             <label >
                                 <span>Tables</span>
                                 <small>(1)</small>
                             </label>
                         </li>
                         <li>
-                            <input type="checkbox">
+                            <input class="cateKinds" type="checkbox" name="cateKinds" value="5" checked
+                                   onchange="checkCategory()">
                             <label >
                                 <span>Chairs</span>
                                 <small>(0)</small>
                             </label>
                         </li>
                         <li>
-                            <input type="checkbox">
+                            <input class="cateKinds" type="checkbox" name="cateKinds" value="6" checked
+                                   onchange="checkCategory()">
                             <label >
                                 <span>Sink</span>
                                 <small>(0)</small>
@@ -183,19 +197,18 @@
            </div>
 
             <div class="col-3-of-4">
-                <form action="">
+                <form name="sortForm" method="POST" action="apis/product/productList">
                     <div class="item">
                         <label >Sort By</label>
                         <select name="sort-by" >
-                            <option value="title">Name</option>
-                            <option value="number">Price</option>
-                            <option value="search_api_relevance">Relevance</option>
-                            <option value="created">Newness</option>
+                            <option value="product_name">Name</option>
+                            <option value="product_price">Price</option>
+                            <option value="product_date">Newness</option>
                         </select>
                     </div>
                     <div class="item">
                         <label >Order</label>
-                        <select name="sort-by" >
+                        <select name="order" >
                             <option value="ASC" selected="selected">ASC</option>
                             <option value="DESC">DESC</option>
                         </select>

@@ -67,6 +67,7 @@ public class ProductService {
     }
 
     //    -------------------------------------------------------------------------------------------- READ (select)
+    // List - Total
     public ProductListContainer getProductsList() throws SQLException {
         try(Connection connection = this.dataSource.getConnection()) {
             ArrayList<ProductVo> itemList = new ArrayList<>();
@@ -75,11 +76,12 @@ public class ProductService {
                 for (ProductVo item : products) {
                     itemList.add(new ProductVo(
                             item.getPdtIndex(),
-                            item.getPdtRoom(),
+                            item.getPdtBrand(),
                             item.getPdtName(),
                             item.getPdtPrice(),
                             item.getPdtKinds(),
                             item.getPdtDetail(),
+                            item.getPdtDate(),
                             item.getPdtImage()
                     ));
                 }
@@ -106,44 +108,5 @@ public class ProductService {
             return imageOutput;
         }
     }
-
-    // Get Image Test 1 - Image(String) -> byte[]
-//    public byte[] getImage(int index) throws SQLException, IOException {
-//        try(Connection connection = this.dataSource.getConnection()){
-//          String imageData = this.productDao.getImage(connection, index);
-//          byte[] imageBytes = DatatypeConverter.parseBase64Binary(imageData);
-//          BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
-//          ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//          ImageIO.write(image, "png", byteArrayOutputStream);
-//          return byteArrayOutputStream.toByteArray();
-//        }
-//    };
-
-    // Get Image Test 2 - Image(byte[]) -> Container(Result, ArrayList, byte[])
-//    public ImageListContainer getImagesList(ProductIndexVo productIndexVo) throws SQLException, IOException {
-//        try(Connection connection = this.dataSource.getConnection()) {
-//            ArrayList<ImageVo> imageList = new ArrayList<>();
-//            byte[] imageJPG = null;
-//            ArrayList<ImageVo> images = this.productDao.getImage(connection, productIndexVo);
-//            if (images != null) {
-//                for (ImageVo img : images) {
-//                    imageList.add(new ImageVo(
-//                            img.getImageIndex(),
-//                            img.getProductIndex(),
-//                            img.getImageName(),
-//                            img.getImageData()
-//                    ));
-//                    byte[] imageBytes = img.getImageData();
-//                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
-//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                    ImageIO.write(image, "jpg", byteArrayOutputStream);
-//                    imageJPG = byteArrayOutputStream.toByteArray();
-//                }
-//                return new ImageListContainer(ImageResult.IMAGE_DOWNLOAD_SUCCESS, imageList, imageJPG);
-//            } else {
-//                return new ImageListContainer(ImageResult.IMAGE_DOWNLOAD_FAILURE, null, null);
-//            }
-//        }
-//    }
 
 }
