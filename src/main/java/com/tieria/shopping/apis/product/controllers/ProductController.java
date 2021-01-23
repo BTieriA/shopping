@@ -1,5 +1,7 @@
 package com.tieria.shopping.apis.product.controllers;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import com.tieria.shopping.apis.product.containers.ProductDetailResultContainer;
 import com.tieria.shopping.apis.product.containers.ProductListContainer;
 import com.tieria.shopping.apis.product.containers.ProductResultContainer;
 import com.tieria.shopping.apis.product.enums.ImageResult;
@@ -38,6 +40,7 @@ public class ProductController {
     }
 
     //    -------------------------------------------------------------------------------------------- CREATE (insert)
+    // Insert Product
     @RequestMapping(value = "/addProduct")
     public String addProduct(HttpServletRequest request, HttpServletResponse response,
                              @RequestParam(value = "brand", defaultValue = "") String brand,
@@ -87,7 +90,6 @@ public class ProductController {
     }
 
     //    -------------------------------------------------------------------------------------------- READ (select)
-
     // List - Total
     @RequestMapping(value = "/productList")
     public String productList(HttpServletRequest request, HttpServletResponse response)
@@ -98,7 +100,7 @@ public class ProductController {
         JSONArray jsonList = new JSONArray();
 
         if (productListContainer.getProductResult() == ProductResult.SUCCESS) {
-            for (ProductVo product : productListContainer.getproductList()) {
+            for (ProductVo product : productListContainer.getProductArray()) {
                 JSONObject jsonItem = new JSONObject();
                 jsonItem.put("itemBrand", product.getPdtBrand());
                 jsonItem.put("itemName", product.getPdtName());
@@ -110,10 +112,13 @@ public class ProductController {
                 jsonList.put(jsonItem);
             }
             jsonResponse.put("products", jsonList);
+        } else {
+            jsonResponse.put("products", "NoData");
         }
         return jsonResponse.toString(4);
     }
 
+    // Get Image
     @RequestMapping(value = "/imageList", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] imageList(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam(name = "index") String strIndex) throws SQLException,
@@ -124,6 +129,60 @@ public class ProductController {
         } else {
             return null;
         }
+    }
+
+    // Get Detail
+    @RequestMapping(value = "/detail")
+    public String productDetail(HttpServletRequest request, HttpServletResponse response,
+                                @RequestParam(name = "index") String strIndex) throws SQLException {
+
+        int index = Converter.stringToInt(strIndex, -1);
+
+        ProductDetailResultContainer productDetailResultContainer = this.productService.getDetail(index);
+
+        JSONObject jsonResponse = new JSONObject();
+        JSONObject jsonItem = new JSONObject();
+
+        ProductVo product = productDetailResultContainer.getProductVo();
+
+        if (productDetailResultContainer.getProductResult() == ProductResult.SUCCESS) {
+            jsonItem.put("itemBrand", product.getPdtBrand());
+            jsonItem.put("itemName", product.getPdtName());
+            jsonItem.put("itemPrice", product.getPdtPrice());
+            jsonItem.put("itemKinds", product.getPdtKinds());
+            jsonItem.put("itemDetail", product.getPdtDetail());
+            jsonItem.put("itemIndex", product.getPdtIndex());
+            jsonResponse.put("product", jsonItem);
+        } else {
+            jsonResponse.put("product", "NoData");
+        }
+        return jsonResponse.toString(4);
+    }
+
+    // Get Related Product
+    @RequestMapping(value = "/relate")
+    public String relateProduct(HttpServletRequest request, HttpServletResponse response,
+                                @RequestParam(name="kinds") String strKinds) throws SQLException, IOException {
+        int kinds = Converter.stringToInt(strKinds, -1);
+        ProductListContainer productListContainer = this.productService.getRelate(kinds);
+        JSONObject jsonResponse = new JSONObject();
+        JSONArray relateProducts = new JSONArray();
+        if (productListContainer.getProductResult() == ProductResult.SUCCESS) {
+            for(ProductVo relateProduct : productListContainer.getProductArray()) {
+                JSONObject jsonItem = new JSONObject();
+                jsonItem.put("itemBrand", relateProduct.getPdtBrand());
+                jsonItem.put("itemName", relateProduct.getPdtName());
+                jsonItem.put("itemPrice", relateProduct.getPdtPrice());
+                jsonItem.put("itemKinds", relateProduct.getPdtKinds());
+                jsonItem.put("itemDetail", relateProduct.getPdtDetail());
+                jsonItem.put("itemIndex", relateProduct.getPdtIndex());
+                relateProducts.put(jsonItem);
+            }
+            jsonResponse.put("relateProduct", relateProducts);
+        } else {
+            jsonResponse.put("relateProduct", "NoData");
+        }
+        return jsonResponse.toString(4);
     }
 
 }
