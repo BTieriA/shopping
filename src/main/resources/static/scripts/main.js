@@ -19,22 +19,22 @@ closeNav.addEventListener("click", () => {
 
 
 // Ajax - items
-let content = window.document.querySelector('.js-content');
-let homeClick = () => {
-    content.classList.add('visible');
-};
-let productsClick = () => {
-    content.classList.remove('visible');
-    let callback = (responseText) => {
-        let items = window.document.querySelector('.js-items');
-        items.classList.add('visible');
-        items.innerHTML = responseText;
-    };
-    let fallback = () => {
-        alert('Not Found Page');
-    };
-    Ajax.request('GET', 'parts/items.html', callback, fallback);
-};
+// let content = window.document.querySelector('.js-content');
+// let homeClick = () => {
+//     content.classList.add('visible');
+// };
+// let productsClick = () => {
+//     content.classList.remove('visible');
+//     let callback = (responseText) => {
+//         let items = window.document.querySelector('.js-items');
+//         items.classList.add('visible');
+//         items.innerHTML = responseText;
+//     };
+//     let fallback = () => {
+//         alert('Not Found Page');
+//     };
+//     Ajax.request('GET', 'parts/items.html', callback, fallback);
+// };
 
 
 // Ajax - Logout
@@ -59,6 +59,7 @@ logout.addEventListener('click', () => {
     return false;
 });
 
+// admin mode
 let adminClick = () => {
     window.location.href = "admin";
 }

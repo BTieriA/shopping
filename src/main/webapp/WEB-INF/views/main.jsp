@@ -270,16 +270,16 @@
                 <div class="glide__track" data-glide-el="track">
                     <ul class="glide__slides">
                         <li class="glide__slide">
-                            <img src="images/han.png" alt="" />
+                            <img src="images/han.png" alt=""/>
                         </li>
                         <li class="glide__slide">
-                            <img src="images/iloom.png" alt="" />
+                            <img src="images/iloom.png" alt=""/>
                         </li>
                         <li class="glide__slide">
-                            <img src="images/wellz.png" alt="" />
+                            <img src="images/wellz.png" alt=""/>
                         </li>
                         <li class="glide__slide">
-                            <img src="images/young.png" alt="" />
+                            <img src="images/young.png" alt=""/>
                         </li>
                     </ul>
                 </div>
@@ -288,6 +288,12 @@
     </section>
 </div>
 <div class="js-items"></div>
+<div class="js-detail">
+    <section class="section product-details">
+        <div class="details container" id="details">
+        </div>
+    </section>
+</div>
 <!-- Footer -->
 <footer id="footer" class="section footer">
     <div class="container">
@@ -341,13 +347,16 @@
     </div>
 </footer>
 
-    <!-- Glidejs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
-    <!-- Gsap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
-    <!-- Custom Script -->
-    <script src="scripts/slider.js"></script>
-    <script src="scripts/main.js"></script>
-    <script src="scripts/ajax.js"></script>
+<!-- Glidejs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
+<!-- Gsap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+<!-- Custom Script -->
+<script src="scripts/slider.js"></script>
+<script src="scripts/main.js"></script>
+<script src="scripts/ajax.js"></script>
+<script src="scripts/goto.js"></script>
+<script src="scripts/items.js"></script>
+<script src="scripts/detail.js"></script>
 </body>
 </html>

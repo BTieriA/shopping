@@ -1,6 +1,7 @@
 package com.tieria.shopping.apis.product.services;
 
 import com.tieria.shopping.apis.product.containers.ImageListContainer;
+import com.tieria.shopping.apis.product.containers.ProductDetailResultContainer;
 import com.tieria.shopping.apis.product.containers.ProductListContainer;
 import com.tieria.shopping.apis.product.containers.ProductResultContainer;
 import com.tieria.shopping.apis.product.daos.ProductDao;
@@ -93,7 +94,7 @@ public class ProductService {
         }
     }
 
-    // Get Image Test 3 - Image(byte[]) -> byte[]
+    // Get Image - Image(byte[]) -> byte[]
     public byte[] getImage(int index) throws SQLException, IOException {
         try (Connection connection = this.dataSource.getConnection()) {
             byte[] imageOutput = null;
@@ -109,4 +110,40 @@ public class ProductService {
         }
     }
 
+    // Get Product Detail
+    public ProductDetailResultContainer getDetail(int index) throws SQLException{
+        try (Connection connection = this.dataSource.getConnection()) {
+            ProductVo productVo = this.productDao.getDetail(connection, index);
+            if (productVo == null){
+                return new ProductDetailResultContainer(ProductResult.FAILURE, null);
+            } else {
+                return new ProductDetailResultContainer(ProductResult.SUCCESS, productVo);
+            }
+        }
+    }
+
+    // Get Related Product
+    public ProductListContainer getRelate(int kinds) throws SQLException{
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<ProductVo> relateProductResult = new ArrayList<>();
+            ArrayList<ProductVo> relateProductDao = this.productDao.relatedProduct(connection, kinds);
+            if (relateProductDao != null) {
+                for (ProductVo relateProduct : relateProductDao ) {
+                    relateProductResult.add(new ProductVo(
+                            relateProduct.getPdtIndex(),
+                            relateProduct.getPdtBrand(),
+                            relateProduct.getPdtName(),
+                            relateProduct.getPdtPrice(),
+                            relateProduct.getPdtKinds(),
+                            relateProduct.getPdtDetail(),
+                            relateProduct.getPdtDate(),
+                            relateProduct.getPdtImage()
+                    ));
+                }
+                return new ProductListContainer(ProductResult.SUCCESS, relateProductResult);
+            } else {
+                return new ProductListContainer(ProductResult.FAILURE, null);
+            }
+        }
+    }
 }

@@ -74,13 +74,15 @@ li{
 .js-admin,
 .js-content,
 .js-addition,
-.js-items{
+.js-items,
+.js-detail{
     display: none;
 }
 
 .js-admin.visible,
 .js-content.visible,
 .js-addition.visible,
-.js-items.visible{
+.js-items.visible,
+.js-detail.visible{
     display: block;
 }

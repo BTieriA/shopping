@@ -97,7 +97,7 @@
             <div class="right">
                 <div class="brandBox">
                     <select id="brand" name="brand">
-                        <option value="Select Brands" selected disabled>Select Brands</option>
+                        <option value="Select Brands" selected disabled>SELECT BRANDS</option>
                         <option value="HANSSEM">HANSSEM</option>
                         <option value="iloom">iloom</option>
                         <option value="WELLZ">WELLZ</option>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="kindsBox">
                     <select name="kinds">
-                        <option value="Select Kinds" selected disabled>Select Kinds</option>
+                        <option value="Select Kinds" selected disabled>SELECT KINDS</option>
                         <option value="1">BED</option>
                         <option value="2">SOFA</option>
                         <option value="3">CABINET</option>

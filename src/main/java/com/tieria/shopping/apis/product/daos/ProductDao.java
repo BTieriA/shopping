@@ -116,4 +116,74 @@ public class ProductDao {
         return index;
     }
 
+    // Detail
+    public ProductVo getDetail(Connection connection, int index) throws SQLException {
+        ProductVo productVo = null;
+        String query = "" +
+                "SELECT `product_index`  AS `itemIndex`,\n" +
+                "       `product_brand`  AS `itemBrand`,\n" +
+                "       `product_name`   AS `itemName`,\n" +
+                "       `product_price`  AS `itemPrice`,\n" +
+                "       `product_kinds`  AS `itemKinds`,\n" +
+                "       `product_detail` AS `itemDetail`,\n" +
+                "       `product_date`   AS `itemDate`,\n" +
+                "       `product_image`  AS `itemImage`\n" +
+                "FROM `shopping`.`products`\n" +
+                "WHERE `product_index` = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setInt(1, index);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()){
+                    productVo = new ProductVo(resultSet.getInt("itemIndex"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemName"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getInt("itemKinds"),
+                            resultSet.getString("itemDetail"),
+                            resultSet.getDate("itemDate"),
+                            resultSet.getString("itemImage"));
+                }
+            }
+        }
+        return productVo;
+    }
+
+    // Related Product
+    public ArrayList<ProductVo> relatedProduct(Connection connection, int kinds) throws SQLException {
+        ProductVo productVo = null;
+        ArrayList<ProductVo> products = new ArrayList<>();
+        String query = "" +
+                "SELECT `product_index`  AS `itemIndex`,\n" +
+                "       `product_brand`  AS `itemBrand`,\n" +
+                "       `product_name`   AS `itemName`,\n" +
+                "       `product_price`  AS `itemPrice`,\n" +
+                "       `product_kinds`  AS `itemKinds`,\n" +
+                "       `product_detail` AS `itemDetail`,\n" +
+                "       `product_date`   AS `itemDate`,\n" +
+                "       `product_image`  AS `itemImage`\n" +
+                "FROM `shopping`.`products`\n" +
+                "WHERE `product_kinds` = ? \n" +
+                "ORDER BY `product_date` DESC \n" +
+                "LIMIT 4";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, kinds);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    productVo = new ProductVo(resultSet.getInt("itemIndex"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemName"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getInt("itemKinds"),
+                            resultSet.getString("itemDetail"),
+                            resultSet.getDate("itemDate"),
+                            resultSet.getString("itemImage"));
+                    products.add(productVo);
+                }
+            }
+        }
+        return products;
+    }
+
+    //    -------------------------------------------------------------------------------------------- UPDATE (update)
+
 }

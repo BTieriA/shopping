@@ -31,13 +31,13 @@
 
 .product-details .thumbnails{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     width: 100%;
 }
 
 .product-details .thumbnail{
-    height: 14rem;
+    height: 10rem;
     background-color: #f6f2f1;
     text-align: center;
 }
@@ -101,7 +101,7 @@
 .product-details .form input{
     padding: .8rem;
     text-align: center;
-    width: 3.5rem;
+    width: 6.5rem;
     margin-right: 2rem;
 }
 
