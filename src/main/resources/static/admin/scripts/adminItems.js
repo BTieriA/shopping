@@ -104,4 +104,6 @@ let checkCategory = (kinds) => {
     return false;
 };
 
+AOS.init();
+
 

@@ -88,7 +88,7 @@
     <div class="section product-insert" data-aos="fade-up" data-aos-duration="2000">
         <form class="details container" id="addForm" method="POST" action="apis/product/addProduct"
               enctype="multipart/form-data">
-            <div class="left">
+            <div class="left" data-aos="fade-right" data-aos-duration="2000">
                 <div class="fileBox">
                     <input type="text" class="uploadName" value="Upload File" disabled="disabled"/>
                     <label for="imgUpload" onclick="uploadClick()">Upload</label>
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="right">
-                <div class="brandBox">
+                <div class="brandBox" data-aos="fade-left" data-aos-duration="2000">
                     <select id="brand" name="brand">
                         <option value="Select Brands" selected disabled>SELECT BRANDS</option>
                         <option value="HANSSEM">HANSSEM</option>
@@ -140,7 +140,7 @@
     <!-- Products -->
     <section class="section products" data-aos="fade-up" data-aos-duration="2000">
         <div class="container products-layout">
-            <div class="col-1-of-4">
+            <div class="col-1-of-4" data-aos="fade-right" data-aos-duration="2000">
                 <div>
                     <div class="block-title">
                         <h3>Category</h3>
@@ -151,7 +151,6 @@
                                    onchange="checkCategory()">
                             <label>
                                 <span>Beds</span>
-                                <small>(1)</small>
                             </label>
                         </li>
                         <li>
@@ -159,7 +158,6 @@
                                    onchange="checkCategory()">
                             <label>
                                 <span>Sofas</span>
-                                <small>(1)</small>
                             </label>
                         </li>
                         <li>
@@ -167,7 +165,6 @@
                                    onchange="checkCategory()">
                             <label>
                                 <span>Cabinets</span>
-                                <small>(1)</small>
                             </label>
                         </li>
                         <li>
@@ -175,7 +172,6 @@
                                    onchange="checkCategory()">
                             <label>
                                 <span>Tables</span>
-                                <small>(1)</small>
                             </label>
                         </li>
                         <li>
@@ -183,7 +179,6 @@
                                    onchange="checkCategory()">
                             <label>
                                 <span>Chairs</span>
-                                <small>(0)</small>
                             </label>
                         </li>
                         <li>
@@ -191,14 +186,13 @@
                                    onchange="checkCategory()">
                             <label>
                                 <span>Sink</span>
-                                <small>(0)</small>
                             </label>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-3-of-4">
+            <div class="col-3-of-4" data-aos="fade-left" data-aos-duration="2000">
                 <form name="sortForm" method="POST" action="apis/product/productList">
                     <div class="item">
                         <label>Sort By</label>
