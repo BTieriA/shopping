@@ -1,5 +1,5 @@
 /* Cart */
-.cart{
+.js-cart .container{
     margin: 20rem auto;
     min-height: 60rem;
 }
@@ -28,6 +28,15 @@
     font-weight: normal;
 }
 
+.cart .item-row {
+    display: table-row;
+}
+
+.cart .item-row.hidden {
+    display: none;
+
+}
+
 .cart td{
     padding: 1rem 0.5rem;
 }
@@ -47,6 +56,13 @@
     width: 8rem;
     height: 8rem;
     margin-right: 1rem;
+}
+
+.cart td .color{
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+    margin-top: 0.1rem;
 }
 
 .total-price{

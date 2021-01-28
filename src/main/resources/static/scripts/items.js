@@ -7,6 +7,10 @@ class List {
         let itemSectionLayoutColLayout = itemSectionLayoutCol.querySelector('.product-layout');
         let check = document.getElementsByName("cateKinds");
 
+        // count
+        let cartCount = window.document.querySelector('.count');
+        cartCount.innerHTML = '0';
+
         itemSectionLayoutColLayout.innerHTML = '';
         const callback = (response) => {
             items.classList.add('visible');
@@ -33,7 +37,7 @@ class List {
                 productElement.append(productContainerElement);
                 productContainerElement.append(productContainerLinkElement);
                 productContainerLinkElement.append(productContainerLinkImageElement);
-                productContainerElement.append(productContainerCartElement);
+                // productContainerElement.append(productContainerCartElement);
                 productContainerCartElement.append(productContainerCartIconElement);
                 productContainerElement.append(productContainerSideElement);
                 productContainerSideElement.append(productContainerSideSpanElement);
@@ -55,7 +59,7 @@ class List {
                 productContainerSideSpanElement.onclick = () => {
                     detailClick(products[i]['itemIndex']);
                     return false;
-                }
+                };
                 productContainerSideSpanIconElement.classList.add('fas');
                 productContainerSideSpanIconElement.classList.add('fa-search');
                 productBottomElement.classList.add('bottom');

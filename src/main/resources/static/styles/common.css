@@ -75,7 +75,8 @@ li{
 .js-content,
 .js-addition,
 .js-items,
-.js-detail{
+.js-detail,
+.js-cart{
     display: none;
 }
 
@@ -83,6 +84,7 @@ li{
 .js-content.visible,
 .js-addition.visible,
 .js-items.visible,
-.js-detail.visible{
+.js-detail.visible,
+.js-cart.visible{
     display: block;
 }

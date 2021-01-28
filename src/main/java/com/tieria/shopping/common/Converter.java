@@ -25,6 +25,19 @@ public class Converter {
         return userVo;
     }
 
+    public static void setDetailVo(HttpServletRequest request, DetailVo detailVo) {
+        request.getSession().setAttribute("DetailVo", detailVo);
+    }
+
+    public static DetailVo getDetailVo(HttpServletRequest request) {
+        Object detailVoObject = request.getSession().getAttribute("DetailVo");
+        DetailVo detailVo = null;
+        if(detailVoObject instanceof DetailVo){
+            detailVo = (DetailVo) detailVoObject;
+        }
+        return detailVo;
+    }
+
     public static int stringToInt(String idText, int fallback) {
         try {
             return Integer.parseInt(idText);

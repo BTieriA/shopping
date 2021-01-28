@@ -7,8 +7,7 @@ addForm.onsubmit = () => {
         if(json['product_input'] === 'success'){
             alert('가구가 등록되었습니다');
             addBox.classList.remove('visible');
-            // itemListClick();
-            items.classList.add('visible');
+            checkCategory();
         } else {
             fallback();
         }

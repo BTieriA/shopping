@@ -16,6 +16,8 @@
     <!-- Glidejs -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+    <%-- AOS --%>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom StyleSheet -->
     <link rel="stylesheet" href="styles/common.css">
     <title>SM Shopping Mall</title>
@@ -31,7 +33,7 @@
             </div>
             <li><a href="#" class="home">Home</a></li>
             <li onclick="checkCategory()"><a href="#">Show Product</a></li>
-<%--            <li onclick="itemListClick()"><a href="#">Show Product</a></li>--%>
+            <%--            <li onclick="itemListClick()"><a href="#">Show Product</a></li>--%>
             <li onclick="insertClick()">
                 <a href="#" class="desktop-item">Insert Product</a>
                 <input type="checkbox" id="showMega">
@@ -68,8 +70,8 @@
     </div>
 </nav>
 
-<div class="js-admin visible">
-    <div class="main">
+<div class="js-admin visible" data-aos="fade-up" data-aos-duration="2000">
+    <div class="main" data-aos="fade-up" data-aos-duration="500">
         <div class="left">
             <span>Product Modify Mode</span>
             <h1>Administrator</h1>
@@ -82,16 +84,16 @@
     </div>
 </div>
 
-<div class="js-addition">
-    <div class="section product-insert">
+<div class="js-addition" data-aos="fade-up" data-aos-duration="2000">
+    <div class="section product-insert" data-aos="fade-up" data-aos-duration="2000">
         <form class="details container" id="addForm" method="POST" action="apis/product/addProduct"
               enctype="multipart/form-data">
             <div class="left">
                 <div class="fileBox">
-                    <input type="text" class="uploadName" value="Upload File" disabled="disabled" />
+                    <input type="text" class="uploadName" value="Upload File" disabled="disabled"/>
                     <label for="imgUpload" onclick="uploadClick()">Upload</label>
-                    <input type="file" name="image" id="imgUpload" accept="image/*" multiple />
-                    <img src="admin/images/default.jpg" class="preview" />
+                    <input type="file" name="image" id="imgUpload" accept="image/*" multiple/>
+                    <img src="admin/images/default.jpg" class="preview"/>
                 </div>
             </div>
             <div class="right">
@@ -134,9 +136,9 @@
     </div>
 </div>
 
-<div class="js-items">
+<div class="js-items" data-aos="fade-up" data-aos-duration="2000">
     <!-- Products -->
-    <section class="section products">
+    <section class="section products" data-aos="fade-up" data-aos-duration="2000">
         <div class="container products-layout">
             <div class="col-1-of-4">
                 <div>
@@ -147,7 +149,7 @@
                         <li>
                             <input class="cateKinds" type="checkbox" name="cateKinds" value="1" checked
                                    onchange="checkCategory()">
-                            <label >
+                            <label>
                                 <span>Beds</span>
                                 <small>(1)</small>
                             </label>
@@ -155,7 +157,7 @@
                         <li>
                             <input class="cateKinds" type="checkbox" name="cateKinds" value="2" checked
                                    onchange="checkCategory()">
-                            <label >
+                            <label>
                                 <span>Sofas</span>
                                 <small>(1)</small>
                             </label>
@@ -163,7 +165,7 @@
                         <li>
                             <input class="cateKinds" type="checkbox" name="cateKinds" value="3" checked
                                    onchange="checkCategory()">
-                            <label >
+                            <label>
                                 <span>Cabinets</span>
                                 <small>(1)</small>
                             </label>
@@ -171,7 +173,7 @@
                         <li>
                             <input class="cateKinds" type="checkbox" name="cateKinds" value="4" checked
                                    onchange="checkCategory()">
-                            <label >
+                            <label>
                                 <span>Tables</span>
                                 <small>(1)</small>
                             </label>
@@ -179,7 +181,7 @@
                         <li>
                             <input class="cateKinds" type="checkbox" name="cateKinds" value="5" checked
                                    onchange="checkCategory()">
-                            <label >
+                            <label>
                                 <span>Chairs</span>
                                 <small>(0)</small>
                             </label>
@@ -187,28 +189,28 @@
                         <li>
                             <input class="cateKinds" type="checkbox" name="cateKinds" value="6" checked
                                    onchange="checkCategory()">
-                            <label >
+                            <label>
                                 <span>Sink</span>
                                 <small>(0)</small>
                             </label>
                         </li>
                     </ul>
                 </div>
-           </div>
+            </div>
 
             <div class="col-3-of-4">
                 <form name="sortForm" method="POST" action="apis/product/productList">
                     <div class="item">
-                        <label >Sort By</label>
-                        <select name="sort-by" >
+                        <label>Sort By</label>
+                        <select name="sort-by">
                             <option value="product_name">Name</option>
                             <option value="product_price">Price</option>
                             <option value="product_date">Newness</option>
                         </select>
                     </div>
                     <div class="item">
-                        <label >Order</label>
-                        <select name="order" >
+                        <label>Order</label>
+                        <select name="order">
                             <option value="ASC" selected="selected">ASC</option>
                             <option value="DESC">DESC</option>
                         </select>
@@ -304,14 +306,16 @@
     </div>
 </footer>
 
-    <!-- Glidejs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
-    <!-- Gsap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
-    <!-- Custom Script -->
-    <script src="scripts/main.js"></script>
-    <script src="scripts/admin.js"></script>
-    <script src="scripts/ajax.js"></script>
-    <script src="admin/scripts/items.js"></script>
+<!-- Glidejs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
+<!-- Gsap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+<%-- AOS --%>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<!-- Custom Script -->
+<script src="scripts/main.js"></script>
+<script src="scripts/admin.js"></script>
+<script src="scripts/ajax.js"></script>
+<script src="admin/scripts/adminItems.js"></script>
 </body>
 </html>

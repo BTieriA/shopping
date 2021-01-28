@@ -16,6 +16,8 @@
     <!-- Glidejs -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+    <%-- AOS --%>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom StyleSheet -->
     <link rel="stylesheet" href="styles/common.css">
     <title>SM Shopping Mall</title>
@@ -87,8 +89,9 @@
             <li class="admin" onclick="adminClick()">
                 <a href="#" class="desktop-item">Admin</a>
             </li>
+            <% } else { %>
+            <li style="display: none"></li>
             <% } %>
-
             <% if (userVo != null) { %>
             <li class="logout"><a href="#">Log Out</a></li>
             <% } else { %>
@@ -105,9 +108,9 @@
         <label class="btn open-btn"><i class="fas fa-bars"></i></label>
     </div>
 </nav>
-<div class="js-content visible">
+<div class="js-content visible" data-aos="fade-up" data-aos-duration="2000">
     <!-- Main -->
-    <div class="main">
+    <div class="main" data-aos="fade-up" data-aos-duration="2000">
         <div class="left">
             <span>Exclusive Sales</span>
             <h1>UP TO 50% OFF ON SALES</h1>
@@ -120,7 +123,7 @@
     </div>
 
     <!-- Promotion -->
-    <section class="section promotion">
+    <section class="section promotion" data-aos="fade-up" data-aos-duration="2000">
         <div class="title">
             <h2>Shop Collections</h2>
             <span>Select from the preminum product and save plenty meney</span>
@@ -152,7 +155,7 @@
     </section>
 
     <!-- Products -->
-    <section class="section products">
+    <section class="section products" data-aos="fade-up" data-aos-duration="2000">
         <div class="title">
             <h2>New Products</h2>
             <span>Select from the premium product and save plenty money</span>
@@ -238,7 +241,7 @@
     </section>
 
     <!-- Advert -->
-    <section class="section advert">
+    <section class="section advert" data-aos="fade-up" data-aos-duration="2000">
         <div class="advert-layout container">
             <div class="item">
                 <img src="images/adv2.jpg" alt="">
@@ -260,7 +263,7 @@
     </section>
 
     <!-- Brands -->
-    <section class="section brands">
+    <section class="section brands" data-aos="fade-right" data-aos-duration="2000">
         <div class="title">
             <h2>Shop by Brands</h2>
             <span>Select from the premium product and save plenty money</span>
@@ -287,12 +290,14 @@
         </div>
     </section>
 </div>
-<div class="js-items"></div>
-<div class="js-detail">
+<div class="js-items" data-aos="fade-up" data-aos-duration="2000"></div>
+<div class="js-detail" data-aos="fade-up" data-aos-duration="2000">
     <section class="section product-details">
         <div class="details container" id="details">
         </div>
     </section>
+</div>
+<div class="js-cart" data-aos="fade-up" data-aos-duration="2000">
 </div>
 <!-- Footer -->
 <footer id="footer" class="section footer">
@@ -351,6 +356,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
 <!-- Gsap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+<%-- AOS --%>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <!-- Custom Script -->
 <script src="scripts/slider.js"></script>
 <script src="scripts/main.js"></script>
@@ -358,5 +365,6 @@
 <script src="scripts/goto.js"></script>
 <script src="scripts/items.js"></script>
 <script src="scripts/detail.js"></script>
+<script src="scripts/cart.js"></script>
 </body>
 </html>

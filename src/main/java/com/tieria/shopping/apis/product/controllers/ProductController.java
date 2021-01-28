@@ -1,15 +1,14 @@
 package com.tieria.shopping.apis.product.controllers;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import com.tieria.shopping.apis.product.containers.CartListContainer;
 import com.tieria.shopping.apis.product.containers.ProductDetailResultContainer;
 import com.tieria.shopping.apis.product.containers.ProductListContainer;
 import com.tieria.shopping.apis.product.containers.ProductResultContainer;
+import com.tieria.shopping.apis.product.enums.CartResult;
 import com.tieria.shopping.apis.product.enums.ImageResult;
 import com.tieria.shopping.apis.product.enums.ProductResult;
 import com.tieria.shopping.apis.product.services.ProductService;
-import com.tieria.shopping.apis.product.vos.AddImageVo;
-import com.tieria.shopping.apis.product.vos.AddProductVo;
-import com.tieria.shopping.apis.product.vos.ProductVo;
+import com.tieria.shopping.apis.product.vos.*;
 import com.tieria.shopping.common.Constant;
 import com.tieria.shopping.common.Converter;
 import com.tieria.shopping.common.UserVo;
@@ -54,10 +53,8 @@ public class ProductController {
         int price = Converter.stringToInt(strPrice, -1);
         int intKinds = Converter.stringToInt(kinds, -1);
         byte[] imageFileBytes = imageFile.getBytes();
-
         // get user data
         UserVo userVo = (UserVo) request.getSession().getAttribute("UserVo");
-
         // upload image
         String fileName = imageFile.getOriginalFilename();
         try {
@@ -71,16 +68,13 @@ public class ProductController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         // insert product
         AddProductVo addProductVo = new AddProductVo(brand, name, price, intKinds, detail, fileName);
         ProductResultContainer productResultContainer = this.productService.addProduct(userVo, addProductVo);
-
         // insert image
         int index = productResultContainer.getIndex();
         AddImageVo addImageVo = new AddImageVo(index, name, imageFileBytes);
         ImageResult imageResult = this.productService.addImage(addImageVo);
-
         // result
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put(Constant.Common.PRODUCT_INPUT, productResultContainer.getProductResult().name().toLowerCase());
@@ -89,16 +83,38 @@ public class ProductController {
         return jsonResponse.toString(4);
     }
 
+    // Insert Detail
+    @RequestMapping(value = "/addDetail")
+    public String addDetail(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(name = "color", defaultValue = "") String color,
+                            @RequestParam(name = "size", defaultValue = "") String size,
+                            @RequestParam(name = "productIndex", defaultValue = "") String productStrIndex,
+                            @RequestParam(name = "imageIndex", defaultValue = "") String imgStrIndex)
+            throws SQLException {
+        // parsing
+        int productIndex = Converter.stringToInt(productStrIndex, -1);
+        int imgIndex = Converter.stringToInt(imgStrIndex, -1);
+        // detail data
+        UserVo userVo = (UserVo) request.getSession().getAttribute("UserVo");
+        int userIndex = userVo.getUserIndex();
+        AddColorSizeVo addColorSizeVo = new AddColorSizeVo(color, size, productIndex, imgIndex, userIndex);
+        // insert detail
+        ProductResult productResult = this.productService.addColorSize(addColorSizeVo, userVo);
+        // result
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, productResult.name().toLowerCase());
+        return jsonResponse.toString(4);
+    }
+
+
     //    -------------------------------------------------------------------------------------------- READ (select)
     // List - Total
     @RequestMapping(value = "/productList")
     public String productList(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-
         ProductListContainer productListContainer = this.productService.getProductsList();
         JSONObject jsonResponse = new JSONObject();
         JSONArray jsonList = new JSONArray();
-
         if (productListContainer.getProductResult() == ProductResult.SUCCESS) {
             for (ProductVo product : productListContainer.getProductArray()) {
                 JSONObject jsonItem = new JSONObject();
@@ -108,7 +124,6 @@ public class ProductController {
                 jsonItem.put("itemKinds", product.getPdtKinds());
                 jsonItem.put("itemDetail", product.getPdtDetail());
                 jsonItem.put("itemIndex", product.getPdtIndex());
-
                 jsonList.put(jsonItem);
             }
             jsonResponse.put("products", jsonList);
@@ -135,16 +150,11 @@ public class ProductController {
     @RequestMapping(value = "/detail")
     public String productDetail(HttpServletRequest request, HttpServletResponse response,
                                 @RequestParam(name = "index") String strIndex) throws SQLException {
-
         int index = Converter.stringToInt(strIndex, -1);
-
         ProductDetailResultContainer productDetailResultContainer = this.productService.getDetail(index);
-
         JSONObject jsonResponse = new JSONObject();
         JSONObject jsonItem = new JSONObject();
-
         ProductVo product = productDetailResultContainer.getProductVo();
-
         if (productDetailResultContainer.getProductResult() == ProductResult.SUCCESS) {
             jsonItem.put("itemBrand", product.getPdtBrand());
             jsonItem.put("itemName", product.getPdtName());
@@ -162,13 +172,13 @@ public class ProductController {
     // Get Related Product
     @RequestMapping(value = "/relate")
     public String relateProduct(HttpServletRequest request, HttpServletResponse response,
-                                @RequestParam(name="kinds") String strKinds) throws SQLException, IOException {
+                                @RequestParam(name = "kinds") String strKinds) throws SQLException, IOException {
         int kinds = Converter.stringToInt(strKinds, -1);
         ProductListContainer productListContainer = this.productService.getRelate(kinds);
         JSONObject jsonResponse = new JSONObject();
         JSONArray relateProducts = new JSONArray();
         if (productListContainer.getProductResult() == ProductResult.SUCCESS) {
-            for(ProductVo relateProduct : productListContainer.getProductArray()) {
+            for (ProductVo relateProduct : productListContainer.getProductArray()) {
                 JSONObject jsonItem = new JSONObject();
                 jsonItem.put("itemBrand", relateProduct.getPdtBrand());
                 jsonItem.put("itemName", relateProduct.getPdtName());
@@ -185,4 +195,61 @@ public class ProductController {
         return jsonResponse.toString(4);
     }
 
+    // Get Color & Size
+    @RequestMapping(value = "/colorSize")
+    public String productColorSize(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        CartListContainer cartListContainer = this.productService.getColorSize(userVo);
+        JSONObject jsonResponse = new JSONObject();
+        JSONArray cartList = new JSONArray();
+        if (cartListContainer.getCartResult() == CartResult.SUCCESS) {
+            for (CartVo cart : cartListContainer.getCartList()) {
+                JSONObject jsonItem = new JSONObject();
+                jsonItem.put("itemIndex", cart.getImgIndex());
+                jsonItem.put("itemName", cart.getItemName());
+                jsonItem.put("itemBrand", cart.getItemBrand());
+                jsonItem.put("itemPrice", cart.getItemPrice());
+                jsonItem.put("itemColor", cart.getItemColor());
+                jsonItem.put("itemSize", cart.getItemSize());
+                jsonItem.put("itemDate", cart.getItemDate());
+                cartList.put(jsonItem);
+            }
+            jsonResponse.put("cartList", cartList);
+        } else
+            jsonResponse.put("cartList", "NoData");
+        return jsonResponse.toString(4);
+    }
+
+    //    -------------------------------------------------------------------------------------------- DELETE
+    @RequestMapping(value = "/deleteCart")
+    public String deleteCart(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(name="itemIndex", defaultValue = "") String strIndex) throws SQLException {
+        int index = Converter.stringToInt(strIndex, -1);
+        UserVo userVo = Converter.getUserVo(request);
+        CartResult cartResult = this.productService.deleteCart(userVo, index);
+        JSONObject jsonResponse = new JSONObject();
+        if (cartResult == CartResult.SUCCESS) {
+            jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, "success");
+        } else if (cartResult == CartResult.INVALID) {
+            jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, "invalid");
+        } else {
+            jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, "failure");
+        }
+        return jsonResponse.toString(4);
+    }
+
+    @RequestMapping(value = "/deleteAllCart")
+    public String deleteAllCart(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        CartResult cartResult = this.productService.deleteAllCart(userVo);
+        JSONObject jsonResponse = new JSONObject();
+        if (cartResult == CartResult.SUCCESS) {
+            jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, "success");
+        } else if (cartResult == CartResult.INVALID) {
+            jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, "invalid");
+        } else {
+            jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, "failure");
+        }
+        return jsonResponse.toString(4);
+    }
 }

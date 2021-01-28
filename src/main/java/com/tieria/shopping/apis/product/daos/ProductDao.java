@@ -1,6 +1,7 @@
 package com.tieria.shopping.apis.product.daos;
 
 import com.tieria.shopping.apis.product.vos.*;
+import com.tieria.shopping.common.UserVo;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -46,6 +47,46 @@ public class ProductDao {
             preparedStatement.setInt(1, addImageVo.getProductIndex());
             preparedStatement.setString(2, addImageVo.getImageName());
             preparedStatement.setBytes(3, addImageVo.getImageData());
+            preparedStatement.execute();
+        }
+    }
+
+    // insert color size
+    public void insertDetail(Connection connection, AddColorSizeVo addColorSizeVo) throws SQLException {
+        String query = "" +
+                "INSERT INTO `shopping`.`details`\n" +
+                "(detail_color,\n" +
+                " detail_size,\n" +
+                " product_index,\n" +
+                " image_index," +
+                " user_index)\n" +
+                "VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, addColorSizeVo.getColor());
+            preparedStatement.setString(2, addColorSizeVo.getSize());
+            preparedStatement.setInt(3, addColorSizeVo.getItemIndex());
+            preparedStatement.setInt(4, addColorSizeVo.getImgIndex());
+            preparedStatement.setInt(5, addColorSizeVo.getUserIndex());
+            preparedStatement.execute();
+        }
+    }
+
+    // insert cart
+    public void insertCart(Connection connection, AddColorSizeVo addColorSizeVo) throws SQLException {
+        String query = "" +
+                "INSERT INTO `shopping`.`carts`\n" +
+                "(cart_color,\n" +
+                " cart_size,\n" +
+                " product_index,\n" +
+                " image_index," +
+                " user_index)\n" +
+                "VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, addColorSizeVo.getColor());
+            preparedStatement.setString(2, addColorSizeVo.getSize());
+            preparedStatement.setInt(3, addColorSizeVo.getItemIndex());
+            preparedStatement.setInt(4, addColorSizeVo.getImgIndex());
+            preparedStatement.setInt(5, addColorSizeVo.getUserIndex());
             preparedStatement.execute();
         }
     }
@@ -130,10 +171,10 @@ public class ProductDao {
                 "       `product_image`  AS `itemImage`\n" +
                 "FROM `shopping`.`products`\n" +
                 "WHERE `product_index` = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, index);
-            try(ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     productVo = new ProductVo(resultSet.getInt("itemIndex"),
                             resultSet.getString("itemBrand"),
                             resultSet.getString("itemName"),
@@ -184,6 +225,91 @@ public class ProductDao {
         return products;
     }
 
-    //    -------------------------------------------------------------------------------------------- UPDATE (update)
+    // color size data
+    public ArrayList<CartVo> getColorSize(Connection connection, UserVo userVo) throws SQLException {
+        CartVo cartVo = null;
+        ArrayList<CartVo> cartList = new ArrayList<>();
+        String query = "" +
+                "SELECT `details`.`image_index` AS `imgIndex`,\n" +
+                "       `product_name`          AS `itemName`,\n" +
+                "       `product_brand`         AS `itemBrand`,\n" +
+                "       `product_price`         AS `itemPrice`,\n" +
+                "       `detail_color`          AS `itemColor`,\n" +
+                "       `detail_size`           AS `itemSize`,\n" +
+                "       `details`.`user_index`  AS `userIndex`,\n" +
+                "       `detail_date`           AS `itemDate`\n" +
+                "FROM `shopping`.`details`\n" +
+                "         INNER JOIN `shopping`.`products`\n" +
+                "                    ON `details`.`product_index` = `products`.`product_index`\n" +
+                "         INNER JOIN `shopping`.`images`\n" +
+                "                    ON `details`.`image_index` = `images`.`image_index`\n" +
+                "         INNER JOIN `shopping`.`users`\n" +
+                "                    ON `details`.`user_index` = `users`.`user_index`\n" +
+                "WHERE `details`.`user_index` = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userVo.getUserIndex());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    cartVo = new CartVo(resultSet.getInt("imgIndex"),
+                            resultSet.getString("itemName"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemColor"),
+                            resultSet.getString("itemSize"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getTimestamp("itemDate"));
+                    cartList.add(cartVo);
+                }
+            }
+        }
+        return cartList;
+    }
+
+    //    -------------------------------------------------------------------------------------------- DELETE
+    // delete cart list
+    public int deleteCart(Connection connection, int index) throws SQLException {
+        int deleteResult = 0;
+        String query = "" +
+                "DELETE\n" +
+                "FROM `shopping`.`details`\n" +
+                "WHERE product_index = ? \n" +
+                "ORDER BY `detail_date` DESC \n" +
+                "LIMIT 1";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, index);
+            deleteResult = preparedStatement.executeUpdate();
+        }
+        return deleteResult;
+
+    }
+
+    // delete cart final list
+    public int deleteFinalCart(Connection connection, int index) throws SQLException {
+        int deleteResult = 0;
+        String query = "" +
+                "DELETE\n" +
+                "FROM `shopping`.`carts`\n" +
+                "WHERE product_index = ? \n" +
+                "ORDER BY `cart_date` DESC \n" +
+                "LIMIT 1";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, index);
+            deleteResult = preparedStatement.executeUpdate();
+        }
+        return deleteResult;
+
+    }
+
+    // delete cart all list
+    public int deleteAllCart(Connection connection) throws SQLException {
+        int deleteResult = 0;
+        String query = "" +
+                "DELETE\n" +
+                "FROM `shopping`.`details`\n";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            deleteResult = preparedStatement.executeUpdate();
+        }
+        return deleteResult;
+    }
+
 
 }

@@ -81,11 +81,15 @@
     outline: none;
 }
 
-.product-details form{
+.product-details .form-detail{
     margin-bottom: 2rem;
 }
 
-.product-details form span{
+.product-details .form-detail .color-container{
+    display: block;
+    margin-bottom: 2rem;
+}
+.product-details .form-detail span{
     position: absolute;
     top: 50%;
     right: 1rem;
@@ -94,18 +98,18 @@
     z-index: 0;
 }
 
-.product-details .form{
+.product-details .size{
     margin-bottom: 3rem;
 }
 
-.product-details .form input{
+.product-details .size input{
     padding: .8rem;
     text-align: center;
     width: 6.5rem;
     margin-right: 2rem;
 }
 
-.product-details .form .addCart{
+.product-details .size .addCart{
     background-color: var(--primary);
     padding: 0.8rem 4rem;
     color: var(--white);
