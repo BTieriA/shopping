@@ -85,10 +85,35 @@ public class ProductService {
 
     //    -------------------------------------------------------------------------------------------- READ (select)
     // List - Total
-    public ProductListContainer getProductsList() throws SQLException {
+    public ProductListContainer getSortList(int page, SortVo sortVo) throws SQLException {
         try (Connection connection = this.dataSource.getConnection()) {
             ArrayList<ProductVo> itemList = new ArrayList<>();
-            ArrayList<ProductVo> products = this.productDao.productsList(connection);
+            ArrayList<ProductVo> products = this.productDao.sortList(connection, page, sortVo);
+            if (products != null) {
+                for (ProductVo item : products) {
+                    itemList.add(new ProductVo(
+                            item.getPdtIndex(),
+                            item.getPdtBrand(),
+                            item.getPdtName(),
+                            item.getPdtPrice(),
+                            item.getPdtKinds(),
+                            item.getPdtDetail(),
+                            item.getPdtDate(),
+                            item.getPdtImage()
+                    ));
+                }
+                return new ProductListContainer(ProductResult.SUCCESS, itemList);
+            } else {
+                return new ProductListContainer(ProductResult.FAILURE, null);
+            }
+
+        }
+    }
+
+    public ProductListContainer getProductsList(int page) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<ProductVo> itemList = new ArrayList<>();
+            ArrayList<ProductVo> products = this.productDao.productsList(connection, page);
             if (products != null) {
                 for (ProductVo item : products) {
                     itemList.add(new ProductVo(
@@ -123,6 +148,13 @@ public class ProductService {
             imageOutput = byteArrayOutputStream.toByteArray();
 
             return imageOutput;
+        }
+    }
+
+    // Get Total Count
+    public int getTotalCount() throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            return this.productDao.getTotalProducts(connection);
         }
     }
 

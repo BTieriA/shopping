@@ -31,7 +31,8 @@
             <div class="top">
                 <label class="btn close-btn"><i class="fas fa-times"></i></label>
             </div>
-            <li><a href="#" onclick="homeClick()">Home</a></li>
+            <li><a href="main">Home</a></li>
+<%--            <li><a href="#" onclick="homeClick()">Home</a></li>--%>
             <li><a href="#" onclick="productsClick()">Products</a></li>
             <li>
                 <a href="#" class="desktop-item">Room <span><i class="fas fa-chevron-down"></i></span></a>
@@ -45,7 +46,7 @@
                         <div class="row">
                             <header>Bed Room</header>
                             <ul class="mega-links">
-                                <li><a href="#">Bed</a></li>
+                                <li><a href="#" onclick="productsClick()">Bed</a></li>
                                 <li><a href="#">Cabinet</a></li>
                                 <li><a href="#">Table</a></li>
                                 <li><a href="#">Chair</a></li>
@@ -102,15 +103,15 @@
                         <img src="images/shoppingBag.svg" alt="">
                         <small class="count d-flex">0</small>
                     </span>
-                <span><img src="images/search.svg" alt=""></span>
+<%--                <span><img src="images/search.svg" alt=""></span>--%>
             </li>
         </ul>
         <label class="btn open-btn"><i class="fas fa-bars"></i></label>
     </div>
 </nav>
-<div class="js-content visible" data-aos="fade-up" data-aos-duration="2000">
+<div class="js-content visible" data-aos="fade-down" data-aos-duration="2000">
     <!-- Main -->
-    <div class="main" data-aos="fade-up" data-aos-duration="2000">
+    <div class="main" data-aos="fade-down" data-aos-duration="2000">
         <div class="left">
             <span>Exclusive Sales</span>
             <h1>UP TO 50% OFF ON SALES</h1>
@@ -123,7 +124,7 @@
     </div>
 
     <!-- Promotion -->
-    <section class="section promotion" data-aos="fade-up" data-aos-duration="2000">
+    <section class="section promotion" data-aos="fade-down" data-aos-duration="2000">
         <div class="title">
             <h2>Shop Collections</h2>
             <span>Select from the preminum product and save plenty meney</span>
@@ -155,7 +156,7 @@
     </section>
 
     <!-- Products -->
-    <section class="section products" data-aos="fade-up" data-aos-duration="2000">
+    <section class="section products" data-aos="fade-down" data-aos-duration="2000">
         <div class="title">
             <h2>New Products</h2>
             <span>Select from the premium product and save plenty money</span>
@@ -241,7 +242,7 @@
     </section>
 
     <!-- Advert -->
-    <section class="section advert" data-aos="fade-up" data-aos-duration="2000">
+    <section class="section advert" data-aos="fade-down" data-aos-duration="2000">
         <div class="advert-layout container">
             <div class="item">
                 <img src="images/adv2.jpg" alt="">
@@ -290,14 +291,14 @@
         </div>
     </section>
 </div>
-<div class="js-items" data-aos="fade-up" data-aos-duration="2000"></div>
-<div class="js-detail" data-aos="fade-up" data-aos-duration="2000">
+<div class="js-items" data-aos="fade-down" data-aos-duration="2000"></div>
+<div class="js-detail" data-aos="fade-down" data-aos-duration="2000">
     <section class="section product-details">
         <div class="details container" id="details">
         </div>
     </section>
 </div>
-<div class="js-cart" data-aos="fade-up" data-aos-duration="2000">
+<div class="js-cart" data-aos="fade-down" data-aos-duration="2000">
 </div>
 <!-- Footer -->
 <footer id="footer" class="section footer">
@@ -366,5 +367,6 @@
 <script src="scripts/items.js"></script>
 <script src="scripts/detail.js"></script>
 <script src="scripts/cart.js"></script>
+<script src="scripts/sort.js"></script>
 </body>
 </html>

@@ -27,7 +27,8 @@ let productsClick = () => {
 
     let callback = (responseText) => {
         items.innerHTML = responseText;
-        List.listData();
+        // List.listData();
+        SortList.sortListData();
     };
     let fallback = () => {
         alert('물품이 없습니다');
@@ -78,8 +79,6 @@ let addDetailClick = (index) => {
 
     let callback = (responseText) => {
         items.innerHTML = responseText;
-        // 카트 리스트 보기 함수 추가
-
         Cart.cartData(index);
     };
     let fallback = () => {
@@ -89,5 +88,6 @@ let addDetailClick = (index) => {
     formData.append("index", index);
     Ajax.request('GET', 'parts/cart.html', callback, fallback, formData);
 };
+
 
 

@@ -70,8 +70,8 @@
     </div>
 </nav>
 
-<div class="js-admin visible" data-aos="fade-up" data-aos-duration="2000">
-    <div class="main" data-aos="fade-up" data-aos-duration="500">
+<div class="js-admin visible" data-aos="fade-down" data-aos-duration="2000">
+    <div class="main" data-aos="fade-down" data-aos-duration="500">
         <div class="left">
             <span>Product Modify Mode</span>
             <h1>Administrator</h1>
@@ -84,8 +84,8 @@
     </div>
 </div>
 
-<div class="js-addition" data-aos="fade-up" data-aos-duration="2000">
-    <div class="section product-insert" data-aos="fade-up" data-aos-duration="2000">
+<div class="js-addition" data-aos="fade-down" data-aos-duration="2000">
+    <div class="section product-insert" data-aos="fade-down" data-aos-duration="2000">
         <form class="details container" id="addForm" method="POST" action="apis/product/addProduct"
               enctype="multipart/form-data">
             <div class="left" data-aos="fade-right" data-aos-duration="2000">
@@ -136,9 +136,9 @@
     </div>
 </div>
 
-<div class="js-items" data-aos="fade-up" data-aos-duration="2000">
+<div class="js-items" data-aos="fade-down" data-aos-duration="2000">
     <!-- Products -->
-    <section class="section products" data-aos="fade-up" data-aos-duration="2000">
+    <section class="section products" data-aos="fade-down" data-aos-duration="2000">
         <div class="container products-layout">
             <div class="col-1-of-4" data-aos="fade-right" data-aos-duration="2000">
                 <div>

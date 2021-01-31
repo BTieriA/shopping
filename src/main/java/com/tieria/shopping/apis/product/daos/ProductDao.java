@@ -93,7 +93,7 @@ public class ProductDao {
 
     //    -------------------------------------------------------------------------------------------- READ (select)
     // Show products - Total
-    public ArrayList<ProductVo> productsList(Connection connection) throws SQLException {
+    public ArrayList<ProductVo> sortList(Connection connection, int page, SortVo sortVo) throws SQLException {
         ProductVo productVo = null;
         ArrayList<ProductVo> products = new ArrayList<>();
         String query = "" +
@@ -105,8 +105,57 @@ public class ProductDao {
                 "       `product_detail` AS `itemDetail`,\n" +
                 "       `product_date` AS `itemDate`,\n" +
                 "       `product_image`  AS `itemImage`\n" +
-                "FROM `shopping`.`products`";
+                "FROM `shopping`.`products`\n";
+
+        if (sortVo.getSortName().equals("price")) {
+            query += "ORDER BY `product_price`\n";
+        } else if (sortVo.getSortName().equals("brand")) {
+            query += "ORDER BY `product_brand`\n";
+        } else {
+            query += "ORDER BY `product_date`\n";
+        }
+
+        if (sortVo.getDesc() == 1) {
+            query += "ASC limit ?, 9";
+        } else {
+            query += "DESC limit ?, 9";
+        }
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, (page - 1) * 9);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    productVo = new ProductVo(resultSet.getInt("itemIndex"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemName"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getInt("itemKinds"),
+                            resultSet.getString("itemDetail"),
+                            resultSet.getDate("itemDate"),
+                            resultSet.getString("itemImage"));
+                    products.add(productVo);
+                }
+            }
+        }
+        return products;
+    }
+
+    public ArrayList<ProductVo> productsList(Connection connection, int page) throws SQLException {
+        ProductVo productVo = null;
+        ArrayList<ProductVo> products = new ArrayList<>();
+        String query = "" +
+                "SELECT `product_index`  AS `itemIndex`,\n" +
+                "       `product_brand`  AS `itemBrand`,\n" +
+                "       `product_name`   AS `itemName`,\n" +
+                "       `product_price`  AS `itemPrice`,\n" +
+                "       `product_kinds`   AS `itemKinds`,\n" +
+                "       `product_detail` AS `itemDetail`,\n" +
+                "       `product_date` AS `itemDate`,\n" +
+                "       `product_image`  AS `itemImage`\n" +
+                "FROM `shopping`.`products`\n" +
+                "ORDER BY `product_index` DESC limit ?, 9";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, (page - 1) * 9);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     productVo = new ProductVo(resultSet.getInt("itemIndex"),
@@ -141,6 +190,20 @@ public class ProductDao {
             }
         }
         return imageByte;
+    }
+
+    // Get Total products
+    public int getTotalProducts(Connection connection) throws SQLException {
+        int count = 0;
+        String query = "SELECT COUNT(`product_index`) AS `count` FROM `shopping`.`products`";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            }
+        }
+        return count;
     }
 
     // get product last index

@@ -20,6 +20,21 @@
     cursor: pointer;
 }
 
+.pagination span.selected{
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: var(--white);
+    cursor: default;
+}
+
+.pagination span:hover .selected{
+    border: 1px solid var(--black);
+    background-color: var(--black);
+    color: var(--white);
+    cursor: default;
+}
+
+.pagination span.first,
 .pagination span.last{
     width: 7rem;
     border-radius: 3rem;

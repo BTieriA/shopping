@@ -109,13 +109,30 @@ public class ProductController {
 
     //    -------------------------------------------------------------------------------------------- READ (select)
     // List - Total
-    @RequestMapping(value = "/productList")
-    public String productList(HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "/sortList")
+    public String sortList(HttpServletRequest request, HttpServletResponse response,
+                              @RequestParam(name = "page", defaultValue = "1") String strPage,
+                              @RequestParam(name = "sort_name", defaultValue = "") String sortName,
+                              @RequestParam(name = "sort", defaultValue = "") String asc)
             throws SQLException, IOException {
-        ProductListContainer productListContainer = this.productService.getProductsList();
+        int page = Converter.stringToInt(strPage, 1);
+        int totalCount = this.productService.getTotalCount();
+        int maxPage = totalCount % 9 == 0 ? totalCount / 9 : (int) (Math.floor((double) totalCount / 9) + 1);
+        int startPage = (page > 5) ? (page - 4) : 1;
+        int endPage = (maxPage > 9 ) ? (page + 4) : maxPage;
+        int intAsc = 0;
+        if (asc.equals("asc")) {
+            intAsc = 1;
+        };
+        SortVo sortVo = new SortVo(sortName, intAsc);
+
+        ProductListContainer productListContainer = this.productService.getSortList(page, sortVo);
         JSONObject jsonResponse = new JSONObject();
         JSONArray jsonList = new JSONArray();
-        if (productListContainer.getProductResult() == ProductResult.SUCCESS) {
+
+        if (page < 1 || productListContainer.getProductResult() == ProductResult.FAILURE) {
+            jsonResponse.put("products", "NoData");
+        } else {
             for (ProductVo product : productListContainer.getProductArray()) {
                 JSONObject jsonItem = new JSONObject();
                 jsonItem.put("itemBrand", product.getPdtBrand());
@@ -127,8 +144,49 @@ public class ProductController {
                 jsonList.put(jsonItem);
             }
             jsonResponse.put("products", jsonList);
-        } else {
+            jsonResponse.put("page", page);
+            jsonResponse.put("start_page", startPage);
+            jsonResponse.put("end_page", endPage);
+            jsonResponse.put("max_page", maxPage);
+            jsonResponse.put("sort_name", sortName);
+            jsonResponse.put("sort_asc", asc);
+        }
+        return jsonResponse.toString(4);
+    }
+
+
+    @RequestMapping(value = "/productList")
+    public String productList(HttpServletRequest request, HttpServletResponse response,
+                              @RequestParam(name = "page", defaultValue = "1") String strPage)
+            throws SQLException, IOException {
+        int page = Converter.stringToInt(strPage, 1);
+        int totalCount = this.productService.getTotalCount();
+        int maxPage = totalCount % 9 == 0 ? totalCount / 9 : (int) (Math.floor((double) totalCount / 9) + 1);
+        int startPage = (page > 5) ? (page - 4) : 1;
+        int endPage = (maxPage > 9 ) ? (page + 4) : maxPage;
+
+        ProductListContainer productListContainer = this.productService.getProductsList(page);
+        JSONObject jsonResponse = new JSONObject();
+        JSONArray jsonList = new JSONArray();
+
+        if (page < 1 || productListContainer.getProductResult() == ProductResult.FAILURE) {
             jsonResponse.put("products", "NoData");
+        } else {
+            for (ProductVo product : productListContainer.getProductArray()) {
+                JSONObject jsonItem = new JSONObject();
+                jsonItem.put("itemBrand", product.getPdtBrand());
+                jsonItem.put("itemName", product.getPdtName());
+                jsonItem.put("itemPrice", product.getPdtPrice());
+                jsonItem.put("itemKinds", product.getPdtKinds());
+                jsonItem.put("itemDetail", product.getPdtDetail());
+                jsonItem.put("itemIndex", product.getPdtIndex());
+                jsonList.put(jsonItem);
+            }
+            jsonResponse.put("products", jsonList);
+            jsonResponse.put("page", page);
+            jsonResponse.put("start_page", startPage);
+            jsonResponse.put("end_page", endPage);
+            jsonResponse.put("max_page", maxPage);
         }
         return jsonResponse.toString(4);
     }
