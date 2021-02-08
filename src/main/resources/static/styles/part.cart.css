@@ -47,7 +47,8 @@
     padding: 0.5rem;
 }
 
-.cart td a{
+.cart td a,
+.cart td .date{
     color: var(--primary);
     font-size: 1.4rem;
 }

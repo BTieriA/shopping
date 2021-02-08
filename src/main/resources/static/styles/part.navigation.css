@@ -12,9 +12,19 @@
     opacity: 1;
 }
 
+.admin-nav {
+    background-color: var(--black);
+}
+
 .nav.fix-nav{
     width: 100%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.admin-nav.fix-nav{
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
     z-index: 1000;
 }
 
@@ -25,11 +35,19 @@
 }
 
 .wrapper .logo a{
-    color: var(--primary);
+     color: var(--primary);
+     font-size: 2.7rem;
+     font-weight: 600;
+     padding: .5rem;
+     border: 3px solid var(--black);
+ }
+
+.wrapper .admin-logo a{
+    color: var(--admin);
     font-size: 2.7rem;
     font-weight: 600;
     padding: .5rem;
-    border: 3px solid var(--black);
+    border: 3px solid var(--white);
 }
 
 .wrapper .nav-list{
@@ -40,6 +58,10 @@
     color: var(--grey2);
 }
 
+.admin-nav-list li i{
+    color: var(--white);
+}
+
 .nav-list a{
     color: var(--black);
     font-size: 1.5rem;
@@ -48,8 +70,20 @@
     transition: all 300ms ease;
 }
 
+.admin-nav-list a{
+    color: var(--white);
+    font-size: 1.5rem;
+    padding: .9rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 300ms ease;
+}
+
 .nav-list a:hover{
     color: var(--primary);
+}
+
+.admin-nav-list a:hover{
+    color: var(--admin);
 }
 
 .nav-list .icons span{
@@ -65,6 +99,19 @@
     top: 0;
     right: -.8rem;
     background-color: var(--primary);
+    height: 2rem;
+    padding: .5rem;
+    color: var(--white);
+    font-weight: 700;
+    border-radius: 50%;
+}
+
+.admin-nav-list .icons .count{
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: -.8rem;
+    background-color: var(--admin);
     height: 2rem;
     padding: .5rem;
     color: var(--white);

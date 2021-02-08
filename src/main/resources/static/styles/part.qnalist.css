@@ -1,0 +1,103 @@
+.js-qna .list {
+    margin: 20rem auto;
+    min-height: 60rem;
+    max-width: 114rem;
+}
+
+.js-qna .list > .menu {
+    align-items: center;
+    border: 0.0625rem solid #cacaca;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style: none;
+    margin-bottom: 1.5rem;
+    padding: 1.125rem 2rem;
+    box-sizing: inherit;
+}
+
+.js-qna .list > .menu > .menu-item {
+    cursor: pointer;
+}
+
+.js-qna .list > .menu > .menu-item:hover {
+    color: #f68121;
+}
+
+.js-qna .list > .menu > .menu-item:not(:last-child) {
+    margin-right: 5rem;
+}
+
+.js-qna .list > .title {
+    cursor: default;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.js-qna .list > .qna-list {
+    width: 100%;
+    border-collapse: collapse;
+    position: relative;
+}
+
+.js-qna .list > .qna-list > thead {
+    border-top: 0.0625rem solid #a0a0a0;
+}
+
+.js-qna .list > .qna-list > thead > tr > th {
+    background-color: #fafafa;
+    border-top: 0.0625rem solid #cacaca;
+    border-bottom: 0.0625rem solid #eaeaea;
+    font-weight: 300;
+    padding: 0.75rem 0;
+    text-align: center;
+}
+
+.js-qna .list > .qna-list > thead > tr > th:nth-child(1) {
+    width: 6rem;
+}
+
+.js-qna .list > .qna-list > thead > tr > th:nth-child(2) {
+    width: 30rem;
+}
+
+.js-qna .list > .qna-list > thead > tr > th:nth-child(4) {
+    width: 12rem;
+}
+
+.js-qna .list > .qna-list > thead > tr > th:not(:last-child) {
+    border-right: 0.0625rem solid #eaeaea;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td {
+    border-bottom: 0.0625rem solid #eaeaea;
+    padding: 0.75rem 1.75rem;
+    text-align: center;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td:nth-child(3) {
+    text-align: left;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td:nth-child(3) > .link{
+    cursor: pointer;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td:not(:last-child) {
+    border-right: 0.0625rem solid #eaeaea;
+}
+
+.js-qna .list > .qna-list > tfoot > tr > td > .page {
+    width: 2.25rem;
+    height: 2.25rem;
+    align-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

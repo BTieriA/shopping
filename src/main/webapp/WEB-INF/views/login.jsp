@@ -5,6 +5,14 @@
     <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
+<div id="js-dialog" class="body-item dialog">
+    <div class="dialog-item cover"></div>
+    <div class="dialog-item window">
+        <div class="window-item title"></div>
+        <div class="window-item content"></div>
+        <div class="window-item buttons"></div>
+    </div>
+</div>
 <section>
     <div class="container">
         <div class="user signinBx">
@@ -43,5 +51,6 @@
 </section>
 <script src="scripts/login.js"></script>
 <script src="scripts/ajax.js"></script>
+<script src="scripts/dialog.js"></script>
 </body>
 </html>

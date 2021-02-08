@@ -1,6 +1,6 @@
-let content = window.document.querySelector('.js-content');
+let content = window.document.querySelector('.js-admin');
 let items = window.document.querySelector('.js-items');
-let details = window.document.querySelector('.js-detail');
+let details = window.document.querySelector('.js-addition');
 let cart = window.document.querySelector('.js-cart');
 let qna = window.document.querySelector('.js-qna');
 
@@ -25,7 +25,7 @@ let homeClick = () => {
 
 
 // Ajax - Go to Products
-let productsClick = () => {
+let adminItemsClick = (index) => {
     if (content.classList.contains('visible')){
         content.classList.remove('visible');
     }
@@ -44,7 +44,8 @@ let productsClick = () => {
 
     let callback = (responseText) => {
         items.innerHTML = responseText;
-        SortList.sortListData();
+        // SortList.sortListData();
+        AdminSortList.sortListData(index);
     };
     let fallback = () => {
         Dialog.show('상품', '상품이 없습니다.', ['확인'], [() => {
@@ -52,7 +53,7 @@ let productsClick = () => {
         }]);
     };
 
-    Ajax.request('GET', 'parts/items.html', callback, fallback);
+    Ajax.request('GET', 'parts/adminItems.html', callback, fallback);
 };
 
 // Category Check Box
@@ -61,7 +62,7 @@ let checkClick = (kinds) => {
 };
 
 // Ajax - Go to Detail
-let detailClick = (index) => {
+let adminDetailClick = (index) => {
     if (content.classList.contains('visible')){
         content.classList.remove('visible');
     }
@@ -80,7 +81,7 @@ let detailClick = (index) => {
 
     let callback = (responseText) => {
         items.innerHTML = responseText;
-        Detail.detailData(index);
+        AdminUpdate.updateItem(index);
     };
 
     let fallback = () => {
@@ -90,7 +91,7 @@ let detailClick = (index) => {
         }]);
 
     };
-    Ajax.request('GET', 'parts/detail.html', callback, fallback);
+    Ajax.request('GET', 'parts/adminUpdate.html', callback, fallback);
 };
 
 // Ajax - Go to Cart

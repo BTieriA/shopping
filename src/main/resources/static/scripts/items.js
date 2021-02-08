@@ -78,6 +78,8 @@ class List {
                     }
                 }
 
+
+                // PAGE
                 let itemSectionLayoutColPageElement = document.querySelector('.pagination');
                 itemSectionLayoutColPageElement.innerHTML = '';
                 let itemSectionLayoutColPageElementSpanFirstElement = document.createElement('span');
@@ -138,7 +140,9 @@ class List {
             };
 
             const fallback = () => {
-                alert('데이터가 없습니다');
+                Dialog.show('상품', '상품이 없습니다.', ['확인'], [() => {
+                    Dialog.hide();
+                }]);
             };
 
             let formData = new FormData();

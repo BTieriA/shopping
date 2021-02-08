@@ -139,17 +139,18 @@ class Detail {
                 const addCallback = (addResponse) => {
                     let jsonAdd = JSON.parse(addResponse);
                     if (jsonAdd['result'] === 'success') {
-                        alert('카트에 담았습니다');
-
-                        //cart add 추가
-
+                        Dialog.show('장바구니', '장바구니에 담았습니다.', ['확인'], [() => {
+                            Dialog.hide();
+                        }]);
                         addDetailClick(index);
                     } else {
                         addFallback();
                     }
                 };
                 const addFallback = () => {
-                    alert('카트에 담지 못했습니다')
+                    Dialog.show('장바구니', '장바구니에 담지 못했습니다.', ['확인'], [() => {
+                        Dialog.hide();
+                    }]);
                 };
                 let addFormData = new FormData(formDetailId);
                 addFormData.append("productIndex", product['itemIndex']);
@@ -170,7 +171,9 @@ class Detail {
         };
 
         const fallback = () => {
-            alert('데이터가 없습니다');
+            Dialog.show('상세정보', '정보가 없습니다.', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         };
 
         let formData = new FormData();

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="styles/common.css">
     <title>SM Shopping Mall</title>
 </head>
-<body>
+<body onload="mainOnload();">
 <!-- Navigation -->
 <nav class="nav">
     <div class="wrapper container">
@@ -35,41 +35,42 @@
 <%--            <li><a href="#" onclick="homeClick()">Home</a></li>--%>
             <li><a href="#" onclick="productsClick()">Products</a></li>
             <li>
-                <a href="#" class="desktop-item">Room <span><i class="fas fa-chevron-down"></i></span></a>
+                <a href="#" class="desktop-item">Brand <span><i class="fas fa-chevron-down"></i></span></a>
                 <input type="checkbox" id="showMega">
-                <label for="showMega" class="mobile-item">Room <span><i class="fas fa-chevron-down"></i></span></label>
+                <label for="showMega" class="mobile-item">Brand <span><i class="fas fa-chevron-down"></i></span></label>
                 <div class="mega-box">
                     <div class="content">
                         <div class="row">
                             <img src="images/main.png" alt="">
                         </div>
                         <div class="row">
-                            <header>Bed Room</header>
+                            <header>Bed</header>
                             <ul class="mega-links">
-                                <li><a href="#" onclick="productsClick()">Bed</a></li>
-                                <li><a href="#">Cabinet</a></li>
-                                <li><a href="#">Table</a></li>
-                                <li><a href="#">Chair</a></li>
+                                <li><a href="#" onclick='brandClick(1, "HANSSEM")'>HANSSEM</a></li>
+                                <li><a href="#" onclick='brandClick(1, "iloom")'>iloom</a></li>
+                                <li><a href="#" onclick='brandClick(1, "WELLZ")'>WELLZ</a></li>
+                                <li><a href="#" onclick='brandClick(1, "youngDongGagu")'>youngDongGagu</a></li>
                             </ul>
                         </div>
                         <div class="row">
-                            <header>Living Room</header>
+                            <header>Sofa</header>
                             <ul class="mega-links">
-                                <li><a href="#">Sofa</a></li>
-                                <li><a href="#">Cabinet</a></li>
-                                <li><a href="#">Table</a></li>
-                                <li><a href="#">Chair</a></li>
+                                <li><a href="#" onclick='brandClick(2, "HANSSEM")'>HANSSEM</a></li>
+                                <li><a href="#" onclick='brandClick(2, "iloom")'>iloom</a></li>
+                                <li><a href="#" onclick='brandClick(2, "WELLZ")'>WELLZ</a></li>
+                                <li><a href="#" onclick='brandClick(2, "youngDongGagu")'>youngDongGagu</a></li>
                             </ul>
                         </div>
                         <div class="row">
-                            <header>Kitchen</header>
+                            <header>Cabinet</header>
                             <ul class="mega-links">
-                                <li><a href="#">Sink</a></li>
-                                <li><a href="#">Cabinet</a></li>
-                                <li><a href="#">Table</a></li>
-                                <li><a href="#">Chair</a></li>
+                                <li><a href="#" onclick='brandClick(3, "HANSSEM")'>HANSSEM</a></li>
+                                <li><a href="#" onclick='brandClick(3, "iloom")'>iloom</a></li>
+                                <li><a href="#" onclick='brandClick(3, "WELLZ")'>WELLZ</a></li>
+                                <li><a href="#" onclick='brandClick(3, "youngDongGagu")'>youngDongGagu</a></li>
                             </ul>
                         </div>
+
                     </div>
                 </div>
             </li>
@@ -80,9 +81,8 @@
                 <label for="showdrop2" class="mobile-item">Custom
                     <span><i class="fas fa-chevron-down"></i></span></label>
                 <ul class="drop-menu2">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Faq</a></li>
+                    <li><a href="#" onclick="historyClick();">Payment History</a></li>
+                    <li><a href="#" onclick="qnaClick();">Faq</a></li>
                 </ul>
             </li>
 
@@ -109,6 +109,14 @@
         <label class="btn open-btn"><i class="fas fa-bars"></i></label>
     </div>
 </nav>
+<div id="js-dialog" class="body-item dialog">
+    <div class="dialog-item cover"></div>
+    <div class="dialog-item window">
+        <div class="window-item title"></div>
+        <div class="window-item content"></div>
+        <div class="window-item buttons"></div>
+    </div>
+</div>
 <div class="js-content visible" data-aos="fade-down" data-aos-duration="2000">
     <!-- Main -->
     <div class="main" data-aos="fade-down" data-aos-duration="2000">
@@ -116,7 +124,7 @@
             <span>Exclusive Sales</span>
             <h1>UP TO 50% OFF ON SALES</h1>
             <small>Get all exclusive offers for the season</small>
-            <a href="#">View Collection</a>
+            <a href="#" onclick="productsClick()">View Collection</a>
         </div>
         <div class="right">
             <img src="images/main.png" alt="">
@@ -133,21 +141,21 @@
         <div class="promotion-layout container">
             <div class="promotion-item">
                 <img src="images/bg1.jpg" alt="">
-                <div class="promontion-content">
+                <div class="promotion-content">
                     <h3>Bed Room</h3>
                     <a href="#">SHOP NOW</a>
                 </div>
             </div>
             <div class="promotion-item">
                 <img src="images/bg2.jpg" alt="">
-                <div class="promontion-content">
+                <div class="promotion-content">
                     <h3>Living Room</h3>
                     <a href="#">SHOP NOW</a>
                 </div>
             </div>
             <div class="promotion-item">
                 <img src="images/bg3.jpg" alt="">
-                <div class="promontion-content">
+                <div class="promotion-content">
                     <h3>Kitchen</h3>
                     <a href="#">SHOP NOW</a>
                 </div>
@@ -264,7 +272,7 @@
     </section>
 
     <!-- Brands -->
-    <section class="section brands" data-aos="fade-right" data-aos-duration="2000">
+    <section class="section brands" data-aos="fade-left" data-aos-duration="2000">
         <div class="title">
             <h2>Shop by Brands</h2>
             <span>Select from the premium product and save plenty money</span>
@@ -299,6 +307,8 @@
     </section>
 </div>
 <div class="js-cart" data-aos="fade-down" data-aos-duration="2000">
+</div>
+<div class="js-qna" data-aos="fade-down" data-aos-duration="2000">
 </div>
 <!-- Footer -->
 <footer id="footer" class="section footer">
@@ -363,10 +373,15 @@
 <script src="scripts/slider.js"></script>
 <script src="scripts/main.js"></script>
 <script src="scripts/ajax.js"></script>
+<script src="scripts/dialog.js"></script>
 <script src="scripts/goto.js"></script>
 <script src="scripts/items.js"></script>
 <script src="scripts/detail.js"></script>
 <script src="scripts/cart.js"></script>
 <script src="scripts/sort.js"></script>
+<script src="scripts/latest.js"></script>
+<script src="scripts/brand.js"></script>
+<script src="scripts/cart-history.js"></script>
+<script src="scripts/qna.js"></script>
 </body>
 </html>

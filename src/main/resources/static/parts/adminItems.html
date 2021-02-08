@@ -1,0 +1,241 @@
+<!-- Products -->
+<section class="section products">
+    <div class="products-layout container">
+        <div class="col-1-of-4" data-aos="fade-right" data-aos-duration="2000">
+            <div>
+                <div class="block-title">
+                    <h3>Category</h3>
+                </div>
+                <ul class="block-content">
+                    <li>
+                        <input class="cateKinds" type="checkbox" name="cateKinds" value="1" checked
+                               onchange="checkClick()">
+                        <label>
+                            <span>Beds</span>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="cateKinds" type="checkbox" name="cateKinds" value="2" checked
+                               onchange="checkClick()">
+                        <label>
+                            <span>Sofas</span>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="cateKinds" type="checkbox" name="cateKinds" value="3" checked
+                               onchange="checkClick()">
+                        <label>
+                            <span>Cabinets</span>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="cateKinds" type="checkbox" name="cateKinds" value="4" checked
+                               onchange="checkClick()">
+                        <label>
+                            <span>Tables</span>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="cateKinds" type="checkbox" name="cateKinds" value="5" checked
+                               onchange="checkClick()">
+                        <label>
+                            <span>Chairs</span>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="cateKinds" type="checkbox" name="cateKinds" value="6" checked
+                               onchange="checkClick()">
+                        <label>
+                            <span>Sink</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-3-of-4" data-aos="fade-left" data-aos-duration="2000">
+            <form name="sortForm" id="sortForm" method="POST" action="/apis/product/sortList">
+                <div class="item">
+                    <label>Sort By</label>
+                    <select name="sort_name">
+                        <option value="newness" selected="selected">Newness</option>
+                        <option value="price">Price</option>
+                        <option value="brand">Brand</option>
+                    </select>
+                </div>
+                <div class="item">
+                    <label>Order</label>
+                    <select name="sort">
+                        <option value="desc" selected="selected">DESC</option>
+                        <option value="asc">ASC</option>
+                    </select>
+                </div>
+<!--                <a href="#" onclick="submit()">Apply</a>-->
+                <input type="submit" value="Apply">
+            </form>
+            <div class="product-layout">
+                <div class="product">
+                    <div class="img-container">
+                        <a href="#"><img src="../admin/images/bed1.jpg" alt=""></a>
+
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Drawers Bed</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../images/sofa1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Hyacinth Sofa</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../images/book1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Book Wood Cabinet</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../images/table1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Cuisine Wood Table</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../admin/images/bed1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Drawers Bed</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../images/sofa1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Hyacinth Sofa</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../images/book1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Book Wood Cabinet</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="img-container">
+                        <img src="../images/table1.jpg" alt="">
+                        <div class="addCart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <ul class="side-icons">
+                            <span><i class="fas fa-search"></i></span>
+                            <span><i class="far fa-heart"></i></span>
+                            <span><i class="fas fa-sliders-h"></i></span>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <a href="#">Cuisine Wood Table</a>
+                        <div class="price">
+                            <span>₩1,000,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination">
+                <span>1</span>
+                <span>2</span>
+                <span class="icon">></span>
+                <span class="last">last >></span>
+            </ul>
+        </div>
+    </div>
+</section>

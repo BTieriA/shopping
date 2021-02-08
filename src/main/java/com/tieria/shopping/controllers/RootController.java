@@ -30,6 +30,8 @@ public class RootController {
     public String AddGet(HttpServletRequest request, HttpServletResponse response) {
         if (Converter.getUserVo(request).getUserLevel() == 1) {
             return "admin/admin";
+        } else if (Converter.getUserVo(request) == null) {
+            return "login";
         } else {
             return "main";
         }

@@ -2,6 +2,7 @@ package com.tieria.shopping.apis.product.daos;
 
 import com.tieria.shopping.apis.product.vos.*;
 import com.tieria.shopping.common.UserVo;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -105,7 +106,8 @@ public class ProductDao {
                 "       `product_detail` AS `itemDetail`,\n" +
                 "       `product_date` AS `itemDate`,\n" +
                 "       `product_image`  AS `itemImage`\n" +
-                "FROM `shopping`.`products`\n";
+                "FROM `shopping`.`products`\n" +
+                "WHERE `product_level` = 0\n";
 
         if (sortVo.getSortName().equals("price")) {
             query += "ORDER BY `product_price`\n";
@@ -153,6 +155,7 @@ public class ProductDao {
                 "       `product_date` AS `itemDate`,\n" +
                 "       `product_image`  AS `itemImage`\n" +
                 "FROM `shopping`.`products`\n" +
+                "WHERE `product_level` = 0 \n" +
                 "ORDER BY `product_index` DESC limit ?, 9";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, (page - 1) * 9);
@@ -195,7 +198,8 @@ public class ProductDao {
     // Get Total products
     public int getTotalProducts(Connection connection) throws SQLException {
         int count = 0;
-        String query = "SELECT COUNT(`product_index`) AS `count` FROM `shopping`.`products`";
+        String query = "SELECT COUNT(`product_index`) AS `count` FROM `shopping`.`products` \n" +
+                "WHERE `product_level` = 0";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -266,7 +270,7 @@ public class ProductDao {
                 "       `product_date`   AS `itemDate`,\n" +
                 "       `product_image`  AS `itemImage`\n" +
                 "FROM `shopping`.`products`\n" +
-                "WHERE `product_kinds` = ? \n" +
+                "WHERE `product_level` = 0 AND `product_kinds` = ? \n " +
                 "ORDER BY `product_date` DESC \n" +
                 "LIMIT 4";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -327,6 +331,174 @@ public class ProductDao {
         return cartList;
     }
 
+    // Latest Product
+    public ArrayList<ProductVo> latestProduct(Connection connection) throws SQLException {
+        ProductVo productVo = null;
+        ArrayList<ProductVo> products = new ArrayList<>();
+        String query = "" +
+                "SELECT `product_index`  AS `itemIndex`,\n" +
+                "       `product_brand`  AS `itemBrand`,\n" +
+                "       `product_name`   AS `itemName`,\n" +
+                "       `product_price`  AS `itemPrice`,\n" +
+                "       `product_kinds`  AS `itemKinds`,\n" +
+                "       `product_detail` AS `itemDetail`,\n" +
+                "       `product_date`   AS `itemDate`,\n" +
+                "       `product_image`  AS `itemImage`\n" +
+                "FROM `shopping`.`products`\n" +
+                "WHERE `product_level` = 0 \n" +
+                "ORDER BY `product_date` DESC \n" +
+                "LIMIT 4";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    productVo = new ProductVo(resultSet.getInt("itemIndex"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemName"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getInt("itemKinds"),
+                            resultSet.getString("itemDetail"),
+                            resultSet.getDate("itemDate"),
+                            resultSet.getString("itemImage"));
+                    products.add(productVo);
+                }
+            }
+        }
+        return products;
+    }
+
+    // Brand Product
+    public ArrayList<ProductVo> brandProduct(Connection connection, BrandVo brandVo) throws SQLException {
+        ProductVo productVo = null;
+        ArrayList<ProductVo> products = new ArrayList<>();
+        String query = "" +
+                "SELECT `product_index`  AS `itemIndex`,\n" +
+                "       `product_brand`  AS `itemBrand`,\n" +
+                "       `product_name`   AS `itemName`,\n" +
+                "       `product_price`  AS `itemPrice`,\n" +
+                "       `product_kinds`  AS `itemKinds`,\n" +
+                "       `product_detail` AS `itemDetail`,\n" +
+                "       `product_date`   AS `itemDate`,\n" +
+                "       `product_image`  AS `itemImage`\n" +
+                "FROM `shopping`.`products`\n" +
+                "WHERE `product_level` = 0 " +
+                "  AND `product_brand` = ? \n" +
+                "  AND `product_kinds` = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, brandVo.getBrand());
+            preparedStatement.setInt(2, brandVo.getKinds());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    productVo = new ProductVo(resultSet.getInt("itemIndex"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemName"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getInt("itemKinds"),
+                            resultSet.getString("itemDetail"),
+                            resultSet.getDate("itemDate"),
+                            resultSet.getString("itemImage"));
+                    products.add(productVo);
+                }
+            }
+        }
+        return products;
+    }
+
+    // Cart History
+    public ArrayList<CartVo> getCartHistory(Connection connection, UserVo userVo, int page) throws SQLException {
+        CartVo cartVo = null;
+        ArrayList<CartVo> cartList = new ArrayList<>();
+        String query = "" +
+                "SELECT `carts`.`image_index` AS `imgIndex`,\n" +
+                "       `product_name`          AS `itemName`,\n" +
+                "       `product_brand`         AS `itemBrand`,\n" +
+                "       `product_price`         AS `itemPrice`,\n" +
+                "       `cart_color`          AS `itemColor`,\n" +
+                "       `cart_size`           AS `itemSize`,\n" +
+                "       `carts`.`user_index`  AS `userIndex`,\n" +
+                "       `cart_date`           AS `itemDate`\n" +
+                "FROM `shopping`.`carts`\n" +
+                "         INNER JOIN `shopping`.`products`\n" +
+                "                    ON `carts`.`product_index` = `products`.`product_index`\n" +
+                "         INNER JOIN `shopping`.`images`\n" +
+                "                    ON `carts`.`image_index` = `images`.`image_index`\n" +
+                "         INNER JOIN `shopping`.`users`\n" +
+                "                    ON `carts`.`user_index` = `users`.`user_index`\n" +
+                "WHERE `carts`.`user_index` = ? \n" +
+                "ORDER BY `cart_date` DESC limit ?, 9";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userVo.getUserIndex());
+            preparedStatement.setInt(2, (page - 1) * 10);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    cartVo = new CartVo(resultSet.getInt("imgIndex"),
+                            resultSet.getString("itemName"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemColor"),
+                            resultSet.getString("itemSize"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getTimestamp("itemDate"));
+                    cartList.add(cartVo);
+                }
+            }
+        }
+        return cartList;
+    }
+
+    // Get Total Cart
+    public int getTotalCarts(Connection connection) throws SQLException {
+        int count = 0;
+        String query = "SELECT COUNT(`cart_index`) AS `count` FROM `shopping`.`carts`";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            }
+        }
+        return count;
+    }
+
+    //    -------------------------------------------------------------------------------------------- UPDATE
+    // update product
+    public int updateProduct(Connection connection, UpdateProductVo updateProductVo) throws SQLException {
+        int result = 0;
+        String query = "" +
+                "UPDATE `shopping`.`products`\n" +
+                "SET `product_brand`  = ?,\n" +
+                "    `product_name`   = ?,\n" +
+                "    `product_price`  = ?,\n" +
+                "    `product_kinds`  = ?,\n" +
+                "    `product_date`   = NOW(),\n" +
+                "    `product_detail` = ? \n" +
+                "WHERE `product_index` = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, updateProductVo.getPdtBrand());
+            preparedStatement.setString(2, updateProductVo.getPdtName());
+            preparedStatement.setInt(3, updateProductVo.getPdtPrice());
+            preparedStatement.setInt(4, updateProductVo.getPdtKinds());
+            preparedStatement.setString(5, updateProductVo.getPdtDetail());
+            preparedStatement.setInt(6, updateProductVo.getPdtIndex());
+            preparedStatement.executeUpdate();
+            result = 1;
+        }
+        return result;
+    }
+
+    // delete product
+    public int deleteProduct(Connection connection, int index) throws SQLException {
+        int deleteResult = 0;
+        String query = "" +
+                "UPDATE `shopping`.`products`\n" +
+                "SET `product_level` = 1\n" +
+                "WHERE `product_index` = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, index);
+            deleteResult = preparedStatement.executeUpdate();
+        }
+        return deleteResult;
+    }
+
+
     //    -------------------------------------------------------------------------------------------- DELETE
     // delete cart list
     public int deleteCart(Connection connection, int index) throws SQLException {
@@ -342,7 +514,6 @@ public class ProductDao {
             deleteResult = preparedStatement.executeUpdate();
         }
         return deleteResult;
-
     }
 
     // delete cart final list
@@ -359,7 +530,6 @@ public class ProductDao {
             deleteResult = preparedStatement.executeUpdate();
         }
         return deleteResult;
-
     }
 
     // delete cart all list

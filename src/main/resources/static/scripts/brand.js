@@ -1,5 +1,5 @@
-class SortList {
-    static sortListData = (kinds) => {
+class Brand {
+    static brandListData = (kinds, brand) => {
         let items = window.document.querySelector('.js-items');
         let itemSection = items.querySelector('.products');
         let itemSectionLayout = itemSection.querySelector('.products-layout');
@@ -15,7 +15,7 @@ class SortList {
                 items.classList.add('visible');
 
                 let json = JSON.parse(response);
-                let products = json['products'];
+                let products = json['brandProduct'];
                 if (products === 'NoData'){
                     fallback();
                     return;
@@ -70,7 +70,7 @@ class SortList {
                     productBottomPriceSpanElement.innerHTML = '₩'
                         + products[i]['itemPrice'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-                    kinds = products[i]['itemKinds'] - 1;
+                    // kinds = products[i]['itemKinds'] - 1;
 
                     if (check[kinds].checked){
                         itemSectionLayoutColLayout.append(productElement);
@@ -137,14 +137,14 @@ class SortList {
             };
 
             const fallback = () => {
-                Dialog.show('목록', '데이터가 없습니다', ['확인'], [() => {
-                    Dialog.hide();
-                }]);
+                alert('데이터가 없습니다');
             };
 
             let formData = new FormData();
             formData.append('page', page);
-            Ajax.request('POST', 'apis/product/productList', callback, fallback, formData);
+            formData.append('kinds', kinds);
+            formData.append('brand', brand);
+            Ajax.request('POST', 'apis/product/brand', callback, fallback, formData);
         };
         getLists(1);
 
@@ -273,7 +273,7 @@ class SortList {
             };
 
             const fallback = () => {
-                Dialog.show('목록', '데이터가 없습니다', ['확인'], [() => {
+                Dialog.show('브랜드', '데이터가 없습니다.', ['확인'], [() => {
                     Dialog.hide();
                 }]);
             };
@@ -285,7 +285,7 @@ class SortList {
         };
 
         sortFormElement.onsubmit = () => {
-            getSortLists(1);
+            getSortLists();
             return false;
         }
     }

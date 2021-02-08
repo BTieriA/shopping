@@ -24,31 +24,79 @@
 </head>
 <body>
 <!-- Navigation -->
-<nav class="nav">
+<%--<nav class="nav">--%>
+<%--    <div class="wrapper container">--%>
+<%--        <div class="logo"><a href="main">Administrator</a></div>--%>
+<%--        <ul class="nav-list">--%>
+<%--            <div class="top">--%>
+<%--                <label class="btn close-btn"><i class="fas fa-times"></i></label>--%>
+<%--            </div>--%>
+<%--            <li><a href="#" class="home">Home</a></li>--%>
+<%--            <li onclick="checkCategory()"><a href="#">Show Product</a></li>--%>
+<%--            &lt;%&ndash;            <li onclick="itemListClick()"><a href="#">Show Product</a></li>&ndash;%&gt;--%>
+<%--            <li onclick="insertClick()">--%>
+<%--                <a href="#" class="desktop-item">Insert Product</a>--%>
+<%--                <input type="checkbox" id="showMega">--%>
+<%--                <label for="showMega" class="mobile-item">Insert</label>--%>
+<%--            </li>--%>
+
+<%--            <li>--%>
+<%--                <a href="#" class="desktop-item">Delete Product</a>--%>
+<%--                <input type="checkbox" id="showdrop2">--%>
+<%--                <label for="showdrop2" class="mobile-item">Delete</label>--%>
+<%--            </li>--%>
+
+<%--            <% if (userVo.getUserLevel() == 1) {%>--%>
+<%--            <li>--%>
+<%--                <a href="#" class="desktop-item" onclick="adminClick()">Admin</a>--%>
+<%--            </li>--%>
+<%--            <% } else { %>--%>
+<%--            <li style="display: none"></li>--%>
+<%--            <% } %>--%>
+<%--            <% if (userVo != null) { %>--%>
+<%--            <li class="logout"><a href="#">Log Out</a></li>--%>
+<%--            <% } else { %>--%>
+<%--            <li class="login"><a href="#">Log In</a></li>--%>
+<%--            <% } %>--%>
+<%--            <li class="icons">--%>
+<%--                    <span>--%>
+<%--                        <img src="images/shoppingBag.svg" alt="">--%>
+<%--                        <small class="count d-flex">0</small>--%>
+<%--                    </span>--%>
+<%--                <span><img src="images/search.svg" alt=""></span>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
+<%--        <label class="btn open-btn"><i class="fas fa-bars"></i></label>--%>
+<%--    </div>--%>
+<%--</nav>--%>
+<nav class="nav admin-nav">
     <div class="wrapper container">
-        <div class="logo"><a href="main">Administrator</a></div>
-        <ul class="nav-list">
+        <div class="logo admin-logo"><a href="main">ADMIN</a></div>
+        <ul class="nav-list admin-nav-list">
             <div class="top">
                 <label class="btn close-btn"><i class="fas fa-times"></i></label>
             </div>
-            <li><a href="#" class="home">Home</a></li>
-            <li onclick="checkCategory()"><a href="#">Show Product</a></li>
-            <%--            <li onclick="itemListClick()"><a href="#">Show Product</a></li>--%>
+            <li><a href="#" onclick="adminClick()">Home</a></li>
+            <li><a href="#" onclick="adminItemsClick()">Show Products</a></li>
             <li onclick="insertClick()">
                 <a href="#" class="desktop-item">Insert Product</a>
                 <input type="checkbox" id="showMega">
                 <label for="showMega" class="mobile-item">Insert</label>
             </li>
-
             <li>
-                <a href="#" class="desktop-item">Delete Product</a>
+                <a href="#" class="desktop-item">Custom <span><i class="fas fa-chevron-down"></i></span></a>
                 <input type="checkbox" id="showdrop2">
-                <label for="showdrop2" class="mobile-item">Delete</label>
+                <label for="showdrop2" class="mobile-item">Custom
+                    <span><i class="fas fa-chevron-down"></i></span></label>
+                <ul class="drop-menu2">
+                    <li><a href="#" onclick="historyClick();">Payment History</a></li>
+                    <li><a href="#" onclick="qnaClick();">Faq</a></li>
+                </ul>
             </li>
 
             <% if (userVo.getUserLevel() == 1) {%>
-            <li>
-                <a href="#" class="desktop-item" onclick="adminClick()">Admin</a>
+            <li class="admin">
+                <a href="/main" class="desktop-item">Customer</a>
             </li>
             <% } else { %>
             <li style="display: none"></li>
@@ -63,12 +111,20 @@
                         <img src="images/shoppingBag.svg" alt="">
                         <small class="count d-flex">0</small>
                     </span>
-                <span><img src="images/search.svg" alt=""></span>
+                <%--                <span><img src="images/search.svg" alt=""></span>--%>
             </li>
         </ul>
         <label class="btn open-btn"><i class="fas fa-bars"></i></label>
     </div>
 </nav>
+<div id="js-dialog" class="body-item dialog">
+    <div class="dialog-item cover"></div>
+    <div class="dialog-item window">
+        <div class="window-item title"></div>
+        <div class="window-item content"></div>
+        <div class="window-item buttons"></div>
+    </div>
+</div>
 
 <div class="js-admin visible" data-aos="fade-down" data-aos-duration="2000">
     <div class="main" data-aos="fade-down" data-aos-duration="500">
@@ -246,6 +302,10 @@
         </div>
     </section>
 </div>
+<div class="js-cart" data-aos="fade-down" data-aos-duration="2000">
+</div>
+<div class="js-qna" data-aos="fade-down" data-aos-duration="2000">
+</div>
 
 <!-- Footer -->
 <footer id="footer" class="section footer">
@@ -311,5 +371,16 @@
 <script src="scripts/admin.js"></script>
 <script src="scripts/ajax.js"></script>
 <script src="admin/scripts/adminItems.js"></script>
+<script src="scripts/dialog.js"></script>
+
+<script src="scripts/slider.js"></script>
+<script src="admin/scripts/adminGoto.js"></script>
+<script src="scripts/cart.js"></script>
+<script src="admin/scripts/adminSort.js"></script>
+<script src="scripts/latest.js"></script>
+<script src="scripts/brand.js"></script>
+<script src="scripts/cart-history.js"></script>
+<script src="scripts/qna.js"></script>
+<script src="admin/scripts/adminUpdate.js"></script>
 </body>
 </html>

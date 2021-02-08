@@ -26,7 +26,9 @@ signUpForm.onsubmit = () => {
     const callback = (response) => {
         let json = JSON.parse(response);
         if(json['result'] === 'success'){
-            alert('회원으로 등록되었습니다');
+            Dialog.show('회원가입', '회원가입 하신 것을 축하합니다.', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         } else {
             fallback(response);
         }
@@ -34,13 +36,21 @@ signUpForm.onsubmit = () => {
     const fallback = (response) => {
         let json = JSON.parse(response);
         if(json['result'] === 'name_duplication'){
-            alert('같은 이름이 존재합니다.');
+            Dialog.show('회원가입', '같은 이름이 존재합니다.', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         } else if (json['result'] === 'email_duplication'){
-            alert('같은 이름이 존재합니다.');
+            Dialog.show('회원가입', '같은 이메일이 존재합니다.', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         } else if (json['result'] === 'unauthorized'){
-            alert('관리자 가입이 허락되지 않았습니다');
+            Dialog.show('회원가입', '관리자 모드로 가입하실 수 없습니다.', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         } else {
-            alert('회원등록에 실패하였습니다.');
+            Dialog.show('회원가입', '회원가입에 실패하셨습니다. <br> 다시 회원가입 해주세요', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         }
     };
 
@@ -58,19 +68,23 @@ loginForm.onsubmit = () => {
     const callback = (response) => {
         let json = JSON.parse(response);
         if(json['result'] === 'success'){
-            alert('로그인이 되었습니다');
-            window.location.href = "main"
+            Dialog.show('로그인', '가구 쇼핑몰에 오신 것을 환영합니다.', ['확인'], [() => {
+                Dialog.hide();
+                window.location.href = "main"
+            }]);
         } else {
             fallback();
         }
     };
 
     const fallback = () => {
-        alert('로그인에 실패하였습니다');
+        Dialog.show('로그인', '로그인에 실패하셨습니다. <br> 아이디랑 비밀번호르 확인해주세요', ['확인'], [() => {
+            Dialog.hide();
+        }]);
     };
     let formData = new FormData(loginForm);
     Ajax.request('POST','/apis/user/login', callback, fallback, formData);
     return false;
-}
+};
 
 

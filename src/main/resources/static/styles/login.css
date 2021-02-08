@@ -1,3 +1,5 @@
+@import "part.dialog.css";
+
 *
 {
     margin: 0;
@@ -11,7 +13,7 @@ section
     position: relative;
     /* vh = 높이 퍼센트 비율 */
     min-height: 100vh;
-    background: #f68121;
+    background: #3121bd;
     display: flex;
     /* 좌우 가운데 */
     justify-content: center;

@@ -95,14 +95,18 @@ class Cart {
                         const delCallback = (delResponse) => {
                             let jsonDel = JSON.parse(delResponse);
                             if (jsonDel['result'] === 'success') {
-                                alert('취소하였습니다');
+                                Dialog.show('장바구니', '상품 구매를 취소하였습니다.', ['확인'], [() => {
+                                    Dialog.hide();
+                                }]);
                                 cartContainerTableContent.classList.add('hidden');
                             } else {
                                 delFallback();
                             }
                         };
                         const delFallback = () => {
-                            alert('취소할수 없습니다');
+                            Dialog.show('장바구니', '상품 구매를 취소할 수 없습니다', ['확인'], [() => {
+                                Dialog.hide();
+                            }]);
                         };
                         let delFormData = new FormData();
                         delFormData.append("itemIndex", product[i]['itemIndex']);
@@ -163,7 +167,9 @@ class Cart {
                 const allCallback = (allResponse) => {
                     let jsonAllDel = JSON.parse(allResponse);
                     if (jsonAllDel['result'] === 'success') {
-                        alert('상품을 구매하였습니다.');
+                        Dialog.show('장바구니', '상품 구매를 구매하였습니다.', ['확인'], [() => {
+                            Dialog.hide();
+                        }]);
                         let cartCount = window.document.querySelector('.count');
                         cartCount.innerHTML = '0';
                     } else {
@@ -172,7 +178,9 @@ class Cart {
 
                 };
                 const allFallback = () => {
-                    alert('상품을 구매하지 못했습니다.');
+                    Dialog.show('장바구니', '상품 구매를 구매하지 못했습니다.', ['확인'], [() => {
+                        Dialog.hide();
+                    }]);
                 };
                 Ajax.request('POST', '/apis/product/deleteAllCart', allCallback, allFallback);
                 return false;
@@ -182,7 +190,9 @@ class Cart {
             cartCount.innerHTML = count;
         };
         const fallback = () => {
-            alert('카트에 없습니다.');
+            Dialog.show('장바구니', '아무 상품도 구매하지 않았습니다.', ['확인'], [() => {
+                Dialog.hide();
+            }]);
         };
         let formData = new FormData();
         formData.append("index", index);

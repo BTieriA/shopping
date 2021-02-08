@@ -222,6 +222,109 @@ public class ProductService {
         }
     }
 
+    // Get latest Product
+    public ProductListContainer getLatest() throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<ProductVo> latestProductResult = new ArrayList<>();
+            ArrayList<ProductVo> latestProductDao = this.productDao.latestProduct(connection);
+            if (latestProductDao != null) {
+                for (ProductVo latestProduct : latestProductDao) {
+                    latestProductResult.add(new ProductVo(
+                            latestProduct.getPdtIndex(),
+                            latestProduct.getPdtBrand(),
+                            latestProduct.getPdtName(),
+                            latestProduct.getPdtPrice(),
+                            latestProduct.getPdtKinds(),
+                            latestProduct.getPdtDetail(),
+                            latestProduct.getPdtDate(),
+                            latestProduct.getPdtImage()
+                    ));
+                }
+                return new ProductListContainer(ProductResult.SUCCESS, latestProductResult);
+            } else {
+                return new ProductListContainer(ProductResult.FAILURE, null);
+            }
+        }
+    }
+
+    // Get Brand Product
+    public ProductListContainer getBrand(BrandVo brandVo) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<ProductVo> brandProductResult = new ArrayList<>();
+            ArrayList<ProductVo> brandProductDao = this.productDao.brandProduct(connection, brandVo);
+            if (brandProductDao != null) {
+                for (ProductVo brandProduct : brandProductDao) {
+                    brandProductResult.add(new ProductVo(
+                            brandProduct.getPdtIndex(),
+                            brandProduct.getPdtBrand(),
+                            brandProduct.getPdtName(),
+                            brandProduct.getPdtPrice(),
+                            brandProduct.getPdtKinds(),
+                            brandProduct.getPdtDetail(),
+                            brandProduct.getPdtDate(),
+                            brandProduct.getPdtImage()
+                    ));
+                }
+                return new ProductListContainer(ProductResult.SUCCESS, brandProductResult);
+            } else {
+                return new ProductListContainer(ProductResult.FAILURE, null);
+            }
+        }
+    }
+
+    // get cart history
+    public CartListContainer getCartHistory(UserVo userVo, int page) throws SQLException {
+        if (userVo == null) {
+            return new CartListContainer(CartResult.INVALID, null);
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<CartVo> cartHistoryResult = new ArrayList<>();
+            ArrayList<CartVo> cartHistoryDao = this.productDao.getCartHistory(connection, userVo, page);
+            if (cartHistoryDao != null) {
+                for (CartVo cart : cartHistoryDao) {
+                    cartHistoryResult.add(new CartVo(
+                            cart.getImgIndex(),
+                            cart.getItemName(),
+                            cart.getItemBrand(),
+                            cart.getItemColor(),
+                            cart.getItemSize(),
+                            cart.getItemPrice(),
+                            cart.getItemDate()
+                    ));
+                }
+                return new CartListContainer(CartResult.SUCCESS, cartHistoryResult);
+            } else {
+                return new CartListContainer(CartResult.FAILURE, null);
+            }
+        }
+    }
+
+    // Get Total Carts
+    public int getTotalCarts() throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            return this.productDao.getTotalCarts(connection);
+        }
+    }
+
+
+    //    -------------------------------------------------------------------------------------------- UPDATE
+    public ProductResult updateProduct(UserVo userVo, UpdateProductVo updateProductVo) throws SQLException {
+        if (updateProductVo.getPdtPrice() < 0) {
+            return ProductResult.INVALID;
+        }
+        if (userVo == null || (userVo.getUserLevel() != 1)) {
+            return ProductResult.NOT_ALLOWED;
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            if (this.productDao.updateProduct(connection, updateProductVo) != 1){
+                return ProductResult.FAILURE;
+            } else {
+                return ProductResult.SUCCESS;
+            }
+
+        }
+    }
+
     //    -------------------------------------------------------------------------------------------- DELETE
     // each cart list delete
     public CartResult deleteCart(UserVo userVo, int index) throws SQLException {
@@ -249,6 +352,20 @@ public class ProductService {
                 return CartResult.FAILURE;
             } else {
                 return CartResult.SUCCESS;
+            }
+        }
+    }
+
+    // delete product
+    public ProductResult deleteProduct(UserVo userVo, int index) throws SQLException {
+        if (userVo == null || userVo.getUserLevel() != 1) {
+            return ProductResult.INVALID;
+        }
+        try(Connection connection = this.dataSource.getConnection()) {
+            if (this.productDao.deleteProduct(connection, index) == 0) {
+                return ProductResult.FAILURE;
+            } else {
+                return ProductResult.SUCCESS;
             }
         }
     }

@@ -1,0 +1,51 @@
+<!-- Product Modification -->
+<div class="section product-insert" data-aos="fade-down" data-aos-duration="2000">
+    <form class="details container" id="addForm" method="POST" action="apis/product/addProduct"
+          enctype="multipart/form-data">
+        <div class="left" data-aos="fade-right" data-aos-duration="2000">
+            <div class="fileBox">
+                <input type="text" class="uploadName" value="Upload File" disabled="disabled"/>
+                <label for="imgUpload" onclick="uploadClick()">Upload</label>
+                <input type="file" name="image" id="imgUpload" accept="image/*" multiple/>
+                <img src="../admin/images/default.jpg" class="preview"/>
+            </div>
+        </div>
+        <div class="right">
+            <div class="brandBox" data-aos="fade-left" data-aos-duration="2000">
+                <select id="brand" name="brand">
+                    <option value="Select Brands" selected disabled>SELECT BRANDS</option>
+                    <option value="HANSSEM">HANSSEM</option>
+                    <option value="iloom">iloom</option>
+                    <option value="WELLZ">WELLZ</option>
+                    <option value="youngDongGagu">youngDongGagu</option>
+                </select>
+                <span><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="name">
+                <input type="text" id="name" name="name" placeholder="PRODUCT NAME">
+            </div>
+            <div class="price">
+                <input type="text" id="price" name="price" placeholder="PRICE">
+            </div>
+            <div class="kindsBox">
+                <select name="kinds">
+                    <option value="Select Kinds" selected disabled>SELECT KINDS</option>
+                    <option value="1">BED</option>
+                    <option value="2">SOFA</option>
+                    <option value="3">CABINET</option>
+                    <option value="4">TABLE</option>
+                    <option value="5">CHAIR</option>
+                    <option value="6">SINK</option>
+                    <option value="7">ETC</option>
+                </select>
+                <span><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <h3>Product Detail</h3>
+            <textarea cols="60" rows="10" name="detail"></textarea>
+            <div class="submitBox">
+                <input type="submit" class="addProduct" value="Add Product">
+            </div>
+        </div>
+    </form>
+</div>
+

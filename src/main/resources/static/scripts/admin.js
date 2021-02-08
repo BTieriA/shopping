@@ -5,10 +5,10 @@ let addBox = window.document.querySelector('.js-addition');
 
 
 // Go to Main
-home.addEventListener('click', () =>{
-    admin.classList.add('visible');
-    window.location.href = "main";
-});
+// home.addEventListener('click', () =>{
+//     admin.classList.add('visible');
+//     window.location.href = "main";
+// });
 
 
 // Ajax - insert
@@ -17,7 +17,7 @@ let insertClick = () => {
     admin.classList.remove('visible');
     addBox.classList.add('visible');
     showItem.classList.remove('visible');
-}
+};
 
 
 // Image Upload - preview

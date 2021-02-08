@@ -3,6 +3,7 @@ const openNav = document.querySelector(".open-btn");
 const closeNav = document.querySelector(".close-btn");
 const menu = document.querySelector(".nav-list");
 const menuLeft = menu.getBoundingClientRect().left;
+
 // getBoundingClientRect() : 위치값
 openNav.addEventListener("click", () => {
     if (menuLeft < 0) {
@@ -15,15 +16,21 @@ closeNav.addEventListener("click", () => {
     }
 });
 
+let mainOnload = () => {
+    Latest.latestItem();
+};
+
 // Ajax - Logout
 let logout = window.document.querySelector('.logout');
-
 logout.addEventListener('click', () => {
     const callback = (response) => {
         let json = JSON.parse(response);
         if (json['result'] === 'logout') {
-            alert('로그아웃 되었습니다');
-            window.location.href = "/";
+            Dialog.show('로그아웃', '로그아웃이 되었습니다.', ['확인'], [() => {
+                Dialog.hide();
+                window.location.href = "/";
+            }]);
+
         } else {
             fallback();
         }

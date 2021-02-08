@@ -12,6 +12,9 @@
 @import "part.footer.css";
 @import "part.responsive.css";
 @import "part.addProduct.css";
+@import "part.dialog.css";
+@import "part.qna.css";
+@import "part.qnalist.css";
 
 
 :root{
@@ -20,6 +23,7 @@
     --black: #222;
     --grey1: #3a3b3c;
     --grey2: #828282;
+    --admin: #f68121;
 }
 
 *, 
@@ -76,7 +80,8 @@ li{
 .js-addition,
 .js-items,
 .js-detail,
-.js-cart{
+.js-cart,
+.js-qna{
     display: none;
 }
 
@@ -85,6 +90,7 @@ li{
 .js-addition.visible,
 .js-items.visible,
 .js-detail.visible,
-.js-cart.visible{
+.js-cart.visible,
+.js-qna.visible{
     display: block;
 }

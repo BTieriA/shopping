@@ -1,4 +1,4 @@
-class SortList {
+class AdminSortList {
     static sortListData = (kinds) => {
         let items = window.document.querySelector('.js-items');
         let itemSection = items.querySelector('.products');
@@ -39,7 +39,7 @@ class SortList {
                     productElement.append(productContainerElement);
                     productContainerElement.append(productContainerLinkElement);
                     productContainerLinkElement.append(productContainerLinkImageElement);
-                    // productContainerElement.append(productContainerCartElement);
+                    productContainerElement.append(productContainerCartElement);
                     productContainerCartElement.append(productContainerCartIconElement);
                     productContainerElement.append(productContainerSideElement);
                     productContainerSideElement.append(productContainerSideSpanElement);
@@ -55,11 +55,45 @@ class SortList {
                     productContainerLinkImageElement.src =  "/apis/product/imageList?index=" + products[i]['itemIndex'];
                     productContainerCartElement.classList.add('addCart');
                     productContainerCartIconElement.classList.add('fas');
-                    productContainerCartIconElement.classList.add('fa-shopping-cart');
+                    productContainerCartIconElement.classList.add('fa-trash');
+                    productContainerCartElement.onclick = () => {
+                        Dialog.show('DELETE', '삭제하겠습니까?', ['네', '아니요'], [
+                            () => {
+                                Dialog.hide();
+                                const delCallback = (delResponse) => {
+                                    let delJson = JSON.parse(delResponse);
+                                    let delResult = delJson['result'];
+                                    if (delResult === 'success') {
+                                        window.location.reload();
+                                    } else if (delResult === 'invalid') {
+                                        Dialog.show('DELETE', '삭제 권한이 없습니다.', ['확인'], [() => {
+                                            Dialog.hide();
+                                        }]);
+                                    } else {
+                                        delFallback();
+                                    }
+                                };
+                                const delFallback = () => {
+                                    Dialog.show('DELETE', '삭제되지 않았습니다.', ['확인'], [() => {
+                                        Dialog.hide();
+                                    }]);
+                                };
+                                formData = new FormData();
+                                formData.append('index', products[i]['itemIndex']);
+                                Ajax.request('POST', 'apis/product/delete', delCallback, delFallback, formData);
+                                return false;
+                            },
+                            () => {
+                                Dialog.show('DELETE', '삭제되지 않았습니다.', ['확인'], [() => {
+                                    Dialog.hide();
+                                }]);
+                            }
+                        ]);
+                    };
                     productContainerSideElement.classList.add('side-icons');
                     productContainerSideSpanElement.classList.add('gotoDetail');
                     productContainerSideSpanElement.onclick = () => {
-                        detailClick(products[i]['itemIndex']);
+                        adminDetailClick(products[i]['itemIndex']);
                         return false;
                     };
                     productContainerSideSpanIconElement.classList.add('fas');
@@ -177,6 +211,7 @@ class SortList {
                     productElement.append(productContainerElement);
                     productContainerElement.append(productContainerLinkElement);
                     productContainerLinkElement.append(productContainerLinkImageElement);
+                    productContainerElement.append(productContainerCartElement);
                     productContainerCartElement.append(productContainerCartIconElement);
                     productContainerElement.append(productContainerSideElement);
                     productContainerSideElement.append(productContainerSideSpanElement);
@@ -192,11 +227,12 @@ class SortList {
                     productContainerLinkImageElement.src =  "/apis/product/imageList?index=" + products[i]['itemIndex'];
                     productContainerCartElement.classList.add('addCart');
                     productContainerCartIconElement.classList.add('fas');
-                    productContainerCartIconElement.classList.add('fa-shopping-cart');
+                    productContainerCartIconElement.classList.add('fa-trash');
                     productContainerSideElement.classList.add('side-icons');
                     productContainerSideSpanElement.classList.add('gotoDetail');
                     productContainerSideSpanElement.onclick = () => {
-                        detailClick(products[i]['itemIndex']);
+                        // detailClick(products[i]['itemIndex']);
+                        AdminUpdate.updateItem(products[i]['itemIndex']);
                         return false;
                     };
                     productContainerSideSpanIconElement.classList.add('fas');
@@ -285,7 +321,7 @@ class SortList {
         };
 
         sortFormElement.onsubmit = () => {
-            getSortLists(1);
+            getSortLists();
             return false;
         }
     }
