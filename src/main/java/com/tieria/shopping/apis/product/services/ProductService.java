@@ -1,9 +1,6 @@
 package com.tieria.shopping.apis.product.services;
 
-import com.tieria.shopping.apis.product.containers.CartListContainer;
-import com.tieria.shopping.apis.product.containers.ProductDetailResultContainer;
-import com.tieria.shopping.apis.product.containers.ProductListContainer;
-import com.tieria.shopping.apis.product.containers.ProductResultContainer;
+import com.tieria.shopping.apis.product.containers.*;
 import com.tieria.shopping.apis.product.daos.ProductDao;
 import com.tieria.shopping.apis.product.enums.CartResult;
 import com.tieria.shopping.apis.product.enums.ImageResult;
@@ -150,6 +147,8 @@ public class ProductService {
             return imageOutput;
         }
     }
+
+
 
     // Get Total Count
     public int getTotalCount() throws SQLException {
@@ -299,10 +298,45 @@ public class ProductService {
         }
     }
 
+    // get cart total history
+    public CartTotalListContainer getCartTotalHistory(UserVo userVo, int page) throws SQLException {
+        if (userVo == null || userVo.getUserLevel() != 1) {
+            return new CartTotalListContainer(CartResult.INVALID, null);
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<CartTotalVo> cartHistoryResult = new ArrayList<>();
+            ArrayList<CartTotalVo> cartHistoryDao = this.productDao.getCartTotalHistory(connection, page);
+            if (cartHistoryDao != null) {
+                for (CartTotalVo cart : cartHistoryDao) {
+                    cartHistoryResult.add(new CartTotalVo(
+                            cart.getImgIndex(),
+                            cart.getItemName(),
+                            cart.getItemBrand(),
+                            cart.getItemColor(),
+                            cart.getItemSize(),
+                            cart.getItemPrice(),
+                            cart.getItemDate(),
+                            cart.getUserName()
+                    ));
+                }
+                return new CartTotalListContainer(CartResult.SUCCESS, cartHistoryResult);
+            } else {
+                return new CartTotalListContainer(CartResult.FAILURE, null);
+            }
+        }
+    }
+
     // Get Total Carts
     public int getTotalCarts() throws SQLException {
         try (Connection connection = this.dataSource.getConnection()) {
             return this.productDao.getTotalCarts(connection);
+        }
+    }
+
+    // Get Total User Count
+    public int getTotalUserCarts(UserVo userVo) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            return this.productDao.getTotalUserCarts(connection, userVo);
         }
     }
 

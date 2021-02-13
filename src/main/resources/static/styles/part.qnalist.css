@@ -28,7 +28,8 @@
     margin-right: 5rem;
 }
 
-.js-qna .list > .title {
+.js-qna .list > .title,
+.js-qna .list > .modForm > .title {
     cursor: default;
     font-size: 2rem;
     font-weight: 400;
@@ -36,17 +37,21 @@
     padding-left: 1.5rem;
 }
 
-.js-qna .list > .qna-list {
+.js-qna .list > .qna-list,
+.js-qna .list > .modForm > .qna-list{
     width: 100%;
     border-collapse: collapse;
     position: relative;
+    margin-bottom: 3rem;
 }
 
-.js-qna .list > .qna-list > thead {
+.js-qna .list > .qna-list > thead,
+.js-qna .list > .modForm > .qna-list > thead{
     border-top: 0.0625rem solid #a0a0a0;
 }
 
-.js-qna .list > .qna-list > thead > tr > th {
+.js-qna .list > .qna-list > thead > tr > th,
+.js-qna .list > .modForm > .qna-list > thead > tr > th {
     background-color: #fafafa;
     border-top: 0.0625rem solid #cacaca;
     border-bottom: 0.0625rem solid #eaeaea;
@@ -55,37 +60,133 @@
     text-align: center;
 }
 
-.js-qna .list > .qna-list > thead > tr > th:nth-child(1) {
+.js-qna .list > .qna-list > thead > tr > th:nth-child(1),
+.js-qna .list > .modForm > .qna-list > thead > tr > th:nth-child(1){
     width: 6rem;
 }
 
-.js-qna .list > .qna-list > thead > tr > th:nth-child(2) {
-    width: 30rem;
+.js-qna .list > .qna-list > thead > tr > td,
+.js-qna .list > .modForm > .qna-list > thead > tr > td {
+    border-bottom: 0.0625rem solid #eaeaea;
+    font-weight: 300;
+    padding: 0.75rem 0;
+    text-align: center;
 }
 
-.js-qna .list > .qna-list > thead > tr > th:nth-child(4) {
-    width: 12rem;
+.js-qna .list > .modForm > .qna-list > thead > tr > td > input,
+.js-qna .list > .modForm > .qna-list > tbody > tr > td > textarea{
+    width: 100%;
+    font-size: 1.6rem;
+    padding: 0.75rem;
+    border: none;
 }
 
-.js-qna .list > .qna-list > thead > tr > th:not(:last-child) {
+/*.js-qna .list > .qna-list > thead > tr > th:nth-child(2) {*/
+/*    width: 30rem;*/
+/*}*/
+
+/*.js-qna .list > .qna-list > thead > tr > th:nth-child(4) {*/
+/*    width: 12rem;*/
+/*}*/
+
+.js-qna .list > .qna-list > thead > tr > th:nth-child(3),
+.js-qna .list > .modForm > .qna-list > thead > tr > th:nth-child(3){
+    width: 22rem;
+}
+
+.js-qna .list > .qna-list > thead > tr > th:not(:last-child),
+.js-qna .list > .modForm > .qna-list > thead > tr > th:not(:last-child){
     border-right: 0.0625rem solid #eaeaea;
 }
 
-.js-qna .list > .qna-list > tbody > tr > td {
+.js-qna .list > .qna-list > thead > tr > td:not(:last-child),
+.js-qna .list > .modForm > .qna-list > thead > tr > td:not(:last-child){
+    border-right: 0.0625rem solid #eaeaea;
+}
+
+.js-qna .list > .qna-list > tbody > tr > th,
+.js-qna .list > .modForm > .qna-list > tbody > tr > th
+{
+    background-color: #fafafa;
+    border-top: 0.0625rem solid #cacaca;
+    border-bottom: 0.0625rem solid #eaeaea;
+    font-weight: 300;
+    padding: 0.75rem 0;
+    text-align: center;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td,
+.js-qna .list > .modForm > .qna-list > tbody > tr > td {
+    border-bottom: 0.0625rem solid #eaeaea;
+    padding: 0.75rem 1.75rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.js-qna .list > .qna-list > tbody > tr > .content,
+.js-qna .list > .modForm > .qna-list > tbody > tr > .content {
+    background-color: #fafafa;
+    border-top: 0.0625rem solid #cacaca;
+    border-bottom: 0.0625rem solid #eaeaea;
+    font-weight: 300;
+    padding: 0.75rem 0;
+    text-align: center;
+}
+
+.js-qna .list > .qna-list > tbody > tr > .content-text,
+.js-qna .list > .modForm > .qna-list > tbody > tr > .content-text {
     border-bottom: 0.0625rem solid #eaeaea;
     padding: 0.75rem 1.75rem;
     text-align: center;
 }
 
-.js-qna .list > .qna-list > tbody > tr > td:nth-child(3) {
-    text-align: left;
+/*.js-qna .list > .qna-list > tbody > tr > td > a {*/
+/*     text-decoration: none;*/
+/*     cursor: pointer;*/
+/*}*/
+
+/*.js-qna .list > .qna-list > tbody > tr > td > a:hover {*/
+/*    color: #f68121;*/
+/*}*/
+
+.js-qna .list > .qna-list > tbody > tr:hover,
+.js-qna .list > .modForm > .qna-list > tbody > tr:hover {
+    background-color: var(--primary);
+    color: var(--white);
 }
 
-.js-qna .list > .qna-list > tbody > tr > td:nth-child(3) > .link{
+.js-qna .list > .qna-list > tbody > tr > .content:hover,
+.js-qna .list > .modForm > .qna-list > tbody > tr > .content:hover {
+    background-color: #fafafa;
+    color: #000;
+    cursor: inherit;
+}
+.js-qna .list > .qna-list > tbody > tr > .content-text:hover,
+.js-qna .list > .modForm > .qna-list > tbody > tr > .content-text:hover {
+    background-color: var(--white);
+    color: #000;
+    cursor: inherit;
+}
+
+.js-qna .list > .qna-list > tbody > .selected,
+.js-qna .list > .modForm > .qna-list > tbody > .selected {
+    border-bottom: 0.0625rem solid #eaeaea;
+    padding: 0.75rem 1.75rem;
+    text-align: center;
+    background-color: #a0a0a0;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td:nth-child(3),
+.js-qna .list > .modForm > .qna-list > tbody > tr > td:nth-child(3){
+    text-align: center;
+}
+
+.js-qna .list > .qna-list > tbody > tr > td:nth-child(3) > .link {
     cursor: pointer;
 }
 
-.js-qna .list > .qna-list > tbody > tr > td:not(:last-child) {
+.js-qna .list > .qna-list > tbody > tr > td:not(:last-child),
+.js-qna .list > .modForm > .qna-list > tbody > tr > td:not(:last-child){
     border-right: 0.0625rem solid #eaeaea;
 }
 
@@ -100,4 +201,59 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.js-qna > .list > form {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.js-qna > .list > .modForm {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.js-qna > .list > form > .updateBox,
+.js-qna > .list > form > .deleteBox,
+.js-qna > .list > form > .modBtnBox
+{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem 3rem;
+    border-radius: 4rem;
+    margin-top: 1.5rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    background-color: var(--primary);
+    color: var(--white);
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+}
+
+.js-qna > .list > form > .updateBox:hover,
+.js-qna > .list > form > .deleteBox:hover,
+.js-qna > .list > form > .modBtnBox:hover{
+    background-color: var(--black);
+}
+
+.js-qna > .list > form > .updateBox > input,
+.js-qna > .list > form > .deleteBox > input,
+.js-qna > .list > form > .modBtnBox > input{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--white);
+    cursor: pointer;
 }

@@ -8,7 +8,6 @@ public class InsertQnaVo {
     public InsertQnaVo(String title, String content, int userIndex) {
         this.title = title;
         this.content = content;
-
         this.userIndex = userIndex;
     }
 
@@ -19,7 +18,6 @@ public class InsertQnaVo {
     public String getContent() {
         return content;
     }
-
 
     public int getUserIndex() {
         return userIndex;

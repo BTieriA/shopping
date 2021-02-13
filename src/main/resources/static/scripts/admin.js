@@ -1,24 +1,6 @@
 // var
 let admin = window.document.querySelector('.js-admin');
-let home = window.document.querySelector('.home');
 let addBox = window.document.querySelector('.js-addition');
-
-
-// Go to Main
-// home.addEventListener('click', () =>{
-//     admin.classList.add('visible');
-//     window.location.href = "main";
-// });
-
-
-// Ajax - insert
-let insertClick = () => {
-    let showItem = window.document.querySelector('.js-items');
-    admin.classList.remove('visible');
-    addBox.classList.add('visible');
-    showItem.classList.remove('visible');
-};
-
 
 // Image Upload - preview
 let uploadClick = () => {

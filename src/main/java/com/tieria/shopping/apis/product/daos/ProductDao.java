@@ -2,7 +2,6 @@ package com.tieria.shopping.apis.product.daos;
 
 import com.tieria.shopping.apis.product.vos.*;
 import com.tieria.shopping.common.UserVo;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -444,11 +443,70 @@ public class ProductDao {
         return cartList;
     }
 
+    // Cart Total History
+    public ArrayList<CartTotalVo> getCartTotalHistory(Connection connection, int page) throws SQLException {
+        CartTotalVo cartTotalVo = null;
+        ArrayList<CartTotalVo> cartList = new ArrayList<>();
+        String query = "" +
+                "SELECT `carts`.`image_index`   AS `imgIndex`,\n" +
+                "       `product_name`          AS `itemName`,\n" +
+                "       `product_brand`         AS `itemBrand`,\n" +
+                "       `product_price`         AS `itemPrice`,\n" +
+                "       `cart_color`            AS `itemColor`,\n" +
+                "       `cart_size`             AS `itemSize`,\n" +
+                "       `carts`.`user_index`    AS `userIndex`,\n" +
+                "       `cart_date`             AS `itemDate`,\n" +
+                "       `users`.`user_name`     AS `userName`\n" +
+                "FROM `shopping`.`carts`\n" +
+                "         INNER JOIN `shopping`.`products`\n" +
+                "                    ON `carts`.`product_index` = `products`.`product_index`\n" +
+                "         INNER JOIN `shopping`.`images`\n" +
+                "                    ON `carts`.`image_index` = `images`.`image_index`\n" +
+                "         INNER JOIN `shopping`.`users`\n" +
+                "                    ON `carts`.`user_index` = `users`.`user_index`\n" +
+                "ORDER BY `cart_date` DESC limit ?, 9";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, (page - 1) * 10);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    cartTotalVo = new CartTotalVo(resultSet.getInt("imgIndex"),
+                            resultSet.getString("itemName"),
+                            resultSet.getString("itemBrand"),
+                            resultSet.getString("itemColor"),
+                            resultSet.getString("itemSize"),
+                            resultSet.getInt("itemPrice"),
+                            resultSet.getTimestamp("itemDate"),
+                            resultSet.getString("userName"));
+                    cartList.add(cartTotalVo);
+                }
+            }
+        }
+        return cartList;
+    }
+
     // Get Total Cart
     public int getTotalCarts(Connection connection) throws SQLException {
         int count = 0;
         String query = "SELECT COUNT(`cart_index`) AS `count` FROM `shopping`.`carts`";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            }
+        }
+        return count;
+    }
+
+    // Get Total User Cart
+    public int getTotalUserCarts(Connection connection, UserVo userVo) throws SQLException {
+        int count = 0;
+        String query = "" +
+                "SELECT COUNT(`cart_index`) AS `count`\n" +
+                "FROM `shopping`.`carts`\n" +
+                "WHERE `carts`.`user_index` = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userVo.getUserIndex());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     count = resultSet.getInt("count");

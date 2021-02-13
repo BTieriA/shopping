@@ -383,5 +383,6 @@
 <script src="scripts/brand.js"></script>
 <script src="scripts/cart-history.js"></script>
 <script src="scripts/qna.js"></script>
+<script src="scripts/qna-detail.js"></script>
 </body>
 </html>

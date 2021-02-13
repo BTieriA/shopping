@@ -28,6 +28,10 @@ public class RootController {
 
     @RequestMapping(value = "admin", produces = MediaType.TEXT_HTML_VALUE)
     public String AddGet(HttpServletRequest request, HttpServletResponse response) {
+        if (Converter.getUserVo(request) == null) {
+            return "login";
+        };
+
         if (Converter.getUserVo(request).getUserLevel() == 1) {
             return "admin/admin";
         } else if (Converter.getUserVo(request) == null) {

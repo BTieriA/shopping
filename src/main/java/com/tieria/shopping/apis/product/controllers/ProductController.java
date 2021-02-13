@@ -1,9 +1,6 @@
 package com.tieria.shopping.apis.product.controllers;
 
-import com.tieria.shopping.apis.product.containers.CartListContainer;
-import com.tieria.shopping.apis.product.containers.ProductDetailResultContainer;
-import com.tieria.shopping.apis.product.containers.ProductListContainer;
-import com.tieria.shopping.apis.product.containers.ProductResultContainer;
+import com.tieria.shopping.apis.product.containers.*;
 import com.tieria.shopping.apis.product.enums.CartResult;
 import com.tieria.shopping.apis.product.enums.ImageResult;
 import com.tieria.shopping.apis.product.enums.ProductResult;
@@ -336,11 +333,11 @@ public class ProductController {
     public String cartHistory(HttpServletRequest request, HttpServletResponse response,
                               @RequestParam(name = "page", defaultValue = "1") String strPage) throws SQLException {
         int page = Converter.stringToInt(strPage, 1);
-        int totalCount = this.productService.getTotalCarts();
+        UserVo userVo = Converter.getUserVo(request);
+        int totalCount = this.productService.getTotalUserCarts(userVo);
         int maxPage = totalCount % 10 == 0 ? totalCount / 10 : (int) (Math.floor((double) totalCount / 10) + 1);
         int startPage = (page > 5) ? (page - 4) : 1;
         int endPage = (maxPage > 10) ? (page + 4) : maxPage;
-        UserVo userVo = Converter.getUserVo(request);
         CartListContainer cartListContainer = this.productService.getCartHistory(userVo, page);
         JSONObject jsonResponse = new JSONObject();
         JSONArray cartList = new JSONArray();
@@ -364,6 +361,47 @@ public class ProductController {
             }
             jsonResponse.put("cartList", cartList);
         } else if (cartListContainer.getCartResult() == CartResult.INVALID) {
+            jsonResponse.put("cartList", "no_authorized");
+        } else {
+            jsonResponse.put("cartList", "no_data");
+        }
+        return jsonResponse.toString(4);
+    }
+
+    // Get Cart Total History
+    @RequestMapping(value = "/total-history")
+    public String cartTotalHistory(HttpServletRequest request, HttpServletResponse response,
+                              @RequestParam(name = "page", defaultValue = "1") String strPage) throws SQLException {
+        int page = Converter.stringToInt(strPage, 1);
+        UserVo userVo = Converter.getUserVo(request);
+        int totalCount = this.productService.getTotalCarts();
+        int maxPage = totalCount % 10 == 0 ? totalCount / 10 : (int) (Math.floor((double) totalCount / 10) + 1);
+        int startPage = (page > 5) ? (page - 4) : 1;
+        int endPage = (maxPage > 10) ? (page + 4) : maxPage;
+        CartTotalListContainer cartTotalListContainer = this.productService.getCartTotalHistory(userVo, page);
+        JSONObject jsonResponse = new JSONObject();
+        JSONArray cartList = new JSONArray();
+
+        jsonResponse.put("page", page);
+        jsonResponse.put("start_page", startPage);
+        jsonResponse.put("end_page", endPage);
+        jsonResponse.put("max_page", maxPage);
+
+        if (cartTotalListContainer.getCartResult() == CartResult.SUCCESS) {
+            for (CartTotalVo cart : cartTotalListContainer.getCartList()) {
+                JSONObject jsonItem = new JSONObject();
+                jsonItem.put("itemIndex", cart.getImgIndex());
+                jsonItem.put("itemName", cart.getItemName());
+                jsonItem.put("itemBrand", cart.getItemBrand());
+                jsonItem.put("itemPrice", cart.getItemPrice());
+                jsonItem.put("itemColor", cart.getItemColor());
+                jsonItem.put("itemSize", cart.getItemSize());
+                jsonItem.put("itemDate", cart.getItemDate());
+                jsonItem.put("userName", cart.getUserName());
+                cartList.put(jsonItem);
+            }
+            jsonResponse.put("cartList", cartList);
+        } else if (cartTotalListContainer.getCartResult() == CartResult.INVALID) {
             jsonResponse.put("cartList", "no_authorized");
         } else {
             jsonResponse.put("cartList", "no_data");

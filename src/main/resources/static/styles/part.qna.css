@@ -36,7 +36,17 @@
     padding-left: 1.5rem;
 }
 
-.js-qna .qna > form.qna-item.form {
+.js-qna > .list > .title {
+    cursor: default;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.js-qna .qna > form.qna-item.form,
+.js-qna > .list > .ansForm {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -45,7 +55,8 @@
     position: relative;
 }
 
-.js-qna .qna > form.qna-item.form > label.form-item.label {
+.js-qna .qna > form.qna-item.form > label.form-item.label,
+.js-qna > .list > .ansForm > .ansLabel {
     width: 100%;
     position: relative;
 }
@@ -61,7 +72,8 @@
     padding:1rem;
 }
 
-.js-qna .qna > form.qna-item.form > label.form-item.label > textarea {
+.js-qna .qna > form.qna-item.form > label.form-item.label > textarea,
+.js-qna > .list > .ansForm > .ansLabel > textarea {
     width: 100%;
     position: relative;
     max-height: 30rem;
@@ -85,19 +97,41 @@
     color: var(--white);
     border: 0;
     outline: 0;
+    cursor: pointer;
     transition: all 300ms ease-in-out;
-
 }
 
-.js-qna .qna > form.qna-item.form > div.form-item.buttons:hover {
+.js-qna > .list > .ansForm > .button {
+    /*width: 100%;*/
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    /*display: inline-block;*/
+    padding: 1rem 3rem;
+    border-radius: 4rem;
+    margin-top: 1.5rem;
+    margin-right: 1rem;
+    background-color: var(--primary);
+    color: var(--white);
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+}
+
+.js-qna .qna > form.qna-item.form > div.form-item.buttons:hover,
+.js-qna > .list > .ansForm > .button:hover {
      background-color: var(--black);
  }
 
-.js-qna .qna > form.qna-item.form > div.form-item.buttons > input {
+.js-qna .qna > form.qna-item.form > div.form-item.buttons > input,
+.js-qna > .list > .ansForm > .button > input {
     border: none;
     outline: none;
     background-color: transparent;
     color: var(--white);
+    cursor: pointer;
 }
 
 .js-qna .qna > div.qna-item.my {

@@ -1,0 +1,18 @@
+<div class="main-item qna">
+    <ul class="qna-item menu">
+        <li class="menu-item qna-title" onclick="qnaClick();">Question</li>
+        <li class="menu-item qna-list" onclick="qnaListClick();">LIST</li>
+    </ul>
+    <div class="qna-item title">Modify Question</div>
+    <form class="qna-item form" action="/apis/customer/updateQna" id="formUpdateQna" name="formUpdateQna" method="POST">
+        <label class="form-item label">
+            <input class="label-item" type="text" name="title" placeholder="TITLE">
+        </label>
+        <label class="form-item label">
+            <textarea class="label-item" name="content" placeholder="CONTENT"></textarea>
+        </label>
+        <div class="form-item buttons">
+            <input type="submit" class="buttons-item object-common-button prop-red" value="SUBMIT">
+        </div>
+    </form>
+</div>

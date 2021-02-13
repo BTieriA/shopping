@@ -23,52 +23,6 @@
     <title>SM Shopping Mall</title>
 </head>
 <body>
-<!-- Navigation -->
-<%--<nav class="nav">--%>
-<%--    <div class="wrapper container">--%>
-<%--        <div class="logo"><a href="main">Administrator</a></div>--%>
-<%--        <ul class="nav-list">--%>
-<%--            <div class="top">--%>
-<%--                <label class="btn close-btn"><i class="fas fa-times"></i></label>--%>
-<%--            </div>--%>
-<%--            <li><a href="#" class="home">Home</a></li>--%>
-<%--            <li onclick="checkCategory()"><a href="#">Show Product</a></li>--%>
-<%--            &lt;%&ndash;            <li onclick="itemListClick()"><a href="#">Show Product</a></li>&ndash;%&gt;--%>
-<%--            <li onclick="insertClick()">--%>
-<%--                <a href="#" class="desktop-item">Insert Product</a>--%>
-<%--                <input type="checkbox" id="showMega">--%>
-<%--                <label for="showMega" class="mobile-item">Insert</label>--%>
-<%--            </li>--%>
-
-<%--            <li>--%>
-<%--                <a href="#" class="desktop-item">Delete Product</a>--%>
-<%--                <input type="checkbox" id="showdrop2">--%>
-<%--                <label for="showdrop2" class="mobile-item">Delete</label>--%>
-<%--            </li>--%>
-
-<%--            <% if (userVo.getUserLevel() == 1) {%>--%>
-<%--            <li>--%>
-<%--                <a href="#" class="desktop-item" onclick="adminClick()">Admin</a>--%>
-<%--            </li>--%>
-<%--            <% } else { %>--%>
-<%--            <li style="display: none"></li>--%>
-<%--            <% } %>--%>
-<%--            <% if (userVo != null) { %>--%>
-<%--            <li class="logout"><a href="#">Log Out</a></li>--%>
-<%--            <% } else { %>--%>
-<%--            <li class="login"><a href="#">Log In</a></li>--%>
-<%--            <% } %>--%>
-<%--            <li class="icons">--%>
-<%--                    <span>--%>
-<%--                        <img src="images/shoppingBag.svg" alt="">--%>
-<%--                        <small class="count d-flex">0</small>--%>
-<%--                    </span>--%>
-<%--                <span><img src="images/search.svg" alt=""></span>--%>
-<%--            </li>--%>
-<%--        </ul>--%>
-<%--        <label class="btn open-btn"><i class="fas fa-bars"></i></label>--%>
-<%--    </div>--%>
-<%--</nav>--%>
 <nav class="nav admin-nav">
     <div class="wrapper container">
         <div class="logo admin-logo"><a href="main">ADMIN</a></div>
@@ -78,7 +32,7 @@
             </div>
             <li><a href="#" onclick="adminClick()">Home</a></li>
             <li><a href="#" onclick="adminItemsClick()">Show Products</a></li>
-            <li onclick="insertClick()">
+            <li onclick="insertProduct()">
                 <a href="#" class="desktop-item">Insert Product</a>
                 <input type="checkbox" id="showMega">
                 <label for="showMega" class="mobile-item">Insert</label>
@@ -90,7 +44,7 @@
                     <span><i class="fas fa-chevron-down"></i></span></label>
                 <ul class="drop-menu2">
                     <li><a href="#" onclick="historyClick();">Payment History</a></li>
-                    <li><a href="#" onclick="qnaClick();">Faq</a></li>
+                    <li><a href="#" onclick="qnaListClick();">Faq</a></li>
                 </ul>
             </li>
 
@@ -132,7 +86,7 @@
             <span>Product Modify Mode</span>
             <h1>Administrator</h1>
             <small>This site is authorized by administrator</small>
-            <a href="#">Show Products</a>
+            <a href="#" onclick="adminItemsClick();">Show Products</a>
         </div>
         <div class="right">
             <img class="adminMain" src="admin/images/admin.svg" alt="">
@@ -379,8 +333,9 @@
 <script src="admin/scripts/adminSort.js"></script>
 <script src="scripts/latest.js"></script>
 <script src="scripts/brand.js"></script>
-<script src="scripts/cart-history.js"></script>
-<script src="scripts/qna.js"></script>
+<script src="admin/scripts/adminHistory.js"></script>
+<script src="admin/scripts/adminQna.js"></script>
 <script src="admin/scripts/adminUpdate.js"></script>
+<script src="admin/scripts/adminAnswer.js"></script>
 </body>
 </html>

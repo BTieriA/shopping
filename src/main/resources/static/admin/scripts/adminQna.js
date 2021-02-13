@@ -1,5 +1,5 @@
-class Qna {
-    static qnaList = () => {
+class AdminQna {
+    static adminQnaList = () => {
         let qnaTable = (page) => {
             let qna = window.document.querySelector('.js-qna');
             let qnaMain = qna.querySelector('.list');
@@ -27,21 +27,15 @@ class Qna {
                     qnaMainMenuListElement.classList.add('qna-list');
                     qnaMainMenuTitleElement.innerHTML = 'Question';
                     qnaMainMenuTitleElement.onclick = () => {
-                        qnaClick();
-                    };
-                    qnaMainMenuListElement.innerHTML = "LIST";
-                    qnaMainMenuListElement.onclick = () => {
                         qnaListClick();
+                    };
+                    qnaMainMenuListElement.innerHTML = "Answer";
+                    qnaMainMenuListElement.onclick = () => {
+
                     };
                     qnaMain.append(qnaMainMenuElement);
                     qnaMainMenuElement.append(qnaMainMenuTitleElement);
                     qnaMainMenuElement.append(qnaMainMenuListElement);
-
-                    // 테이블 제목
-                    let qnaMainTitleElement = document.createElement('div');
-                    qnaMainTitleElement.classList.add('title');
-                    qnaMainTitleElement.innerHTML='Question List';
-                    qnaMain.append(qnaMainTitleElement);
 
                     // 테이블 생성
                     let qnaMainTableElement = document.createElement('table');
@@ -56,7 +50,6 @@ class Qna {
 
                     qnaMainTableHeadTrNoElement.innerHTML = 'NO';
                     qnaMainTableHeadTrTitleElement.innerHTML = 'TITLE';
-                    // qnaMainTableHeadTrContentElement.innerHTML = 'CONTENT';
                     qnaMainTableHeadTrDateElement.innerHTML = 'DATE';
 
                     qnaMain.append(qnaMainTableElement);
@@ -64,7 +57,6 @@ class Qna {
                     qnaMainTableHeadElement.append(qnaMainTableHeadTrElement);
                     qnaMainTableHeadTrElement.append(qnaMainTableHeadTrNoElement);
                     qnaMainTableHeadTrElement.append(qnaMainTableHeadTrTitleElement);
-                    // qnaMainTableHeadTrElement.append(qnaMainTableHeadTrContentElement);
                     qnaMainTableHeadTrElement.append(qnaMainTableHeadTrDateElement);
 
                     let qnaMainTableBodyElement = document.createElement('tbody');
@@ -76,25 +68,18 @@ class Qna {
                         let qnaMainTableBodyTrIndexElement = document.createElement('td');
                         let qnaMainTableBodyTrTitleElement = document.createElement('td');
                         let qnaMainTableBodyTrTitleLinkElement = document.createElement('a');
-                        // let qnaMainTableBodyTrContentElement = document.createElement('td');
                         let qnaMainTableBodyTrDateElement = document.createElement('td');
 
                         qnaMainTableBodyTrIndexElement.innerHTML = qnaList[i]['qnaIndex'];
-                        // qnaMainTableBodyTrTitleElement.innerHTML = qnaList[i]['qnaTitle'];
-                        // qnaMainTableBodyTrContentElement.innerHTML = qnaList[i]['qnaContent'];
                         qnaMainTableBodyTrTitleLinkElement.innerHTML = qnaList[i]['qnaTitle'];
                         qnaMainTableBodyTrDateElement.innerHTML = qnaList[i]['qnaDate'];
                         qnaMainTableBodyTrElement.onclick = () => {
-                            QnaDetail.qnaDetailLayout(qnaList[i]['qnaIndex']);
+                            AdminAnswer.adminAnswerLayout(qnaList[i]['qnaIndex']);
                         };
-                        // qnaMainTableBodyTrTitleLinkElement.onclick = () => {
-                        //     QnaDetail.qnaDetailLayout(qnaList[i]['qnaIndex']);
-                        // };
                         qnaMainTableBodyElement.append(qnaMainTableBodyTrElement);
                         qnaMainTableBodyTrElement.append(qnaMainTableBodyTrIndexElement);
                         qnaMainTableBodyTrElement.append(qnaMainTableBodyTrTitleElement);
                         qnaMainTableBodyTrTitleElement.append(qnaMainTableBodyTrTitleLinkElement);
-                        // qnaMainTableBodyTrElement.append(qnaMainTableBodyTrContentElement);
                         qnaMainTableBodyTrElement.append(qnaMainTableBodyTrDateElement);
                     }
 
@@ -173,7 +158,7 @@ class Qna {
             let formData = new FormData();
             formData.append('page', page);
             Ajax.request('POST', '/apis/customer/qnaList', callback, fallback, formData);
-        }
+        };
         qnaTable(1);
     }
 }
