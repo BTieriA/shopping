@@ -224,8 +224,8 @@ class QnaDetail {
 
                                             qnaMainUpdateFormTableHeadTrNoContentElement.innerHTML = updateData['qnaIndex'];
                                             qnaMainUpdateFormTableHeadTrDateContentElement.innerHTML = updateData['qnaDate'];
-                                            qnaMainUpdateFormTableHeadTrTitleContentInputElement.placeholder = 'Modify' +
-                                                ' the Title '  + '\"' + updateData['qnaTitle'] + '\"';
+                                            qnaMainUpdateFormTableHeadTrTitleContentInputElement.placeholder = '제목을' +
+                                                ' 입력해주세요';
                                             qnaMainUpdateFormTableHeadTrTitleContentInputElement.name = 'title';
 
                                             qnaMain.append(qnaMainUpdateFormElement);
@@ -257,8 +257,8 @@ class QnaDetail {
                                             qnaMainUpdateFormTableBodyTrContentTdElement.colSpan = 3;
                                             qnaMainUpdateFormTableBodyTrContentTdElement.classList.add('content-text');
                                             qnaMainUpdateFormTableBodyTrContentTdInputElement.name = 'content';
-                                            qnaMainUpdateFormTableBodyTrContentTdInputElement.placeholder = 'Modify' +
-                                                ' the Content ' + '\"' + updateData['qnaContent'] + '\"';
+                                            qnaMainUpdateFormTableBodyTrContentTdInputElement.placeholder = '내용을' +
+                                                ' 입력해주세요';
 
                                             qnaMainUpdateFormTableBodyElement.append(qnaMainUpdateFormTableBodyTrElement);
                                             qnaMainUpdateFormTableBodyTrElement.append(qnaMainUpdateFormTableBodyTrThElement);

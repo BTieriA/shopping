@@ -247,8 +247,8 @@ class AdminAnswer {
                                             qnaMainUpdateFormTableBodyTrContentTdElement.colSpan = 3;
                                             qnaMainUpdateFormTableBodyTrContentTdElement.classList.add('content-text');
                                             qnaMainUpdateFormTableBodyTrContentTdInputElement.name = 'content';
-                                            qnaMainUpdateFormTableBodyTrContentTdInputElement.placeholder = 'Modify' +
-                                                ' the Content ' + '\"' + updateData['ansContent'] + '\"';
+                                            qnaMainUpdateFormTableBodyTrContentTdInputElement.placeholder = '내용을' +
+                                                ' 입력해주세요';
 
                                             qnaMainUpdateFormTableBodyElement.append(qnaMainUpdateFormTableBodyTrElement);
                                             qnaMainUpdateFormTableBodyTrElement.append(qnaMainUpdateFormTableBodyTrThElement);
