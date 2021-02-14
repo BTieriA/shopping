@@ -337,5 +337,6 @@
 <script src="admin/scripts/adminQna.js"></script>
 <script src="admin/scripts/adminUpdate.js"></script>
 <script src="admin/scripts/adminAnswer.js"></script>
+<script src="admin/scripts/adminAnsList.js"></script>
 </body>
 </html>

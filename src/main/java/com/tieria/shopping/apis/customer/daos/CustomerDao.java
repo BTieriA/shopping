@@ -2,6 +2,7 @@ package com.tieria.shopping.apis.customer.daos;
 
 import com.tieria.shopping.apis.customer.vos.*;
 import com.tieria.shopping.common.UserVo;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -73,12 +74,16 @@ public class CustomerDao {
     }
 
     // QNA COUNT
-    public int totalQnaCount(Connection connection) throws SQLException {
+    public int totalQnaCount(Connection connection, UserVo userVo) throws SQLException {
         int count = 0;
         String query = "" +
                 "SELECT COUNT(`customer_index`) AS `count`\n" +
-                "FROM `shopping`.`customers`";
+                "FROM `shopping`.`customers`\n" +
+                "         INNER JOIN `shopping`.users\n" +
+                "             ON `customers`.`user_index` = `users`.`user_index`\n" +
+                "WHERE `users`.`user_index` = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userVo.getUserIndex());
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     count = resultSet.getInt("count");
@@ -148,6 +153,108 @@ public class CustomerDao {
         return ansVo;
     }
 
+    // QNA ALL LIST
+    public ArrayList<QnaAllVo> qnaAllList(Connection connection, int page) throws SQLException {
+        QnaAllVo qnaAllVo = null;
+        ArrayList<QnaAllVo> qnaAllList = new ArrayList<>();
+        String query = "" +
+                "SELECT `customers`.`customer_index` AS `qnaIndex`,\n" +
+                "       `customer_title`             AS `qnaTitle`,\n" +
+                "       `customer_content`           AS `qnaContent`,\n" +
+                "       `customer_date`              AS `qnaDate`,\n" +
+                "       `user_name`                  AS `userName`,\n" +
+                "       `answer_index`               AS `ansIndex`\n" +
+                "FROM `shopping`.`customers`\n" +
+                "         LEFT JOIN `shopping`.`users`\n" +
+                "                   ON `customers`.`user_index` = `users`.`user_index`\n" +
+                "         LEFT JOIN `shopping`.`answers`\n" +
+                "                   ON `customers`.`customer_index` = `answers`.`customer_index`\n" +
+                "ORDER BY customers.customer_index DESC\n" +
+                "LIMIT ?, 10;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, (page - 1) * 10);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    qnaAllVo = new QnaAllVo(
+                            resultSet.getInt("qnaIndex"),
+                            resultSet.getString("qnaTitle"),
+                            resultSet.getString("qnaContent"),
+                            resultSet.getTimestamp("qnaDate"),
+                            resultSet.getString("userName"),
+                            resultSet.getInt("ansIndex")
+                    );
+                    qnaAllList.add(qnaAllVo);
+                }
+            }
+        }
+        return qnaAllList;
+    }
+
+    // QNA ALL COUNT
+    public int totalQnaAllCount(Connection connection) throws SQLException {
+        int count = 0;
+        String query = "" +
+                "SELECT COUNT(`customer_index`) AS `count`\n" +
+                "FROM `shopping`.`customers`";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            }
+        }
+        return count;
+    }
+
+    // QNA ALL LIST
+    public ArrayList<AnswerListVo> ansList(Connection connection, int page) throws SQLException {
+        AnswerListVo answerListVo = null;
+        ArrayList<AnswerListVo> ansList = new ArrayList<>();
+        String query = "" +
+                "SELECT `answers`.`customer_index` AS `qnaIndex`,\n" +
+                "       `answer_content`           AS `ansContent`,\n" +
+                "       `user_name`                AS `userName`,\n" +
+                "       `answer_date`              AS `ansDate`\n" +
+                "FROM `shopping`.`answers`\n" +
+                "         INNER JOIN `shopping`.`customers`\n" +
+                "                    ON `answers`.`customer_index` = `customers`.`customer_index`\n" +
+                "         INNER JOIN `shopping`.`users`\n" +
+                "                    ON `customers`.`user_index` = `users`.`user_index`\n" +
+                "ORDER BY `answers`.`customer_index` DESC\n" +
+                "LIMIT ?, 10";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, (page - 1) * 10);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    answerListVo = new AnswerListVo(
+                            resultSet.getInt("qnaIndex"),
+                            resultSet.getString("ansContent"),
+                            resultSet.getString("userName"),
+                            resultSet.getTimestamp("ansDate")
+                    );
+                    ansList.add(answerListVo);
+                }
+            }
+        }
+        return ansList;
+    }
+
+    // QNA ALL COUNT
+    public int totalAnsCount(Connection connection) throws SQLException {
+        int count = 0;
+        String query = "" +
+                "SELECT COUNT(`answer_index`) AS `count`\n" +
+                "FROM `shopping`.`answers`";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+            }
+        }
+        return count;
+    }
+
     //    -------------------------------------------------------------------------------------------- UPDATE
     public int updateQna(Connection connection, UpdateQnaVo updateQnaVo, int index) throws SQLException {
         int result = 0;
@@ -167,5 +274,48 @@ public class CustomerDao {
         return result;
     }
 
+    public int updateAns(Connection connection, UpdateAnsVo updateAnsVo) throws SQLException {
+        int result = 0;
+        String query = "" +
+                "UPDATE `shopping`.`answers`\n" +
+                "SET `answer_content` = ?,\n" +
+                "    `answer_date`    = now()\n" +
+                "WHERE `customer_index` = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, updateAnsVo.getContent());
+            preparedStatement.setInt(2, updateAnsVo.getIndex());
+            preparedStatement.executeUpdate();
+            result = 1;
+        }
+        return result;
+    }
+
     //    -------------------------------------------------------------------------------------------- DELETE
+    public int deleteQna(Connection connection, int index) throws SQLException {
+        int deleteResult = 0;
+        String query = "" +
+                "DELETE\n" +
+                "FROM `shopping`.`customers`\n" +
+                "WHERE `customer_index` = ?\n" +
+                "LIMIT 1";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, index);
+            deleteResult = preparedStatement.executeUpdate();
+        }
+        return deleteResult;
+    }
+
+    public int deleteAns(Connection connection, int index) throws SQLException {
+        int deleteResult = 0;
+        String query = "" +
+                "DELETE\n" +
+                "FROM `shopping`.`answers`\n" +
+                "WHERE `customer_index` = ?\n" +
+                "LIMIT 1";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, index);
+            deleteResult = preparedStatement.executeUpdate();
+        }
+        return deleteResult;
+    }
 }

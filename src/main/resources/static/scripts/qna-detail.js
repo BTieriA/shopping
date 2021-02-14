@@ -4,7 +4,6 @@ class QnaDetail {
             let qna = window.document.querySelector('.js-qna');
             let qnaMain = qna.querySelector('.list');
             qnaMain.innerHTML = '';
-            let modIndex = index;
 
             const callback = (response) => {
                 let json = JSON.parse(response);
@@ -182,9 +181,10 @@ class QnaDetail {
                             qnaMainFormUpdateBoxElement.append(qnaMainButtonBoxUpdateElement);
                             qnaMainFormDeleteBoxElement.append(qnaMainButtonBoxDeleteElement);
 
+                            qnaMainFormElement.method = 'POST';
+
                             let btnFrom = window.document.querySelector('#btnForm');
                             qnaMainButtonBoxUpdateElement.onclick = () => {
-                                qnaMainFormElement.method = 'POST';
                                 qnaMainFormElement.action = 'apis/customer/qna';
                                 btnFrom.onsubmit = () => {
                                     const updateCallback = (updateResponse) => {
@@ -286,6 +286,7 @@ class QnaDetail {
                                                         if (modJson['result'] === 'success') {
                                                             Dialog.show('MODIFY', '수정하였습니다.', ['확인'], [() => {
                                                                 Dialog.hide();
+                                                                qnaDetailData(index);
                                                             }]);
                                                         }
                                                     };
@@ -306,7 +307,9 @@ class QnaDetail {
 
                                     };
                                     const updateFallback = () => {
-                                        alert("no");
+                                        Dialog.show('MODIFY', '수정 페이지로 이동하지 못했습니다.', ['확인'], [() => {
+                                            Dialog.hide();
+                                        }]);
                                     };
                                     let updateFormData = new FormData(btnFrom);
                                     updateFormData.append("index", index);
@@ -315,8 +318,29 @@ class QnaDetail {
                                 };
                             };
                             qnaMainButtonBoxDeleteElement.onclick = () => {
+                                qnaMainFormElement.action = 'apis/customer/deleteQna';
                                 btnFrom.onsubmit = () => {
-                                    alert("delete index = " + index);
+                                    const delCallback = (delResponse) => {
+                                        let delJson = JSON.parse(delResponse);
+                                        let delResult = delJson['result'];
+                                        if (delResult === 'success') {
+                                            Dialog.show('DELETE', '삭제하였습니다.', ['확인'], [() => {
+                                                Dialog.hide();
+                                                qnaListClick();
+                                            }]);
+                                        } else{
+                                            delFallback();
+                                        }
+                                    };
+                                    const delFallback = () => {
+                                        Dialog.show('DELETE', '삭제하지 못하였습니다.', ['확인'], [() => {
+                                            Dialog.hide();
+                                        }]);
+                                    };
+                                    let delFormData = new FormData(btnFrom);
+                                    delFormData.append("index", index);
+                                    Ajax.request('POST', 'apis/customer/deleteQna', delCallback, delFallback, delFormData);
+                                    return false;
                                 };
                             };
 

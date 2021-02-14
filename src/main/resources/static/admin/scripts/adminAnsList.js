@@ -1,16 +1,16 @@
-class Qna {
-    static qnaList = () => {
-        let qnaTable = (page) => {
+class AdminAnsList {
+    static adminAnsListData = () => {
+        let ansTable = (page) => {
             let qna = window.document.querySelector('.js-qna');
             let qnaMain = qna.querySelector('.list');
             qnaMain.innerHTML = '';
 
             const callback = (response) => {
                 let json = JSON.parse(response);
-                let qnaList = json['qnaList'];
-                if (qnaList === 'no_data'){
+                let ansList = json['ansList'];
+                if (ansList === 'no_data'){
                     fallback();
-                } else if (qnaList === 'no_authorized') {
+                } else if (ansList === 'no_authorized') {
                     Dialog.show('QNA', '로그인 해주세요', ['확인'], [() => {
                         Dialog.hide();
                     }]);
@@ -27,36 +27,30 @@ class Qna {
                     qnaMainMenuListElement.classList.add('qna-list');
                     qnaMainMenuTitleElement.innerHTML = 'Question';
                     qnaMainMenuTitleElement.onclick = () => {
-                        qnaClick();
-                    };
-                    qnaMainMenuListElement.innerHTML = "LIST";
-                    qnaMainMenuListElement.onclick = () => {
                         qnaListClick();
+                    };
+                    qnaMainMenuListElement.innerHTML = "Answer";
+                    qnaMainMenuListElement.onclick = () => {
+                        ansTable(1);
                     };
                     qnaMain.append(qnaMainMenuElement);
                     qnaMainMenuElement.append(qnaMainMenuTitleElement);
                     qnaMainMenuElement.append(qnaMainMenuListElement);
 
-                    // 테이블 제목
-                    let qnaMainTitleElement = document.createElement('div');
-                    qnaMainTitleElement.classList.add('title');
-                    qnaMainTitleElement.innerHTML='Question List';
-                    qnaMain.append(qnaMainTitleElement);
-
                     // 테이블 생성
                     let qnaMainTableElement = document.createElement('table');
                     qnaMainTableElement.classList.add('list-item');
-                    qnaMainTableElement.classList.add('qna-list');
+                    qnaMainTableElement.classList.add('admin-qna');
                     let qnaMainTableHeadElement = document.createElement('thead');
                     let qnaMainTableHeadTrElement = document.createElement('tr');
                     let qnaMainTableHeadTrNoElement = document.createElement('th');
                     let qnaMainTableHeadTrTitleElement = document.createElement('th');
-                    // let qnaMainTableHeadTrContentElement = document.createElement('th');
+                    let qnaMainTableHeadTrNameElement = document.createElement('th');
                     let qnaMainTableHeadTrDateElement = document.createElement('th');
 
                     qnaMainTableHeadTrNoElement.innerHTML = 'NO';
-                    qnaMainTableHeadTrTitleElement.innerHTML = 'TITLE';
-                    // qnaMainTableHeadTrContentElement.innerHTML = 'CONTENT';
+                    qnaMainTableHeadTrTitleElement.innerHTML = 'ANSWER';
+                    qnaMainTableHeadTrNameElement.innerHTML = 'NAME';
                     qnaMainTableHeadTrDateElement.innerHTML = 'DATE';
 
                     qnaMain.append(qnaMainTableElement);
@@ -64,37 +58,31 @@ class Qna {
                     qnaMainTableHeadElement.append(qnaMainTableHeadTrElement);
                     qnaMainTableHeadTrElement.append(qnaMainTableHeadTrNoElement);
                     qnaMainTableHeadTrElement.append(qnaMainTableHeadTrTitleElement);
-                    // qnaMainTableHeadTrElement.append(qnaMainTableHeadTrContentElement);
+                    qnaMainTableHeadTrElement.append(qnaMainTableHeadTrNameElement);
                     qnaMainTableHeadTrElement.append(qnaMainTableHeadTrDateElement);
 
                     let qnaMainTableBodyElement = document.createElement('tbody');
                     qnaMainTableElement.append(qnaMainTableBodyElement);
 
-                    for (let i=0; i < qnaList.length; i++) {
+                    for (let i=0; i < ansList.length; i++) {
                         // 리스트
                         let qnaMainTableBodyTrElement = document.createElement('tr');
                         let qnaMainTableBodyTrIndexElement = document.createElement('td');
                         let qnaMainTableBodyTrTitleElement = document.createElement('td');
                         let qnaMainTableBodyTrTitleLinkElement = document.createElement('a');
-                        // let qnaMainTableBodyTrContentElement = document.createElement('td');
+                        let qnaMainTableBodyTrNameElement = document.createElement('td');
                         let qnaMainTableBodyTrDateElement = document.createElement('td');
 
-                        qnaMainTableBodyTrIndexElement.innerHTML = qnaList[i]['qnaIndex'];
-                        // qnaMainTableBodyTrTitleElement.innerHTML = qnaList[i]['qnaTitle'];
-                        // qnaMainTableBodyTrContentElement.innerHTML = qnaList[i]['qnaContent'];
-                        qnaMainTableBodyTrTitleLinkElement.innerHTML = qnaList[i]['qnaTitle'];
-                        qnaMainTableBodyTrDateElement.innerHTML = qnaList[i]['qnaDate'];
-                        qnaMainTableBodyTrElement.onclick = () => {
-                            QnaDetail.qnaDetailLayout(qnaList[i]['qnaIndex']);
-                        };
-                        // qnaMainTableBodyTrTitleLinkElement.onclick = () => {
-                        //     QnaDetail.qnaDetailLayout(qnaList[i]['qnaIndex']);
-                        // };
+                        qnaMainTableBodyTrIndexElement.innerHTML = ansList[i]['qnaIndex'];
+                        qnaMainTableBodyTrTitleLinkElement.innerHTML = ansList[i]['ansContent'];
+                        qnaMainTableBodyTrNameElement.innerHTML = ansList[i]['userName'];
+                        qnaMainTableBodyTrDateElement.innerHTML = ansList[i]['ansDate'];
+
                         qnaMainTableBodyElement.append(qnaMainTableBodyTrElement);
                         qnaMainTableBodyTrElement.append(qnaMainTableBodyTrIndexElement);
                         qnaMainTableBodyTrElement.append(qnaMainTableBodyTrTitleElement);
                         qnaMainTableBodyTrTitleElement.append(qnaMainTableBodyTrTitleLinkElement);
-                        // qnaMainTableBodyTrElement.append(qnaMainTableBodyTrContentElement);
+                        qnaMainTableBodyTrElement.append(qnaMainTableBodyTrNameElement);
                         qnaMainTableBodyTrElement.append(qnaMainTableBodyTrDateElement);
                     }
 
@@ -127,10 +115,10 @@ class Qna {
 
                     if (reqPage > 1) {
                         qnaMainTableFootColPageFirstElement.addEventListener('click', () => {
-                            qnaTable(1);
+                            ansTable(1);
                         });
                         qnaMainTableFootColPagePreElement.addEventListener('click', () => {
-                            qnaTable(reqPage - 1);
+                            ansTable(reqPage - 1);
                         });
                         qnaMainTableFootColPageFirstElement.innerHTML = '<< first';
                         qnaMainTableFootColPagePreElement.innerHTML = '<';
@@ -146,17 +134,17 @@ class Qna {
                             qnaMainTableFootColPageElementSpan1Element.classList.add('selected');
                         } else {
                             qnaMainTableFootColPageElementSpan1Element.addEventListener('click', () => {
-                                qnaTable(i);
+                                ansTable(i);
                             })
                         }
                         qnaMainTableFootColPageElement.append(qnaMainTableFootColPageElementSpan1Element);
                     }
                     if (reqPage < maxPage) {
                         qnaMainTableFootColPageNextElement.addEventListener('click', () => {
-                            qnaTable(reqPage + 1);
+                            ansTable(reqPage + 1);
                         });
                         qnaMainTableFootColPageLastElement.addEventListener('click', () => {
-                            qnaTable(maxPage);
+                            ansTable(maxPage);
                         });
                         qnaMainTableFootColPageNextElement.innerHTML = '>';
                         qnaMainTableFootColPageLastElement.innerHTML = 'last >>';
@@ -168,14 +156,12 @@ class Qna {
 
             };
             const fallback = () => {
-                Dialog.show('QNA', '데이터가 없습니다.', ['확인'], [() => {
-                    Dialog.hide();
-                }]);
+
             };
             let formData = new FormData();
             formData.append('page', page);
-            Ajax.request('POST', '/apis/customer/qnaList', callback, fallback, formData);
-        }
-        qnaTable(1);
+            Ajax.request('POST', '/apis/customer/ansList', callback, fallback, formData);
+        };
+        ansTable(1);
     }
 }

@@ -1,8 +1,6 @@
 package com.tieria.shopping.apis.customer.services;
 
-import com.tieria.shopping.apis.customer.containers.AnsResultContainer;
-import com.tieria.shopping.apis.customer.containers.CustomerResultContainer;
-import com.tieria.shopping.apis.customer.containers.QuestionResultContainer;
+import com.tieria.shopping.apis.customer.containers.*;
 import com.tieria.shopping.apis.customer.daos.CustomerDao;
 import com.tieria.shopping.apis.customer.enums.CustomerResult;
 import com.tieria.shopping.apis.customer.vos.*;
@@ -79,9 +77,9 @@ public class CustomerService {
         }
     }
 
-    public int getTotalQnaCount() throws SQLException {
+    public int getTotalQnaCount(UserVo userVo) throws SQLException {
         try (Connection connection = this.dataSource.getConnection()) {
-            return this.customerDao.totalQnaCount(connection);
+            return this.customerDao.totalQnaCount(connection, userVo);
         }
     }
 
@@ -126,6 +124,66 @@ public class CustomerService {
         }
     }
 
+    public QnaAllListResultContainer getQnaAllList(UserVo userVo, int page) throws SQLException {
+        if (userVo == null || userVo.getUserLevel() != 1) {
+            return new QnaAllListResultContainer(CustomerResult.NOT_ALLOWED, null);
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<QnaAllVo> qnaResultAllList = new ArrayList<>();
+            ArrayList<QnaAllVo> qnaDaoAllList = this.customerDao.qnaAllList(connection, page);
+            if (qnaDaoAllList == null) {
+                return new QnaAllListResultContainer(CustomerResult.FAILURE, null);
+            } else {
+                for (QnaAllVo qna : qnaDaoAllList) {
+                    qnaResultAllList.add(new QnaAllVo(
+                            qna.getQnaIndex(),
+                            qna.getQnaTitle(),
+                            qna.getQnaContent(),
+                            qna.getQnaDate(),
+                            qna.getUserName(),
+                            qna.getAnsIndex()
+                    ));
+                }
+                return new QnaAllListResultContainer(CustomerResult.SUCCESS, qnaResultAllList);
+            }
+        }
+    }
+
+    public int getTotalQnaAllCount() throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            return this.customerDao.totalQnaAllCount(connection);
+        }
+    }
+
+    public AnsListResultContainer getAnsList(UserVo userVo, int page) throws SQLException {
+        if (userVo == null || userVo.getUserLevel() != 1) {
+            return new AnsListResultContainer(CustomerResult.NOT_ALLOWED, null);
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            ArrayList<AnswerListVo> ansResultList = new ArrayList<>();
+            ArrayList<AnswerListVo> ansDaoList = this.customerDao.ansList(connection, page);
+            if (ansDaoList == null) {
+                return new AnsListResultContainer(CustomerResult.FAILURE, null);
+            } else {
+                for (AnswerListVo ans : ansDaoList) {
+                    ansResultList.add(new AnswerListVo(
+                            ans.getQnaIndex(),
+                            ans.getAnsContent(),
+                            ans.getUserName(),
+                            ans.getAsnDate()
+                    ));
+                }
+                return new AnsListResultContainer(CustomerResult.SUCCESS, ansResultList);
+            }
+        }
+    }
+
+    public int getTotalAnsCount() throws SQLException {
+        try (Connection connection = this.dataSource.getConnection()) {
+            return this.customerDao.totalAnsCount(connection);
+        }
+    }
+
     //    -------------------------------------------------------------------------------------------- UPDATE
     public CustomerResult updateQna(UserVo userVo, UpdateQnaVo updateQnaVo, int index) throws SQLException {
         if (userVo == null) {
@@ -133,6 +191,46 @@ public class CustomerService {
         }
         try (Connection connection = this.dataSource.getConnection()) {
             if (this.customerDao.updateQna(connection, updateQnaVo, index) != 1) {
+                return CustomerResult.FAILURE;
+            } else {
+                return CustomerResult.SUCCESS;
+            }
+        }
+    }
+
+    public CustomerResult updateAns(UserVo userVo, UpdateAnsVo updateAnsVo) throws SQLException {
+        if (userVo == null) {
+            return CustomerResult.NOT_ALLOWED;
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            if (this.customerDao.updateAns(connection, updateAnsVo) != 1) {
+                return CustomerResult.FAILURE;
+            } else {
+                return CustomerResult.SUCCESS;
+            }
+        }
+    }
+
+    //    -------------------------------------------------------------------------------------------- DELETE
+    public CustomerResult deleteQna(UserVo userVo, int index) throws SQLException {
+        if (userVo == null) {
+            return CustomerResult.NOT_ALLOWED;
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            if (this.customerDao.deleteQna(connection, index) != 1) {
+                return CustomerResult.FAILURE;
+            } else {
+                return CustomerResult.SUCCESS;
+            }
+        }
+    }
+
+    public CustomerResult deleteAns(UserVo userVo, int index) throws SQLException {
+        if (userVo == null) {
+            return CustomerResult.NOT_ALLOWED;
+        }
+        try (Connection connection = this.dataSource.getConnection()) {
+            if (this.customerDao.deleteAns(connection, index) != 1 || index <= 0) {
                 return CustomerResult.FAILURE;
             } else {
                 return CustomerResult.SUCCESS;

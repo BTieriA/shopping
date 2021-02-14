@@ -1,8 +1,6 @@
 package com.tieria.shopping.apis.customer.controllers;
 
-import com.tieria.shopping.apis.customer.containers.AnsResultContainer;
-import com.tieria.shopping.apis.customer.containers.CustomerResultContainer;
-import com.tieria.shopping.apis.customer.containers.QuestionResultContainer;
+import com.tieria.shopping.apis.customer.containers.*;
 import com.tieria.shopping.apis.customer.enums.CustomerResult;
 import com.tieria.shopping.apis.customer.services.CustomerService;
 import com.tieria.shopping.apis.customer.vos.*;
@@ -69,7 +67,7 @@ public class CustomerController {
                              @RequestParam(value = "page", defaultValue = "1") String strPage) throws SQLException {
         UserVo userVo = Converter.getUserVo(request);
         int page = Converter.stringToInt(strPage, 1);
-        int totalCount = this.customerService.getTotalQnaCount();
+        int totalCount = this.customerService.getTotalQnaCount(userVo);
         int maxPage = totalCount % 10 == 0 ? totalCount / 10 : (int) (Math.floor((double) (totalCount / 10)) + 1);
         int startPage = (page > 5) ? (page - 4) : 1;
         int endPage = (maxPage > 10) ? (page + 4) : maxPage;
@@ -155,6 +153,81 @@ public class CustomerController {
         return jsonResponse.toString(4);
     }
 
+    @RequestMapping(value = "/qnaAllList")
+    public String getQnaAllList(HttpServletRequest request, HttpServletResponse response,
+                                @RequestParam(value = "page", defaultValue = "1") String strPage) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        int page = Converter.stringToInt(strPage, 1);
+        int totalCount = this.customerService.getTotalQnaAllCount();
+        int maxPage = totalCount % 10 == 0 ? totalCount / 10 : (int) (Math.floor((double) (totalCount / 10)) + 1);
+        int startPage = (page > 5) ? (page - 4) : 1;
+        int endPage = (maxPage > 10) ? (page + 4) : maxPage;
+        QnaAllListResultContainer qnaAllListResultContainer = this.customerService.getQnaAllList(userVo, page);
+        JSONObject jsonResponse = new JSONObject();
+        JSONArray jsonQnaAllList = new JSONArray();
+
+        jsonResponse.put("page", page);
+        jsonResponse.put("max_page", maxPage);
+        jsonResponse.put("start_page", startPage);
+        jsonResponse.put("end_page", endPage);
+
+        if (qnaAllListResultContainer.getCustomerResult() == CustomerResult.SUCCESS) {
+            for (QnaAllVo qnaAllVo : qnaAllListResultContainer.getQnaAllList()) {
+                JSONObject jsonQna = new JSONObject();
+                jsonQna.put("qnaIndex", qnaAllVo.getQnaIndex());
+                jsonQna.put("qnaTitle", qnaAllVo.getQnaTitle());
+                jsonQna.put("qnaContent", qnaAllVo.getQnaContent());
+                jsonQna.put("qnaDate", qnaAllVo.getQnaDate());
+                jsonQna.put("userName", qnaAllVo.getUserName());
+                jsonQna.put("ansIndex", qnaAllVo.getAnsIndex());
+                jsonQnaAllList.put(jsonQna);
+            }
+
+            jsonResponse.put("qnaAllList", jsonQnaAllList);
+        } else if (qnaAllListResultContainer.getCustomerResult() == CustomerResult.NOT_ALLOWED) {
+            jsonResponse.put("qnaAllList", "no_authorized");
+        } else {
+            jsonResponse.put("qnaAllList", "no_data");
+        }
+        return jsonResponse.toString(4);
+    }
+
+    @RequestMapping(value = "/ansList")
+    public String getAnsList(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(value = "page", defaultValue = "1") String strPage) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        int page = Converter.stringToInt(strPage, 1);
+        int totalCount = this.customerService.getTotalAnsCount();
+        int maxPage = totalCount % 10 == 0 ? totalCount / 10 : (int) (Math.floor((double) (totalCount / 10)) + 1);
+        int startPage = (page > 5) ? (page - 4) : 1;
+        int endPage = (maxPage > 10) ? (page + 4) : maxPage;
+        AnsListResultContainer ansListResultContainer = this.customerService.getAnsList(userVo, page);
+        JSONObject jsonResponse = new JSONObject();
+        JSONArray jsonAnsList = new JSONArray();
+
+        jsonResponse.put("page", page);
+        jsonResponse.put("max_page", maxPage);
+        jsonResponse.put("start_page", startPage);
+        jsonResponse.put("end_page", endPage);
+
+        if (ansListResultContainer.getCustomerResult() == CustomerResult.SUCCESS) {
+            for (AnswerListVo answerListVo : ansListResultContainer.getAnsList()) {
+                JSONObject jsonAns = new JSONObject();
+                jsonAns.put("qnaIndex", answerListVo.getQnaIndex());
+                jsonAns.put("ansContent", answerListVo.getAnsContent());
+                jsonAns.put("userName", answerListVo.getUserName());
+                jsonAns.put("ansDate", answerListVo.getAsnDate());
+                jsonAnsList.put(jsonAns);
+            }
+            jsonResponse.put("ansList", jsonAnsList);
+        } else if (ansListResultContainer.getCustomerResult() == CustomerResult.NOT_ALLOWED) {
+            jsonResponse.put("ansList", "no_authorized");
+        } else {
+            jsonResponse.put("ansList", "no_data");
+        }
+        return jsonResponse.toString(4);
+    }
+
     //    -------------------------------------------------------------------------------------------- UPDATE
     @RequestMapping(value = "/updateQna")
     public String updateQna(HttpServletRequest request, HttpServletResponse response,
@@ -165,6 +238,42 @@ public class CustomerController {
         UpdateQnaVo updateQnaVo = new UpdateQnaVo(title, content);
         int index = Converter.stringToInt(strIndex, -1);
         CustomerResult customerResult = this.customerService.updateQna(userVo, updateQnaVo, index);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, customerResult.name().toLowerCase());
+        return jsonResponse.toString(4);
+    }
+
+    @RequestMapping(value = "/updateAns")
+    public String updateQna(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = "index", defaultValue = "") String strIndex,
+                            @RequestParam(value = "content", defaultValue = "") String content) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        int index = Converter.stringToInt(strIndex, -1);
+        UpdateAnsVo updateAnsVo = new UpdateAnsVo(index, content);
+        CustomerResult customerResult = this.customerService.updateAns(userVo, updateAnsVo);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, customerResult.name().toLowerCase());
+        return jsonResponse.toString(4);
+    }
+
+    //    -------------------------------------------------------------------------------------------- DELETE
+    @RequestMapping(value = "/deleteQna")
+    public String delQna(HttpServletRequest request, HttpServletResponse response,
+                         @RequestParam(value = "index", defaultValue = "") String strIndex) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        int index = Converter.stringToInt(strIndex, -1);
+        CustomerResult customerResult = this.customerService.deleteQna(userVo, index);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, customerResult.name().toLowerCase());
+        return jsonResponse.toString(4);
+    }
+
+    @RequestMapping(value = "/deleteAns")
+    public String delAns(HttpServletRequest request, HttpServletResponse response,
+                         @RequestParam(value = "index", defaultValue = "") String strIndex) throws SQLException {
+        UserVo userVo = Converter.getUserVo(request);
+        int index = Converter.stringToInt(strIndex, -1);
+        CustomerResult customerResult = this.customerService.deleteAns(userVo, index);
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put(Constant.Common.JSON_ENTRY_RESULT, customerResult.name().toLowerCase());
         return jsonResponse.toString(4);
