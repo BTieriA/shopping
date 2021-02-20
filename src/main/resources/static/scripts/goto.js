@@ -114,7 +114,6 @@ let addDetailClick = (index) => {
     let callback = (responseText) => {
         items.innerHTML = responseText;
         Cart.cartData(index);
-        window.location.href = "main"
     };
     let fallback = () => {
         Dialog.show('구매', '구매한 제품이 없습니다.', ['확인'], [() => {

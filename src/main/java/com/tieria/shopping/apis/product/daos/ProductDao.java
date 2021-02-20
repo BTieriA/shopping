@@ -58,7 +58,7 @@ public class ProductDao {
                 "(detail_color,\n" +
                 " detail_size,\n" +
                 " product_index,\n" +
-                " image_index," +
+                " image_index,\n" +
                 " user_index)\n" +
                 "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -78,7 +78,7 @@ public class ProductDao {
                 "(cart_color,\n" +
                 " cart_size,\n" +
                 " product_index,\n" +
-                " image_index," +
+                " image_index,\n" +
                 " user_index)\n" +
                 "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

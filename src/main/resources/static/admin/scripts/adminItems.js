@@ -10,7 +10,7 @@ addForm.onsubmit = () => {
             }]);
             addBox.classList.remove('visible');
             // checkCategory();
-            productsClick();
+            adminItemsClick();
         } else {
             fallback();
         }
